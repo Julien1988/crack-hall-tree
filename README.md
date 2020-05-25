@@ -136,4 +136,4 @@ One of the solutions is to use [**Heroku**](https://www.heroku.com). To host you
 The project **have** to be online the **26/06/2020 16H59**.  
 We are expecting an e-mail for each group with a link to the repository and a link to the application in production.
 
-Have fun and good work.# crack-hall-tree
+Have fun and good work.
