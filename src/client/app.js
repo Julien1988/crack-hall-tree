@@ -8,7 +8,9 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
+// let app = require("../server/index.js");
 
 import HelloWorld from "./components/hello";
+const test = "toto";
 
-ReactDOM.render(<HelloWorld />, document.querySelector("#app"));
+ReactDOM.render(<HelloWorld name={test} />, document.querySelector("#app"));
