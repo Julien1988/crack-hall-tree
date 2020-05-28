@@ -6,49 +6,59 @@
  * started at 18/05/2020
  */
 
+// UTILE :
+// // "mongodb://dev:dev@mongo:27017/"
+
 import express from "express";
-//import path from "path";
-import mongoose from "mongoose";
+import path from "path";
 //import bodyParser from "body-parser";
 
-mongoose
-    .connect(
-        "mongodb+srv://mwenbwa12345:3mwIHp8j4UTSOM5J@mwenbwa-hde8o.mongodb.net/test?retryWrites=true&w=majority",
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        },
-    )
-    .then(() => console.log("connexion réussie"))
-    .catch(() => console.log("Connexion échouée"));
-
+var MongoClient = require("mongodb").MongoClient;
 const {APP_PORT} = process.env;
 
 const app = express();
-//app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
-// app.use("/test", (req, res, next) => {
-//     const stuff = [
-//         {
-//             _id: "1",
-//             psuedo: "toto",
-//             email: "toto@gmail.com",
-//         },
-//     ];
-//     res.status(200).json(stuff);
+app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
-//     let test = "it's work";
-//     res.send(console.log(test));
-// });
+app.get("/hello", (req, res) => {
+    console.log("tu es dans Hello");
+});
 
-app.get("/", (req, res) => {
-    const test = "hello Test";
-    res.send(test);
-    console.log(test);
+app.get("/index/:param1", (req, res) => {
+    console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
+
+    res.send(req.params);
+});
+
+app.get("/test", (req, res) => {
+    MongoClient.connect("mongodb://dev:dev@mongo:27017/", function (
+        err,
+        mongo,
+    ) {
+        let db = mongo.db("crack-hall-three");
+
+        let collection = db.collection("three");
+
+        let threes = collection.find({
+            //_id: ObjectId("5ece7015b467be4c63b04e4e"),
+            circonf: {$all: [184]},
+        });
+
+        threes.toArray((err, test) => {
+            if (err) {
+                console.log("==> ERROR");
+                res.send(err);
+            } else {
+                // Envoyer les données au format json
+                console.log(test);
+                res.json(test);
+            }
+        });
+
+        mongo.close();
+    });
 });
 
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
-
-module.exports = app;

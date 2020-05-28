@@ -8,9 +8,10 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
-// let app = require("../server/index.js");
 
 import HelloWorld from "./components/hello";
-const test = "toto";
+// let db = require("../../data/db.json");
+// console.log(db[0]);
 
-ReactDOM.render(<HelloWorld name={test} />, document.querySelector("#app"));
+ReactDOM.render(<HelloWorld name="Hello" />, document.querySelector("#app"));
+console.log("coucou");
