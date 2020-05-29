@@ -49,6 +49,13 @@ const nextFunction = myGetArray => {
     };
     // Nettoyage ddes informations en excluant les valeurs null
     const arrById = myGetArray.filter(filter);
+    const arrByIdLength = arrById.length;
+
+    for (let i = 0; i < arrByIdLength; i++) {
+        document.querySelector(
+            "#test",
+        ).innerHTML += `<li> ${arrById[i].nom_complet} </li>`;
+    }
     console.log(arrById);
 };
 
