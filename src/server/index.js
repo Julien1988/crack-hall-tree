@@ -11,13 +11,20 @@
 
 import express from "express";
 import path from "path";
-//import bodyParser from "body-parser";
+import {ServerResponse} from "http";
+import bodyParser from "body-parser";
 
-var MongoClient = require("mongodb").MongoClient;
+const MongoClient = require("mongodb").MongoClient;
+const assert = require("assert");
 const {APP_PORT} = process.env;
 
 const app = express();
 
+// Connection URL :
+const url =
+    "mongodb://dev:dev@mongo:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+// const url = 'mongodb://$[username]:$[password]@$[hostlist]/$[database]?authSource=$[authSource]';
+// mongodb://dev:dev@localhost:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
 app.get("/hello", (req, res) => {
@@ -40,10 +47,8 @@ app.get("/test", (req, res) => {
         let collection = db.collection("three");
 
         let threes = collection.find({
-            //_id: ObjectId("5ece7015b467be4c63b04e4e"),
-            circonf: {$all: [184]},
+            circonf: 184,
         });
-
         threes.toArray((err, test) => {
             if (err) {
                 console.log("==> ERROR");
@@ -57,6 +62,55 @@ app.get("/test", (req, res) => {
 
         mongo.close();
     });
+});
+
+app.get("/test2", (req, res) => {
+    MongoClient.connect("mongodb://dev:dev@mongo:27017/", function (
+        err,
+        mongo,
+    ) {
+        let db = mongo.db("crack-hall-three");
+
+        let collection = db.collection("three");
+
+        let threes = collection.find({
+            circonf: 184,
+        });
+        threes.toArray((err, test) => {
+            if (err) {
+                console.log("==> ERROR");
+                res.send(err);
+            } else {
+                // Envoyer les données au format json
+                console.log(test);
+                res.json(test);
+            }
+        });
+
+        mongo.close();
+    });
+});
+
+app.get("/data", (req, res) => {
+    MongoClient.connect(url, function (err, client) {
+        assert.equal(null, err);
+        const db = client.db("crack-hall-three");
+        let cursor = db.collection("three").find({});
+        cursor.forEach(iterateFunc, errorFunc);
+        client.close();
+    });
+    function iterateFunc(doc) {
+        //console.log(doc);
+
+        console.log(JSON.stringify(doc, null, 4));
+
+        res.json(doc);
+    }
+
+    function errorFunc(error) {
+        console.log("==> ERROR");
+        console.log(error);
+    }
 });
 
 app.listen(APP_PORT, () =>
