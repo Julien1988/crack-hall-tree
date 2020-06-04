@@ -28,7 +28,7 @@ mongoose.connect(uri, options, function (error) {
     // Check error in initial connection. There is no 2nd param to the callback.
     console.log(" !!!! OK  !!!");
 });
-
+let getAllThrees = [];
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
@@ -44,12 +44,68 @@ db.once("open", function () {
         hauteur_totale: Number,
         diametre_cime: Number,
         circonf: Number,
+        player_id: Number,
+        player_color: Number,
+        leave: Number,
+        random_name: String,
+        locked: Boolean,
+        free: Boolean,
     });
 
     let Three = mongoose.model("threes", threeSchema);
+
+    // enregistrement d'un arbre de test
+
+    // ------------------------------------
+
+    // let newThree = new Three({
+    //     nom_complet: "Toto",
+    //     arbotag: 2222,
+    //     geoloc: {
+    //         lat: 50.651528,
+    //         lon: 5.580581,
+    //     },
+    //     hauteur_totale: 10,
+    //     diametre_cime: 10,
+    //     circonf: 10,
+    //     player_id: 9999,
+    //     player_color: 9999,
+    //     leave: 9999,
+    //     random_name: "Great Toto",
+    //     locked: false,
+    //     free: false,
+    // });
+
+    // newThree.save(function (err, newThree) {
+    //     if (err) return console.error(err);
+    // });
+
+    // END
+
+    //modification d'un arbre par ID
+
+    // ------------------------------------
+
+    // const id = "5ed8b8f6b3bbfd00ce18d4c5";
+    // Three.findById(id, function (err, doc) {
+    //     if (err) {
+    //         return console.log(err);
+    //     }
+    //     doc.free = true;
+    //     doc.save();
+    // });
+
+    // END
+
+    // Récupération de l'ensemble des Arbres
+
+    // ------------------------------------
+
     Three.find(function (err, threes) {
         if (err) return console.error(err);
-        console.log(threes);
+        //console.log(threes);
+        getAllThrees = threes;
+        //console.log(getAllThrees);
     });
 });
 
@@ -59,8 +115,9 @@ app.get("/hello", (req, res) => {
     console.log("==> TU ES DANS HELLO");
 });
 
-app.get("/allthrees", (req, res) => {
+app.use("/allthrees", (req, res) => {
     console.log("==> TU ES DANS ALL-THREES");
+    res.json(getAllThrees);
 });
 
 app.listen(APP_PORT, () =>
