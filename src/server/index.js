@@ -11,6 +11,7 @@
 
 import express from "express";
 import path from "path";
+import {nameByRace} from "fantasy-name-generator";
 
 const {APP_PORT} = process.env;
 const mongoose = require("mongoose");
@@ -50,6 +51,8 @@ db.once("open", function () {
         random_name: String,
         locked: Boolean,
         free: Boolean,
+        wikilink: String,
+        comment: String,
     });
 
     let Three = mongoose.model("threes", threeSchema);
@@ -80,10 +83,98 @@ db.once("open", function () {
     //     if (err) return console.error(err);
     // });
 
+    // ------------------------------------
+
+    // NAME GENERATOR :
+    let randomName;
+    let gender;
+    let randomNumber;
+    let randomRaceName;
+    let randomRaceGender;
+    let raceGender;
+    let fantasyName;
+    const raceArrayLength = 17;
+    const raceArray = {
+        0: ["angel", (gender = true)],
+        1: ["cavePerson", (gender = true)],
+        2: ["darkelf", (gender = true)],
+        3: ["demon", (gender = false)],
+        4: ["dragon", (gender = true)],
+        5: ["drow", (gender = true)],
+        6: ["dwarf", (gender = true)],
+        7: ["elf", (gender = true)],
+        8: ["fairy", (gender = true)],
+        9: ["gnome", (gender = true)],
+        10: ["goblin", (gender = false)],
+        11: ["halfdemon", (gender = true)],
+        12: ["halfling", (gender = true)],
+        13: ["highelf", (gender = true)],
+        14: ["highfairy", (gender = true)],
+        15: ["ogre", (gender = false)],
+        16: ["orc", (gender = false)],
+    };
+
+    const fantasyNameGenerator = (randomNumber) => {
+        randomRaceName = raceArray[randomNumber][0];
+        randomRaceGender = raceArray[randomNumber][1];
+        raceGender = randomNumber % 2;
+        // console.log(randomRaceName);
+        // console.log(randomRaceGender);
+        // console.log(raceGender);
+
+        if (randomRaceGender == true) {
+            if (raceGender == 0) {
+                fantasyName = nameByRace(randomRaceName, {
+                    gender: "female",
+                });
+            } else {
+                fantasyName = nameByRace(randomRaceName, {
+                    gender: "male",
+                });
+            }
+        } else {
+            fantasyName = nameByRace(randomRaceName);
+        }
+        console.log(fantasyName);
+    };
+
+    const getRandomInt = (max) => {
+        randomNumber = Math.floor(Math.random() * Math.floor(max));
+        //console.log(randomNumber);
+        fantasyNameGenerator(randomNumber);
+    };
+
+    const nameGenerator = () => {
+        getRandomInt(raceArrayLength);
+    };
+
+    //nameGenerator();
+
     // END
 
     //modification d'un arbre par ID
 
+    // ------------------------------------
+    // ------------------------------------
+
+    // const test = () => {
+    //     getAllThrees.forEach((element) => {
+    //         //console.log(randomName);
+
+    //         let id = element._id;
+
+    //         Three.findById(id, function (err, doc) {
+    //             nameGenerator();
+    //             if (err) {
+    //                 return console.log(err);
+    //             }
+    //             doc.random_name = fantasyName;
+    //             doc.save();
+    //         });
+    //     });
+    // };
+
+    // ------------------------------------
     // ------------------------------------
 
     // const id = "5ed8b8f6b3bbfd00ce18d4c5";
@@ -91,9 +182,11 @@ db.once("open", function () {
     //     if (err) {
     //         return console.log(err);
     //     }
-    //     doc.free = true;
+    //     doc.leaves = true;
     //     doc.save();
     // });
+
+    // ------------------------------------
 
     // END
 
@@ -103,11 +196,14 @@ db.once("open", function () {
 
     Three.find(function (err, threes) {
         if (err) return console.error(err);
-        //console.log(threes);
+
         getAllThrees = threes;
-        //console.log(getAllThrees);
+
+        //test();
     });
 });
+
+// ------------------------------------
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
