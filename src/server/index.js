@@ -15,7 +15,7 @@ import {nameByRace} from "fantasy-name-generator";
 
 const {APP_PORT} = process.env;
 const mongoose = require("mongoose");
-
+const axios = require("axios");
 const app = express();
 const uri = "mongodb://mongo:27017/";
 const options = {
@@ -85,94 +85,29 @@ db.once("open", function () {
 
     // ------------------------------------
 
-    // NAME GENERATOR :
-    let randomName;
-    let gender;
-    let randomNumber;
-    let randomRaceName;
-    let randomRaceGender;
-    let raceGender;
-    let fantasyName;
-    const raceArrayLength = 17;
-    const raceArray = {
-        0: ["angel", (gender = true)],
-        1: ["cavePerson", (gender = true)],
-        2: ["darkelf", (gender = true)],
-        3: ["demon", (gender = false)],
-        4: ["dragon", (gender = true)],
-        5: ["drow", (gender = true)],
-        6: ["dwarf", (gender = true)],
-        7: ["elf", (gender = true)],
-        8: ["fairy", (gender = true)],
-        9: ["gnome", (gender = true)],
-        10: ["goblin", (gender = false)],
-        11: ["halfdemon", (gender = true)],
-        12: ["halfling", (gender = true)],
-        13: ["highelf", (gender = true)],
-        14: ["highfairy", (gender = true)],
-        15: ["ogre", (gender = false)],
-        16: ["orc", (gender = false)],
-    };
-
-    const fantasyNameGenerator = (randomNumber) => {
-        randomRaceName = raceArray[randomNumber][0];
-        randomRaceGender = raceArray[randomNumber][1];
-        raceGender = randomNumber % 2;
-        // console.log(randomRaceName);
-        // console.log(randomRaceGender);
-        // console.log(raceGender);
-
-        if (randomRaceGender == true) {
-            if (raceGender == 0) {
-                fantasyName = nameByRace(randomRaceName, {
-                    gender: "female",
-                });
-            } else {
-                fantasyName = nameByRace(randomRaceName, {
-                    gender: "male",
-                });
-            }
-        } else {
-            fantasyName = nameByRace(randomRaceName);
-        }
-        console.log(fantasyName);
-    };
-
-    const getRandomInt = (max) => {
-        randomNumber = Math.floor(Math.random() * Math.floor(max));
-        //console.log(randomNumber);
-        fantasyNameGenerator(randomNumber);
-    };
-
-    const nameGenerator = () => {
-        getRandomInt(raceArrayLength);
-    };
-
-    //nameGenerator();
-
-    // END
-
     //modification d'un arbre par ID
 
     // ------------------------------------
     // ------------------------------------
 
-    // const test = () => {
-    //     getAllThrees.forEach((element) => {
-    //         //console.log(randomName);
+    const test = () => {
+        getAllThrees.forEach((element) => {
+            //console.log(randomName);
 
-    //         let id = element._id;
+            let id = element._id;
 
-    //         Three.findById(id, function (err, doc) {
-    //             nameGenerator();
-    //             if (err) {
-    //                 return console.log(err);
-    //             }
-    //             doc.random_name = fantasyName;
-    //             doc.save();
-    //         });
-    //     });
-    // };
+            Three.findById(id, function (err, doc) {
+                //nameGenerator();
+                if (err) {
+                    return console.log(err);
+                }
+                // wikiUrl(element);
+                doc.wikilink = wikiUrlVar;
+                //console.log(wikiUrl);
+                doc.save();
+            });
+        });
+    };
 
     // ------------------------------------
     // ------------------------------------
@@ -190,6 +125,40 @@ db.once("open", function () {
 
     // END
 
+    // ------------------------------------
+    // ------------------------------------
+
+    // Mondifcation des liens pour pointer vers wikipedia
+
+    // let newUrl;
+    // let wordConc;
+    // let treeName;
+    // let words;
+    // let wordsArrayLength;
+    // let wikiUrlVar;
+
+    // const nextStep = () => {
+    //     wikiUrlVar = "https://fr.wikipedia.org/wiki/" + wordConc;
+
+    // };
+
+    // const wikiUrl = (tree) => {
+
+    //     treeName = tree.nom_complet;
+    //     words = treeName.split(" ");
+    //     wordsArrayLength = words.length;
+    //     wordConc = words[0] + "_";
+    //     for (let i = 1; i < wordsArrayLength; i++) {
+    //         if (i < wordsArrayLength - 1) {
+    //             wordConc += words[i] + "_";
+    //         } else {
+    //             wordConc += words[i];
+    //             nextStep();
+    //         }
+
+    //     }
+    // };
+
     // Récupération de l'ensemble des Arbres
 
     // ------------------------------------
@@ -198,10 +167,43 @@ db.once("open", function () {
         if (err) return console.error(err);
 
         getAllThrees = threes;
-
+        //wikiUrl();
         //test();
     });
 });
+
+// ------------------------------------
+// ------------------------------------
+
+// Api wikipedia
+
+// app.use("/wikiapi/:treeName", (req, res) => {
+//     let wikiUrl;
+//     console.log("==> TU ES DANS WIKIAPI");
+//     const nextStep = () => {
+//         console.log(wordConc);
+//         wikiUrl = "https://fr.wikipedia.org/wiki/" + wordConc;
+//         console.log(wikiUrl);
+//     };
+
+//     let treeName = req.params.treeName;
+//     let words = treeName.split(" ");
+//     let wordsArrayLength = words.length;
+//     let wordConc = words[0] + "_";
+//     for (let i = 1; i < wordsArrayLength; i++) {
+//         if (i < wordsArrayLength - 1) {
+//             wordConc += words[i] + "_";
+//         } else {
+//             wordConc += words[i];
+//             nextStep();
+//         }
+
+//         //console.log(wordConc);
+//     }
+
+// });
+
+// END
 
 // ------------------------------------
 
