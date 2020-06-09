@@ -137,3 +137,97 @@ The project **have** to be online the **26/06/2020 16H59**.
 We are expecting an e-mail for each group with a link to the repository and a link to the application in production.
 
 Have fun and good work.
+sudo service apache2 stop  
+sudo lsof -i tcp:80 
+sudo kill -9 1080                           
+
+ module: {
+            rules: [
+                {
+                    test: /\.(png|jpg|gif)$/,
+                    use: [
+                        {
+                            loader: "file-loader",
+                            options: {
+                                name: "[path][name].[ext]",
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.js$/,
+                    exclude: [/node_modules/],
+                    use: [
+                        {
+                            loader: "babel-loader",
+                            options: {
+                                cacheDirectory: env === "development",
+                                presets: [
+                                    "@babel/preset-env",
+                                    "@babel/preset-react",
+                                ],
+                                plugins: [
+                                    [
+                                        "@babel/plugin-proposal-decorators",
+                                        {
+                                            legacy: true,
+                                        },
+                                    ],
+                                    "@babel/plugin-proposal-object-rest-spread",
+                                    [
+                                        "@babel/plugin-proposal-class-properties",
+                                        {
+                                            loose: true,
+                                        },
+                                    ],
+                                ],
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.css$/i,
+                    //use: ["style-loader", "css-loader"],
+                    use: [
+                        "style-loader",
+                        {
+                            loader: "css-loader",
+                            options: {
+                                // Run postcss-loader on each CSS @import, do not forget that sass-loader compile non CSS @import's into a single file
+                                // If you need run sass-loader and postcss-loader on each CSS @import please set it to 2
+                                importLoaders: 1,
+                                // Automatically enable css modules for files satisfying /\.module\.\w+$/i RegExp.
+                                modules: {auto: true},
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.(png|svg|jpg|gif)$/,
+                    use: [
+                        {
+                            loader: "file-loader",
+                            options: {
+                                name: "img/[name]_[hash:7].[ext]",
+                            },
+                        },
+                    ],
+                },
+                /* {
+                    test: /\.scss$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: "css-loader",
+                        },
+                        {
+                            loader: "sass-loader",
+                            options: {
+                                sourceMap: true,
+                                // options...
+                            },
+                        },
+                    ],
+                }, */
+            ],
+        },
