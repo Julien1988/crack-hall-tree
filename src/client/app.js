@@ -13,7 +13,7 @@ import HelloWorld from "./components/hello";
 import Map from "./components/map";
 import "./style/map.scss";
 
-ReactDOM.render(<HelloWorld name={"Hello"} />, document.querySelector("#app"));
+//ReactDOM.render(<HelloWorld name={"Hello"} />, document.querySelector("#app"));
 ReactDOM.render(Map, document.querySelector("#mapid"));
 
 const myHeaders = new Headers();
