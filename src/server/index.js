@@ -71,7 +71,7 @@ app.get("/hello", (req, res) => {
     console.log("==> TU ES DANS HELLO");
 });
 
-app.use("/allthrees", (req, res) => {
+app.get("/allthrees", (req, res) => {
     console.log("==> TU ES DANS ALL-THREES");
     res.json(getAllThrees);
 });

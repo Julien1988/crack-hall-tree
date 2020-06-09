@@ -8,7 +8,7 @@
 
 import * as React from "react";
 
-const HelloWorld = props => (
+const HelloWorld = (props) => (
     <div>
         <h1>{props.name}</h1>
         <hr />
