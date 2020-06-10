@@ -1,13 +1,13 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-use-before-define */
 const expressJwt = require("express-jwt");
-//const config = require("config");
+//const config = require("./config.json");
 const userService = require("../users/user.service");
 
 module.exports = jwt;
-const secret =
-    "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 function jwt() {
+    const secret =
+        "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
     return expressJwt({secret, isRevoked}).unless({
         path: [
             // public routes that don"t require authentication

@@ -9,7 +9,7 @@ const connectionOptions = {
 };
 //mongoose.connect(process.env.MONGODB_URI || config.connectionString, connectionOptions);//connexion locale required config.json
 const uri =
-    "mongodb+srv://dbUser:dYhU1vxb81ZX9yyT@bertholdmongodb-ztfz0.mongodb.net/crakehall?retryWrites=true&w=majority";
+    "mongodb+srv://dbUser:dYhU1vxb81ZX9yyT@bertholdmongodb-ztfz0.mongodb.net/crakehalltrees?retryWrites=true&w=majority";
 mongoose.connect(uri, connectionOptions);
 mongoose.Promise = global.Promise;
 //
