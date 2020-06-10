@@ -6,12 +6,23 @@
  */
 
 import * as React from "react";
-import "../routing";
 
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
+import MakerTools from "./tools/marker";
 
 const position = [51.505, -0.09];
 const myGetArray = [];
+let treeSlectorVar = [];
+const test = [
+    [51.505, -0.09],
+    [51.506, -0.09],
+    [51.507, -0.09],
+];
+// console.log(test);
+// test.map((item) => {
+//     console.log(item[0], item[1]);
+// });
+
 const App = () => {
     fetch("/allthrees").then((response) => {
         response.json().then((json) => {
@@ -19,7 +30,8 @@ const App = () => {
             json.forEach((element) => {
                 myGetArray.push(element);
             });
-            console.log(myGetArray);
+            //console.log(myGetArray);
+            //treeSlectorVar.push(myGetArray);
         });
     });
     return (
@@ -28,15 +40,25 @@ const App = () => {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
-            <Marker position={position}>
-                <Popup>
-                    A pretty CSS3 popup.
-                    <br />
-                    Easily customizable.
-                </Popup>
-            </Marker>
+            <React.Fragment>
+                {test.map((item) => (
+                    <MakerTools position={[item[0], item[1]]} />
+                ))}
+            </React.Fragment>
         </Map>
     );
 };
 
 export default App;
+
+// return (
+//     <Map center={position} zoom={16}>
+
+//         <TileLayer
+//             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+//         />
+//         <MakerTools position={position} />
+//         {/* <MakerTools position={[51.506, -0.09]} /> */}
+//     </Map>
+// );

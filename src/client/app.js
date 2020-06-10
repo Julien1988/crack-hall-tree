@@ -10,7 +10,7 @@ import * as React from "react";
 import ReactDOM from "react-dom";
 
 import Map from "./components/map";
-import "./routing";
+
 import "./style/map.scss";
 
 ReactDOM.render(<Map />, document.querySelector("#mapid"));
