@@ -56,9 +56,11 @@ const App = () => {
                     <React.Fragment>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
-                                A pretty CSS3 popup.
+                                Nom de l'arbre: {item.random_name}
                                 <br />
-                                Easily customizable.
+                                Nombre de feuilles : {item.leave}
+                                <br /> lat: {item.geoloc.lat} long:
+                                {item.geoloc.lon}
                             </Popup>
                         </Marker>
                     </React.Fragment>
