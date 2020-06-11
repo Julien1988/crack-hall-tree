@@ -5,14 +5,14 @@
  
  */
 
-import * as React from "react";
+import React, {useState, useCallback, useEffect} from "react";
 
 import {Map, TileLayer, Marker, Popup} from "react-leaflet";
-import MakerTools from "./tools/marker";
+//import MakerTools from "./tools/marker";
 
-const position = [51.505, -0.09];
+const position = [50.65156, 5.5806785];
 const myGetArray = [];
-let treeSlectorVar = [];
+const treeSlectorVar = [];
 const test = [
     [51.505, -0.09],
     [51.506, -0.09],
@@ -24,41 +24,113 @@ const test = [
 // });
 
 const App = () => {
-    fetch("/allthrees").then((response) => {
-        response.json().then((json) => {
-            // traitement du JSON
-            json.forEach((element) => {
-                myGetArray.push(element);
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch("/allthrees").then((response) => {
+            response.json().then((json) => {
+                // traitement du JSON
+                json.forEach((element) => {
+                    myGetArray.push(element);
+                    //console.log(element);
+                });
+                // setData(myGetArray[0]);
+                for (let i = 1; i < 20; i++) {
+                    treeSlectorVar.push(myGetArray[i]);
+                }
+                setData(treeSlectorVar);
+
+                // data.map((element) => {
+                //     // console.log(element);
+                // });
+                console.log(data);
             });
-            //console.log(myGetArray);
-            //treeSlectorVar.push(myGetArray);
         });
     });
+
     return (
-        <Map center={position} zoom={16}>
+        <Map center={position} zoom={20}>
             <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             />
-            <React.Fragment>
-                {test.map((item) => (
-                    <MakerTools position={[item[0], item[1]]} />
-                ))}
-            </React.Fragment>
+            {data.map((item) => (
+                <React.Fragment>
+                    <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
+                        <Popup>
+                            A pretty CSS3 popup.
+                            <br />
+                            Easily customizable.
+                        </Popup>
+                    </Marker>
+                </React.Fragment>
+            ))}
         </Map>
     );
 };
 
 export default App;
 
-// return (
-//     <Map center={position} zoom={16}>
+// SAVE
 
-//         <TileLayer
-//             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//         />
-//         <MakerTools position={position} />
-//         {/* <MakerTools position={[51.506, -0.09]} /> */}
-//     </Map>
-// );
+// import React, {useState, useCallback, useEffect} from "react";
+
+// import {Map, TileLayer, Marker, Popup} from "react-leaflet";
+// //import MakerTools from "./tools/marker";
+
+// const position = [51.505, -0.09];
+// const myGetArray = [];
+// const treeSlectorVar = [];
+// const test = [
+//     [51.505, -0.09],
+//     [51.506, -0.09],
+//     [51.507, -0.09],
+// ];
+// // console.log(test);
+// // test.map((item) => {
+// //     console.log(item[0], item[1]);
+// // });
+
+// const App = () => {
+//     const [data, setData] = useState([null]);
+//     useEffect(() => {
+//         fetch("/allthrees").then((response) => {
+//             response.json().then((json) => {
+//                 // traitement du JSON
+//                 json.forEach((element) => {
+//                     myGetArray.push(element);
+//                     //console.log(element);
+//                 });
+//                 // setData(myGetArray[0]);
+//                 for (let i = 1; i < 20; i++) {
+//                     treeSlectorVar.push(myGetArray[i]);
+//                 }
+//                 setData(treeSlectorVar);
+//                 //console.log(data);
+//                 data.map((element) => {
+//                     console.log(element);
+//                 });
+//             });
+//         });
+//     });
+//     return (
+//         <Map center={position} zoom={16}>
+//             <TileLayer
+//                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+//             />
+//             {test.map((item) => (
+//                 <React.Fragment>
+//                     <Marker position={[item[0], item[1]]}>
+//                         <Popup>
+//                             A pretty CSS3 popup.
+//                             <br />
+//                             Easily customizable.
+//                         </Popup>
+//                     </Marker>
+//                 </React.Fragment>
+//             ))}
+//         </Map>
+//     );
+// };
+
+// export default App;
