@@ -65,12 +65,46 @@ db.once("open", function () {
 // ------------------------------------
 // ------------------------------------
 
+// -- CODE DE DISTRIBUITIONS DES ARBRES --
+
+let getTreesId = [];
+
+const dbModifie = (data) => {
+    //console.log(data);
+    data.forEach((element) => {
+        console.log(element);
+        let id = element;
+        // __
+        // __
+        // ---- DECOMMENTER QUAND LA FONCTION SERA PRETE ----
+        // __
+        // __
+        // Three.findById(id, function (err, doc) {
+        //     if (err) {
+        //         return console.log(err);
+        //     }
+
+        //     //doc.player_id = "AJOUTER L'ID DU JOUEUR";
+        //     //doc.player_color = "AJOUTER LA COULEUR DU JOUEUR";
+        //     //doc.free = false;
+        //     // doc.save();
+        // });
+    });
+};
+
 // Attribution des 3 arbres
 
 const getFreeTree = (newUserThreeIndex) => {
-    console.log(findUserTree[newUserThreeIndex[0]]._id);
-    console.log(findUserTree[newUserThreeIndex[1]]._id);
-    console.log(findUserTree[newUserThreeIndex[2]]._id);
+    getTreesId = [];
+
+    for (let i = 0; i < 3; i++) {
+        getTreesId.push(findUserTree[newUserThreeIndex[i]]._id);
+    }
+    // console.log(findUserTree[newUserThreeIndex[0]]._id);
+    // console.log(findUserTree[newUserThreeIndex[1]]._id);
+    // console.log(findUserTree[newUserThreeIndex[2]]._id);
+    //console.log(getTreesId);
+    dbModifie(getTreesId);
 };
 
 // Algo pour la distribution des arbres des nouveaux joueurs:
@@ -110,6 +144,8 @@ const newUserTree = () => {
         return console.log("Il n'y a plus d'arbes disponnible");
     }
 };
+
+// -- FIN -- CODE DE DISTRIBUITIONS DES ARBRES --
 
 // ------------------------------------
 // ------------------------------------
