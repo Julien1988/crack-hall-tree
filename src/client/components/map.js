@@ -7,7 +7,7 @@
 
 import React, {useState, useCallback, useEffect} from "react";
 
-import {Map, TileLayer, Marker, Popup} from "react-leaflet";
+import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
 //import MakerTools from "./tools/marker";
 
 const position = [50.65156, 5.5806785];
@@ -53,7 +53,7 @@ const App = () => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
-
+                <Circle center={[50.65156, 5.5806785]} radius={100} />
                 {data.map((item) => (
                     <React.Fragment>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
