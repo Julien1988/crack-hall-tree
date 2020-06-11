@@ -59,6 +59,7 @@ const App = () => {
                                 Nom de l'arbre: {item.random_name}
                                 <br />
                                 Nombre de feuilles : {item.leave}
+                                <br /> <a href={item.wikilink}> Lien wiki</a>
                                 <br /> lat: {item.geoloc.lat} long:
                                 {item.geoloc.lon}
                             </Popup>
