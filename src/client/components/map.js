@@ -8,7 +8,6 @@
 import React, {useState, useCallback, useEffect} from "react";
 
 import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
-//import MakerTools from "./tools/marker";
 
 const position = [50.65156, 5.5806785];
 const myGetArray = [];
