@@ -52,7 +52,7 @@ const App = () => {
                 />
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
                 {data.map((item) => (
-                    <React.Fragment>
+                    <React.Fragment key={item.arbotag}>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
                                 Nom de l'arbre: {item.random_name}
