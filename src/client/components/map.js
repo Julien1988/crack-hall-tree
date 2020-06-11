@@ -46,26 +46,37 @@ const App = () => {
             });
         });
     });
+    if (data.length > 0) {
+        return (
+            <Map center={position} zoom={13}>
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                />
 
-    return (
-        <Map center={position} zoom={13}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-            {data.map((item) => (
-                <React.Fragment>
-                    <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
-                        <Popup>
-                            A pretty CSS3 popup.
-                            <br />
-                            Easily customizable.
-                        </Popup>
-                    </Marker>
-                </React.Fragment>
-            ))}
-        </Map>
-    );
+                {data.map((item) => (
+                    <React.Fragment>
+                        <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
+                            <Popup>
+                                A pretty CSS3 popup.
+                                <br />
+                                Easily customizable.
+                            </Popup>
+                        </Marker>
+                    </React.Fragment>
+                ))}
+            </Map>
+        );
+    } else {
+        return (
+            <Map center={position} zoom={10}>
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                />
+            </Map>
+        );
+    }
 };
 
 export default App;
