@@ -55,6 +55,19 @@ const App = () => {
                 // ----------------------------------------------------
                 // ----------------------------------------------------
 
+                // ----------------------------------------------------
+                // ----------------------------------------------------
+
+                // Envois vers le back
+
+                const getTreeIdServer = (data) => {
+                    fetch("/tree/" + data).then((response) => {
+                        //console.log(data);
+                    });
+                };
+
+                // getTreeIdServer(freeTreeInCercle[0]);
+
                 // Vérification de la présence des arbres dans un rayon définis
 
                 const center = {lat: position[0], lon: position[1]};
@@ -91,6 +104,9 @@ const App = () => {
                     numberOfFreeTreeInCercle = freeTreeInCercle.length;
                     numberOfNotFreeTreeInCercle = notFreeTreeInCercle.length;
 
+                    // envois vers le back
+                    getTreeIdServer(freeTreeInCercle);
+
                     // console.log(freeTreeInCercle);
                     // console.log(notFreeTreeInCercle);
                     // console.log(numberOfFreeTreeInCercle);
@@ -115,16 +131,10 @@ const App = () => {
                 };
 
                 isInRadiusLoop(data);
-                //console.log(data);
+                console.log(data);
 
-                // ----------------------------------------------------
-                // ----------------------------------------------------
-                const test = (data) => {
-                    fetch("/tree/:" + data).then((response) => {
-                        console.log(response);
-                    });
-                };
-                test("Il est en viiiiiiie ");
+                // // ----------------------------------------------------
+                // // ----------------------------------------------------
             });
         });
     });
