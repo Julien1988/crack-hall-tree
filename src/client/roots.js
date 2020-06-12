@@ -9,7 +9,7 @@ import "./components/scss/roots.scss";
 export default class RootComponent extends React.Component {
     render() {
         return (
-            <div className={"bom"}>
+            <div>
                 <HomeConnect />
                 {/* <Leaflet /> */}
             </div>
