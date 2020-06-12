@@ -13,6 +13,8 @@ export default class Logup extends React.Component {
         this.onChangeColor = this.onChangeColor.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        //this.onChangeUserCreated = this.onChangeUserCreated.bind(this);
+        //this.onChangeUserMessage = this.onChangeUserMessage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -20,6 +22,8 @@ export default class Logup extends React.Component {
             color: "",
             email: "",
             password: "",
+            userCreated: "",
+            message: "",
         };
     }
     onChangePseudo(e) {
@@ -42,7 +46,6 @@ export default class Logup extends React.Component {
             password: e.target.value,
         });
     }
-
     onSubmit(e) {
         e.preventDefault();
 
@@ -60,20 +63,10 @@ export default class Logup extends React.Component {
             .then(res => console.log(res.data))
             .catch(erreur => {
                 console.warn(`Error${erreur.response.data.message}`);
-                //this.messsageError = erreur.response.data.message;
             });
-        console.warn(user.pseudo);
-        //recharge la page pour entrer un nouveau user
-        /* this.setState({
-            pseudo: "",
-            color: "",
-            email: "",
-            password: "",
-        }); */
-        //sinon redirection profil à créer
-        //window.location = "/";
+        //sinon redirection
+        window.location = "/";
     }
-
     render() {
         return (
             <div>

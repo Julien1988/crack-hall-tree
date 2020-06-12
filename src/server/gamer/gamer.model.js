@@ -3,9 +3,12 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     pseudo: {type: String, unique: true, required: true},
-    hash: {type: String, required: true},
-    email: {type: String, required: true},
-    color: {type: String, required: true},
+    lock: {type: Boolean},
+    score: {type: Number},
+    threename: {type: String},
+    color: {type: String},
+    wikilink: {type: String},
+    comment: {type: String},
     createdDate: {type: Date, default: Date.now},
 });
 
@@ -18,4 +21,4 @@ schema.set("toJSON", {
     },
 });
 
-module.exports = mongoose.model("User", schema);
+module.exports = mongoose.model("Gamer", schema);

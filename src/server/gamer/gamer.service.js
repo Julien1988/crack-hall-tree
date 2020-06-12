@@ -1,20 +1,21 @@
-﻿/* eslint-disable no-use-before-define */
+﻿/* eslint-disable no-shadow */
+/* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-extra-parens */
 /* eslint-disable require-atomic-updates */
 /* eslint-disable no-sync */
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-return-await */
-//const config = require("config.json");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const db = require("../_helpers/db");
-const User = db.User;
-const secret =
-    "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 
+//const config = require("config.json");
+//const jwt = require("jsonwebtoken");
+//const bcrypt = require("bcryptjs");
+const db = require("../_helpers/db");
+const Gamer = db.Gamer;
+/* const secret =
+    "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
+ */
 module.exports = {
-    authenticate,
     getAll,
     getById,
     create,
@@ -22,67 +23,67 @@ module.exports = {
     delete: _delete,
 };
 
-async function authenticate({pseudo, password}) {
-    const user = await User.findOne({pseudo});
-    if (user && bcrypt.compareSync(password, user.hash)) {
-        const token = jwt.sign({sub: user.id}, secret);
+/* async function authenticate({pseudo, password}) {
+    const Gamer = await Gamer.findOne({pseudo});
+    if (Gamer && bcrypt.compareSync(password, Gamer.hash)) {
+        const token = jwt.sign({sub: Gamer.id}, secret);
         return {
-            ...user.toJSON(),
+            ...Gamer.toJSON(),
             token,
         };
     }
-}
+} */
 
 async function getAll() {
-    return await User.find();
+    return await Gamer.find();
 }
 
 async function getById(id) {
-    return await User.findById(id);
+    return await Gamer.findById(id);
 }
 
-async function create(userParam) {
+async function create(GamerParam) {
     // validate
-    if (await User.findOne({pseudo: userParam.pseudo})) {
-        throw `pseudo "${userParam.pseudo}" is already taken`;
-    }
+    /* if (await Gamer.findOne({pseudo: GamerParam.pseudo})) {
+        throw `pseudo "${GamerParam.pseudo}" is already taken`;
+    } */
 
-    const user = new User(userParam);
+    const gamer = new Gamer(GamerParam);
 
-    // hash password
-    if (userParam.password) {
-        user.hash = bcrypt.hashSync(userParam.password, 10);
-    }
+    // hash password don't need to log
+    /* if (GamerParam.password) {
+        Gamer.hash = bcrypt.hashSync(GamerParam.password, 10);
+    } */
 
-    // save user
-    await user.save();
+    // save Gamer
+    await gamer.save();
 }
 
-async function update(id, userParam) {
-    const user = await User.findById(id);
+async function update(id, GamerParam) {
+    const gamer = await Gamer.findById(id);
 
     // validate
-    if (!user) {
-        throw "User not found";
+    if (!Gamer) {
+        throw "Gamer not found";
     }
     if (
-        user.pseudo !== userParam.pseudo &&
-        (await User.findOne({pseudo: userParam.pseudo}))
+        Gamer.pseudo !== GamerParam.pseudo &&
+        (await Gamer.findOne({pseudo: GamerParam.pseudo}))
     ) {
-        throw `pseudo "${userParam.pseudo}" is already taken`;
+        throw `pseudo "${GamerParam.pseudo}" is already taken`;
     }
 
-    // hash password if it was entered
-    if (userParam.password) {
-        userParam.hash = bcrypt.hashSync(userParam.password, 10);
-    }
+    // hash password if it was entered dont need to log
+    /* if (GamerParam.password) {
+        GamerParam.hash = bcrypt.hashSync(GamerParam.password, 10);
+    } */
 
-    // copy userParam properties to user
-    Object.assign(user, userParam);
+    // copy GamerParam properties to Gamer
+    Object.assign(gamer, GamerParam);
 
-    await user.save();
+    await gamer.save();
 }
 
 async function _delete(id) {
-    await User.findByIdAndRemove(id);
+    await Gamer.findByIdAndRemove(id);
 }

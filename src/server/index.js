@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 /* eslint-disable prefer-arrow-callback */
@@ -20,6 +22,11 @@ app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 app.use(jwt());
 // / api routes
 app.use("/users", require("./users/users.controller"));
+app.use("/gamer", require("./gamer/gamer.controller"));
+
+app.get("/algo", (req, res) => {
+    res.send(res.data);
+});
 
 // global error handler
 app.use(errorHandler);

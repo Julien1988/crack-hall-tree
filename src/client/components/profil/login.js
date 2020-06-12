@@ -46,7 +46,7 @@ export default class Login extends React.Component {
                 console.warn(`Error${erreur.response.data.message}`);
                 //this.messsageError = erreur.response.data.message;
             });
-        console.warn(user);
+        console.warn(user.pseudo);
         //recharge la page pour entrer un nouveau user
         /* this.setState({
             pseudo: "",
