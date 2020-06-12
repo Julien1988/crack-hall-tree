@@ -8,24 +8,26 @@
 import React, {useState, useCallback, useEffect} from "react";
 
 import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
+import {
+    toLatLon,
+    toLatitudeLongitude,
+    headingDistanceTo,
+    moveTo,
+    insidePolygon,
+    insideCircle,
+} from "geolocation-utils";
 
 const position = [50.65156, 5.5806785];
 const myGetArray = [];
 const treeSlectorVar = [];
-const test = [
-    [51.505, -0.09],
-    [51.506, -0.09],
-    [51.507, -0.09],
-];
-// console.log(test);
-// test.map((item) => {
-//     console.log(item[0], item[1]);
-// });
+// Var temporaire
+let myGetArrayLength = 20;
 
 const App = () => {
     const [data, setData] = useState([]);
     const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
     const [radiusGeoloc, setRadiusGeoloc] = useState(100);
+
     useEffect(() => {
         fetch("/allthrees").then((response) => {
             response.json().then((json) => {
@@ -34,15 +36,39 @@ const App = () => {
                     myGetArray.push(element);
                 });
 
-                for (let i = 1; i < 20; i++) {
+                for (let i = 1; i < myGetArrayLength; i++) {
+                    if (myGetArray[i].comment == null) {
+                        myGetArray[i].comment = "Pas de commentaire";
+
+                        treeSlectorVar.push(myGetArray[i]);
+                    }
                     treeSlectorVar.push(myGetArray[i]);
                 }
                 setData(treeSlectorVar);
 
-                console.log(data);
+                //console.log(data);
             });
         });
     });
+    // ----------------------------------------------------
+    // ----------------------------------------------------
+
+    // Vérification de la présence des arbres dans un rayon définis
+
+    const center = {lat: position[0], lon: position[1]};
+    console.log(center);
+    const radius = radiusGeoloc;
+    let isInRadius = insideCircle(
+        {lat: 50.651627, lon: 5.581035},
+        center,
+        radius,
+    );
+    console.log(isInRadius);
+    insideCircle({lat: 50.651627, lon: 5.581035}, center, radius);
+
+    // ----------------------------------------------------
+    // ----------------------------------------------------
+
     if (data.length > 0) {
         return (
             <Map center={position} zoom={13}>
@@ -52,13 +78,14 @@ const App = () => {
                 />
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
                 {data.map((item) => (
-                    <React.Fragment key={item.arbotag}>
+                    <React.Fragment>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
                                 Nom de l'arbre: {item.random_name}
                                 <br />
                                 Nombre de feuilles : {item.leave}
                                 <br /> <a href={item.wikilink}> Lien wiki</a>
+                                <br /> Commentaire : {item.comment}
                                 <br /> lat: {item.geoloc.lat} long:
                                 {item.geoloc.lon}
                             </Popup>
