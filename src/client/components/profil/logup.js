@@ -115,6 +115,11 @@ export default class Logup extends React.Component {
                             <option>{"green"}</option>
                             <option>{"dark"}</option>
                             <option>{"grey"}</option>
+                            <option>{"brown"}</option>
+                            <option>{"orange"}</option>
+                            <option>{"pink"}</option>
+                            <option>{"purple"}</option>
+                            <option>{"white"}</option>
                         </Form.Control>
                     </Form.Group>
                     {/* <Form.Group controlId={"formBasicCheckbox"}>

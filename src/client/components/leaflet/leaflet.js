@@ -4,7 +4,7 @@
 // @flow
 import * as React from "react";
 import "leaflet/dist/leaflet.css";
-import "./leaflet.css";
+import "./leaflet.scss";
 import L from "leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "react-leaflet-markercluster/dist/styles.min.css";

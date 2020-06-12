@@ -14,9 +14,13 @@ const Button = ({label, title, disabled = false, onClick}) => (
     <button
         onClick={onClick}
         disabled={disabled}
-        className={["button", "is-primary", "is-medium", "is-fullwidth"].join(
-            " ",
-        )}
+        className={[
+            "button",
+            "is-success",
+            "is-outlined",
+            "is-small",
+            "is-fullwidth",
+        ].join(" ")}
         type={"button"}
         title={title || label}>
         {label}

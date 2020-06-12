@@ -10,7 +10,6 @@
 const webpack = require("webpack");
 const {resolve} = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = env => {
     const plugins = [
@@ -73,6 +72,14 @@ module.exports = env => {
                     ],
                 },
                 {
+                    test: /\.css$/,
+                    use: ["style-loader", "css-loader"],
+                },
+                {
+                    test: /\.scss$/,
+                    use: ["style-loader", "css-loader", "sass-loader"],
+                },
+                {
                     test: /\.js$/,
                     exclude: [/node_modules/],
                     use: [
@@ -99,50 +106,6 @@ module.exports = env => {
                                         },
                                     ],
                                 ],
-                            },
-                        },
-                    ],
-                },
-                {
-                    test: /\.css$/i,
-                    //use: ["style-loader", "css-loader"],
-                    use: [
-                        "style-loader",
-                        {
-                            loader: "css-loader",
-                            options: {
-                                // Run postcss-loader on each CSS @import, do not forget that sass-loader compile non CSS @import's into a single file
-                                // If you need run sass-loader and postcss-loader on each CSS @import please set it to 2
-                                importLoaders: 1,
-                                // Automatically enable css modules for files satisfying /\.module\.\w+$/i RegExp.
-                                modules: {auto: true},
-                            },
-                        },
-                    ],
-                },
-                {
-                    test: /\.(png|svg|jpg|gif)$/,
-                    use: [
-                        {
-                            loader: "file-loader",
-                            options: {
-                                name: "img/[name]_[hash:7].[ext]",
-                            },
-                        },
-                    ],
-                },
-                {
-                    test: /\.scss$/,
-                    use: [
-                        MiniCssExtractPlugin.loader,
-                        {
-                            loader: "css-loader",
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: true,
-                                // options...
                             },
                         },
                     ],
