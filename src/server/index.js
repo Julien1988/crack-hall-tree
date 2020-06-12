@@ -166,6 +166,13 @@ app.get("/allthrees", (req, res) => {
     res.json(getAllThrees);
 });
 
+app.get("/tree/:threeIdFree", function (req, res) {
+    console.log("ok tu es dans un chemin dynamique");
+
+    console.log(req.params);
+    res.send(req.params);
+});
+
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );

@@ -22,6 +22,8 @@ const myGetArray = [];
 const treeSlectorVar = [];
 const freeTreeInCercle = [];
 const notFreeTreeInCercle = [];
+let numberOfFreeTreeInCercle;
+let numberOfNotFreeTreeInCercle;
 
 // Var temporaire
 let myGetArrayLength = 20;
@@ -49,7 +51,7 @@ const App = () => {
                 }
                 setData(treeSlectorVar);
 
-                console.log(data.length);
+                //console.log(data.length);
                 // ----------------------------------------------------
                 // ----------------------------------------------------
 
@@ -78,7 +80,7 @@ const App = () => {
                 };
 
                 const isInRadiusLoopValidation = (data) => {
-                    console.log(data);
+                    //console.log(data);
                     for (let i = 0; i < data.length; i++) {
                         if (data[i][0] === true && data[i][0] == true) {
                             freeTreeInCercle.push(data[i][1]);
@@ -86,8 +88,13 @@ const App = () => {
                             notFreeTreeInCercle.push(data[i][1]);
                         }
                     }
-                    console.log(freeTreeInCercle);
-                    console.log(notFreeTreeInCercle);
+                    numberOfFreeTreeInCercle = freeTreeInCercle.length;
+                    numberOfNotFreeTreeInCercle = notFreeTreeInCercle.length;
+
+                    // console.log(freeTreeInCercle);
+                    // console.log(notFreeTreeInCercle);
+                    // console.log(numberOfFreeTreeInCercle);
+                    // console.log(numberOfNotFreeTreeInCercle);
                 };
 
                 const isInRadiusLoop = (data) => {
@@ -112,6 +119,12 @@ const App = () => {
 
                 // ----------------------------------------------------
                 // ----------------------------------------------------
+                const test = (data) => {
+                    fetch("/tree/:" + data).then((response) => {
+                        console.log(response);
+                    });
+                };
+                test("Il est en viiiiiiie ");
             });
         });
     });
