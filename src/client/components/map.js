@@ -20,6 +20,8 @@ import {
 const position = [50.65156, 5.5806785];
 const myGetArray = [];
 const treeSlectorVar = [];
+const treeFreeInCercle = [];
+const treeNotFreeInCercle = [];
 // Var temporaire
 let myGetArrayLength = 20;
 
@@ -46,28 +48,58 @@ const App = () => {
                 }
                 setData(treeSlectorVar);
 
-                //console.log(data);
+                console.log(data.length);
+                // ----------------------------------------------------
+                // ----------------------------------------------------
+
+                // Vérification de la présence des arbres dans un rayon définis
+
+                const center = {lat: position[0], lon: position[1]};
+
+                const radius = radiusGeoloc;
+                let isInRadius = [];
+                // let isInRadiusIndex;
+                const isInRadiusCheck = (data1, data2, index) => {
+                    isInRadius.push([
+                        insideCircle({lat: data1, lon: data2}, center, radius),
+                        index,
+                    ]);
+                };
+
+                const isInRadiusLoopValidation = (data) => {
+                    for (let i = 0; i < data.length; i++) {
+                        if (data[i][0] === true) {
+                            treeFreeInCercle.push(data[i][1]);
+                        } else {
+                            treeNotFreeInCercle.push(data[i][1]);
+                        }
+                    }
+                    console.log(treeFreeInCercle);
+                    console.log(treeNotFreeInCercle);
+                };
+
+                const isInRadiusLoop = (data) => {
+                    let i;
+                    for (i = 0; i < data.length; i++) {
+                        isInRadiusCheck(
+                            data[i].geoloc.lat,
+                            data[i].geoloc.lon,
+                            data[i]._id,
+                        );
+                    }
+                    if ((i = data.length)) {
+                        //console.log(isInRadius);
+                        isInRadiusLoopValidation(isInRadius);
+                    }
+                };
+
+                isInRadiusLoop(data);
+
+                // ----------------------------------------------------
+                // ----------------------------------------------------
             });
         });
     });
-    // ----------------------------------------------------
-    // ----------------------------------------------------
-
-    // Vérification de la présence des arbres dans un rayon définis
-
-    const center = {lat: position[0], lon: position[1]};
-    console.log(center);
-    const radius = radiusGeoloc;
-    let isInRadius = insideCircle(
-        {lat: 50.651627, lon: 5.581035},
-        center,
-        radius,
-    );
-    console.log(isInRadius);
-    insideCircle({lat: 50.651627, lon: 5.581035}, center, radius);
-
-    // ----------------------------------------------------
-    // ----------------------------------------------------
 
     if (data.length > 0) {
         return (
