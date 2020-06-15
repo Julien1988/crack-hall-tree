@@ -62,7 +62,8 @@ const App = () => {
 
                 const getTreeIdServer = (data) => {
                     fetch("/tree/" + data).then((response) => {
-                        //console.log(data);
+                        console.log(data);
+                        console.log("coucou");
                     });
                 };
 
@@ -76,15 +77,9 @@ const App = () => {
 
                 let isInRadius = [];
                 // let isInRadiusIndex;
-                const isInRadiusCheck = (
-                    data1,
-                    data2,
-                    index,
-                    isFree,
-                    isLocked,
-                ) => {
+                const isInRadiusCheck = (lat, lon, index, isFree, isLocked) => {
                     isInRadius.push([
-                        insideCircle({lat: data1, lon: data2}, center, radius),
+                        insideCircle({lat: lat, lon: lon}, center, radius),
                         index,
                         isFree,
                         isLocked,

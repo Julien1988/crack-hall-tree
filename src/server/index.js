@@ -166,20 +166,18 @@ app.get("/allthrees", (req, res) => {
     res.json(getAllThrees);
 });
 
-const getTreesId = (data) => {
-    console.log(data.threeIdFree);
+const getTreesIdData = (data) => {
+    console.log("Affichages des arbres free");
     const treesIdArray = data.threeIdFree.split(",");
     console.log(treesIdArray);
-    console.log(treesIdArray[0]);
 };
 
 app.get("/tree/:threeIdFree", function (req, res) {
-    console.log("ok tu es dans un chemin dynamique");
+    console.log("==> ok tu es dans un chemin dynamique <==");
 
     const data = req.params;
-    getTreesId(data);
     //console.log(data);
-    //res.send(req.params);
+    getTreesIdData(data);
 });
 
 app.listen(APP_PORT, () =>
