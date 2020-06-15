@@ -7,7 +7,8 @@
 
 import React, {useState, useCallback, useEffect} from "react";
 
-import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
+import {map, latLng} from "leaflet";
+import {Map, TileLayer, Marker, Popup, Circle, layerPoint} from "react-leaflet";
 import {
     toLatLon,
     toLatitudeLongitude,
@@ -26,6 +27,7 @@ let numberOfFreeTreeInCercle;
 let numberOfNotFreeTreeInCercle;
 
 // Var temporaire
+// getTreeId
 let myGetArrayLength = 20;
 
 const App = () => {
@@ -134,9 +136,15 @@ const App = () => {
         });
     });
 
+    // Récupération de la latitude et longitude au click sur la carte
+
+    const handleClick = (e) => {
+        console.log(e.latlng);
+    };
+
     if (data.length > 0) {
         return (
-            <Map center={position} zoom={13}>
+            <Map center={position} zoom={13} onClick={handleClick}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
