@@ -11,29 +11,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import "../scss/roots.scss";
 
-const Button = ({label, title, disabled = false, onClick}) => (
+const ButtonRect = ({label, title, disabled = false, onClick}) => (
     <button
         onClick={onClick}
         disabled={disabled}
-        className={[
-            "button",
-            "is-success",
-            "is-outlined",
-            "is-fullwidth",
-            "sg-btn",
-        ].join(" ")}
+        className={["button", "is-success", "is-outlined", "is-fullwidth"].join(
+            " ",
+        )}
         type={"button"}
         title={title || label}>
-        <i className={"fas fa-users"} />
         {label}
     </button>
 );
 
-Button.propTypes = {
+ButtonRect.propTypes = {
     label: PropTypes.string.isRequired,
     title: PropTypes.string,
     disabled: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
 };
 
-export default Button;
+export default ButtonRect;

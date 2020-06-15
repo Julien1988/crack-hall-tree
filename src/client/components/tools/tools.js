@@ -6,21 +6,21 @@
  */
 
 import {NBSP} from "./constants";
-import Button from "./button";
 import PropType from "prop-types";
 import React from "react";
+import ButtonRect from "./buttonrect";
 
 const Tools = ({onConnection, onInscription}) => (
     <div className={["is-flex", "columns"].join(" ")}>
         <div className={["is-centrerd", "column"].join(" ")}>
-            <Button
+            <ButtonRect
                 label={"Connection"}
                 title={"connection au profil"}
                 disabled={onclick}
                 onClick={onConnection}
             />
             {NBSP}
-            <Button
+            <ButtonRect
                 label={"inscription"}
                 title={"inscription au profil"}
                 disabled={onclick}

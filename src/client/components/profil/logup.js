@@ -3,7 +3,6 @@
 /* eslint-disable class-methods-use-this */
 import * as React from "react";
 import axios from "axios";
-import {Form, Button} from "react-bootstrap";
 
 export default class Logup extends React.Component {
     constructor(props) {
@@ -69,67 +68,83 @@ export default class Logup extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Form onSubmit={this.onSubmit}>
-                    <Form.Group>
-                        <Form.Label>{"Pseudo"}</Form.Label>
-                        <Form.Control
+            <form onSubmit={this.onSubmit}>
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <label>{"Pseudo"}</label>
+                        <input
+                            className={"input"}
                             type={"text"}
                             placeholder={"Your Pseudo"}
                             value={this.state.pseudo}
                             onChange={this.onChangePseudo}
                         />
-                        <Form.Text className={"text-muted"}>
+                        <p className={"text-muted"}>
                             {"We'll never share your email with anyone else."}
-                        </Form.Text>
-                    </Form.Group>
+                        </p>
+                    </p>
+                </div>
 
-                    <Form.Group controlId={"formPlaintextPassword"}>
-                        <Form.Label>{"Password"}</Form.Label>
-                        <Form.Control
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <label>{"Password"}</label>
+                        <input
+                            className={"input"}
                             type={"password"}
                             placeholder={"Password"}
                             value={this.state.password}
                             onChange={this.onChangePassword}
                         />
-                    </Form.Group>
-                    <Form.Group controlId={"exampleForm.ControlInput1"}>
-                        <Form.Label>{"Email address"}</Form.Label>
-                        <Form.Control
+                    </p>
+                </div>
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <label>{"Email address"}</label>
+                        <input
+                            className={"input"}
                             type={"email"}
                             placeholder={"name@example.com"}
                             value={this.state.email}
                             onChange={this.onChangeEmail}
                         />
-                    </Form.Group>
-                    <Form.Group controlId={"exampleForm.ControlSelect1"}>
-                        <Form.Label>{"Colors"}</Form.Label>
-                        <Form.Control
+                    </p>
+                </div>
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <label>{"Colors "}</label>
+                        <div
+                            className={"select"}
                             as={"select"}
                             type={"text"}
                             placeholder={"Your color"}
                             value={this.state.color}
                             onChange={this.onChangeColor}>
-                            <option>{"red"}</option>
-                            <option>{"yellow"}</option>
-                            <option>{"green"}</option>
-                            <option>{"dark"}</option>
-                            <option>{"grey"}</option>
-                            <option>{"brown"}</option>
-                            <option>{"orange"}</option>
-                            <option>{"pink"}</option>
-                            <option>{"purple"}</option>
-                            <option>{"white"}</option>
-                        </Form.Control>
-                    </Form.Group>
-                    {/* <Form.Group controlId={"formBasicCheckbox"}>
-                        <Form.Check type={"checkbox"} label={"Check me out"} />
-                    </Form.Group> */}
-                    <Button variant={"success"} type={"submit"}>
-                        {"Submit"}
-                    </Button>
-                </Form>
-            </div>
+                            <select>
+                                <option>{"red"}</option>
+                                <option>{"yellow"}</option>
+                                <option>{"green"}</option>
+                                <option>{"dark"}</option>
+                                <option>{"grey"}</option>
+                                <option>{"brown"}</option>
+                                <option>{"orange"}</option>
+                                <option>{"pink"}</option>
+                                <option>{"purple"}</option>
+                                <option>{"white"}</option>
+                            </select>
+                        </div>
+                    </p>
+                </div>
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <button
+                            className={"button is-success"}
+                            variant={"success"}
+                            type={"submit"}>
+                            {"Submit"}
+                        </button>
+                    </p>
+                </div>
+            </form>
         );
     }
 }

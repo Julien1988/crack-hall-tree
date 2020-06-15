@@ -10,8 +10,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "../scss/roots.scss";
-
-const Button = ({label, title, disabled = false, onClick}) => (
+const ButtonSmall = ({label, title, disabled = false, onClick}) => (
     <button
         onClick={onClick}
         disabled={disabled}
@@ -20,20 +19,21 @@ const Button = ({label, title, disabled = false, onClick}) => (
             "is-success",
             "is-outlined",
             "is-fullwidth",
-            "sg-btn",
+            "is-small",
+            "sg-small",
         ].join(" ")}
         type={"button"}
         title={title || label}>
-        <i className={"fas fa-users"} />
+        <i className={"fas fa-sign-out-alt"} />
         {label}
     </button>
 );
 
-Button.propTypes = {
+ButtonSmall.propTypes = {
     label: PropTypes.string.isRequired,
     title: PropTypes.string,
     disabled: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
 };
 
-export default Button;
+export default ButtonSmall;

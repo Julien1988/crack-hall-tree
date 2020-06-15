@@ -7,14 +7,23 @@
 
 // import {NBSP} from "./constants";
 import Button from "./button";
+import ButtonSmall from "./buttonsmall";
 import PropType from "prop-types";
 import React from "react";
+import {NBSP} from "./constants";
 import "../scss/roots.scss";
 
-const ToolsInfo = ({onInfo}) => (
-    <div className={"border-sg"}>
+const ToolsInfo = ({onInfo, onOut}) => (
+    <div className={"sg-profilebtn"}>
+        <ButtonSmall
+            label={""}
+            title={"déconnection"}
+            disabled={onclick}
+            onClick={onOut}
+        />
+        {NBSP}
         <Button
-            label={"Profile"}
+            label={""}
             title={"Info du profile en question"}
             disabled={onclick}
             onClick={onInfo}
@@ -24,6 +33,7 @@ const ToolsInfo = ({onInfo}) => (
 
 ToolsInfo.propType = {
     onInfo: PropType.func.isRequired,
+    onOut: PropType.func.isRequired,
 };
 
 export default ToolsInfo;

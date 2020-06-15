@@ -45,8 +45,12 @@ const HomeConnect = () => {
                 "is-centered",
                 "mt-1",
                 "is-full",
+                "sg-up",
             ].join(" ")}>
-            <ToolsInfo onInfo={handleModalInfo} />
+            <div className={"border-sg"}>
+                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalInfo} />
+            </div>
+
             <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
 
             <ModalHome showHome={modalShowHome} onHide={handleCloseModalHome} />

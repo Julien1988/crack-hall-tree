@@ -19,7 +19,7 @@ const containerStyles = {
     bottom: 0,
     left: 0,
     display: "flex",
-    zIndex: 1000,
+    zIndex: 1100,
     justifyContent: "center",
     alignItems: "center",
     background: "rgba(0,0,0,0.5)",
@@ -47,19 +47,20 @@ const ModalHome = ({showHome = true, onHide}) => {
     if (showHome === true) {
         return createPortal(
             <div style={containerStyles}>
-                <div className={"box"}>
-                    <div
-                        className={[
-                            "columns",
-                            "is-mobile",
-                            "is-multiline",
-                        ].join(" ")}>
+                <div
+                    className={[
+                        "columns",
+                        "box",
+                        "box-shadow",
+                        "is-mobile",
+                        "is-multiline",
+                    ].join(" ")}>
+                    <div>
                         <div
                             className={[
                                 "box",
                                 "box-shadow",
                                 "column",
-                                "is-full",
                                 "is-centered",
                             ].join(" ")}>
                             <button
@@ -75,11 +76,10 @@ const ModalHome = ({showHome = true, onHide}) => {
                                     "box",
                                     "box-shadow",
                                     "has-text-success",
-                                    "title",
                                     "is-centrerd",
                                 ].join(" ")}>
                                 <h1 className={[""].join(" ")}>
-                                    {"The tree buying game !"}
+                                    {"Welcom"} <br /> {"The tree buying game !"}
                                 </h1>
                             </div>
 

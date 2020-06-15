@@ -3,7 +3,6 @@
 /* eslint-disable class-methods-use-this */
 import * as React from "react";
 import axios from "axios";
-import {Form, Button} from "react-bootstrap";
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -59,32 +58,43 @@ export default class Login extends React.Component {
     }
     render() {
         return (
-            <div>
-                <Form onSubmit={this.onSubmit}>
-                    <Form.Group>
-                        <Form.Label>{"Pseudo"}</Form.Label>
-                        <Form.Control
+            <form onSubmit={this.onSubmit} className={["block"].join(" ")}>
+                <div className={"field box"}>
+                    <p className={"control has-icons-left has-icons-right"}>
+                        <label>{"Pseudo"}</label>
+                        <input
+                            className={"input"}
                             type={"text"}
                             placeholder={"Your Pseudo"}
                             value={this.state.pseudo}
                             onChange={this.onChangePseudo}
                         />
-                    </Form.Group>
+                    </p>
+                </div>
 
-                    <Form.Group controlId={"formPlaintextPassword"}>
-                        <Form.Label>{"Password"}</Form.Label>
-                        <Form.Control
+                <div className={"field box"}>
+                    <p className={"control has-icons-left has-icons-right"}>
+                        <label>{"Password"}</label>
+                        <input
+                            className={"input"}
                             type={"password"}
                             placeholder={"Password"}
                             value={this.state.password}
                             onChange={this.onChangePassword}
                         />
-                    </Form.Group>
-                    <Button variant={"primary"} type={"submit"}>
-                        {"Submit"}
-                    </Button>
-                </Form>
-            </div>
+                    </p>
+                </div>
+                <div className={"field box"}>
+                    <p className={"control"}>
+                        <button
+                            className={"button is-success"}
+                            variant={"primary"}
+                            type={"submit"}>
+                            {"Submit"}
+                        </button>
+                    </p>
+                </div>
+            </form>
         );
     }
 }
