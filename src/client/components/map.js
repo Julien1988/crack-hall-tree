@@ -51,8 +51,6 @@ const App = () => {
     });
 
     const geolocCircle = (getCenter) => {
-        // console.log(getCenter);
-        // console.log(allTrees);
         allTrees.forEach((element) => {
             const center = {lat: getCenter[0], lon: getCenter[1]};
             const radius = 500;
@@ -67,12 +65,11 @@ const App = () => {
                 myGetArray.push(element);
             }
 
-            console.log(myGetArray);
+            console.log("chargement des données en cours... Wait for it !");
         });
     };
 
     const handleClick = (e) => {
-        console.log("click");
         test = [e.latlng.lat, e.latlng.lng];
         if (click === false) {
             myGetArray = [];
@@ -81,10 +78,8 @@ const App = () => {
         } else {
             setClick(false);
         }
-        //console.log(test[0]);
     };
 
-    console.log("ok");
     if (click === true) {
         return (
             <Map center={position} zoom={13} onClick={handleClick}>
@@ -97,7 +92,9 @@ const App = () => {
 
                 {myGetArray.map((item) => (
                     <React.Fragment>
-                        <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
+                        <Marker
+                            key={item._id}
+                            position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
                                 Nom de l'arbre: {item.random_name}
                                 <br />
