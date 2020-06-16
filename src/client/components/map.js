@@ -91,10 +91,8 @@ const App = () => {
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
 
                 {myGetArray.map((item) => (
-                    <React.Fragment>
-                        <Marker
-                            key={item._id}
-                            position={[item.geoloc.lat, item.geoloc.lon]}>
+                    <React.Fragment key={item._id}>
+                        <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
                                 Nom de l'arbre: {item.random_name}
                                 <br />
