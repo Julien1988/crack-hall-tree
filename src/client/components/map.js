@@ -19,138 +19,83 @@ import {
 } from "geolocation-utils";
 
 const position = [50.65156, 5.5806785];
-const myGetArray = [];
-const treeSlectorVar = [];
-const freeTreeInCercle = [];
-const notFreeTreeInCercle = [];
-let numberOfFreeTreeInCercle;
-let numberOfNotFreeTreeInCercle;
+let myGetArray = [];
+let test;
 
-// Var temporaire
-// getTreeId
-let myGetArrayLength = 20;
+let treeSlectorVar = [];
 
 const App = () => {
-    const [data, setData] = useState([]);
+    // Stope la recupération des données des arbres
+    const [getData, setGetData] = useState(true);
+    // Stoque l'ensemble des arbres
+    const [allTrees, setAllTrees] = useState([]);
+    // Stoque le centre geographique
     const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
+    //stoque la taille du rayon du cercle
     const [radiusGeoloc, setRadiusGeoloc] = useState(100);
+    // Stoque la lat et long au click
+    const [geolocClick, setGeolocClick] = useState(undefined);
 
-    useEffect(() => {
-        fetch("/allthrees").then((response) => {
-            response.json().then((json) => {
-                // traitement du JSON
-                json.forEach((element) => {
-                    myGetArray.push(element);
-                });
+    const [click, setClick] = useState(false);
 
-                for (let i = 1; i < myGetArrayLength; i++) {
-                    if (myGetArray[i].comment == null) {
-                        myGetArray[i].comment = "Pas de commentaire";
+    const [treesToShow, setTreesToShow] = useState([]);
 
-                        treeSlectorVar.push(myGetArray[i]);
-                    }
-                    treeSlectorVar.push(myGetArray[i]);
-                }
-                setData(treeSlectorVar);
-
-                //console.log(data.length);
-                // ----------------------------------------------------
-                // ----------------------------------------------------
-
-                // ----------------------------------------------------
-                // ----------------------------------------------------
-
-                // Envois vers le back
-
-                const getTreeIdServer = (data) => {
-                    fetch("/tree/" + data).then((response) => {
-                        console.log(data);
-                        console.log("coucou");
-                    });
-                };
-
-                // getTreeIdServer(freeTreeInCercle[0]);
-
-                // Vérification de la présence des arbres dans un rayon définis
-
-                const center = {lat: position[0], lon: position[1]};
-
-                const radius = radiusGeoloc;
-
-                let isInRadius = [];
-                // let isInRadiusIndex;
-                const isInRadiusCheck = (lat, lon, index, isFree, isLocked) => {
-                    isInRadius.push([
-                        insideCircle({lat: lat, lon: lon}, center, radius),
-                        index,
-                        isFree,
-                        isLocked,
-                    ]);
-                    //console.log(isInRadius);
-                };
-
-                const isInRadiusLoopValidation = (data) => {
-                    //console.log(data);
-                    for (let i = 0; i < data.length; i++) {
-                        if (data[i][0] === true && data[i][0] == true) {
-                            freeTreeInCercle.push(data[i][1]);
-                        } else if (data[i][0] === true && data[i][0] == false) {
-                            notFreeTreeInCercle.push(data[i][1]);
-                        }
-                    }
-                    numberOfFreeTreeInCercle = freeTreeInCercle.length;
-                    numberOfNotFreeTreeInCercle = notFreeTreeInCercle.length;
-
-                    // envois vers le back
-                    getTreeIdServer(freeTreeInCercle);
-
-                    // console.log(freeTreeInCercle);
-                    // console.log(notFreeTreeInCercle);
-                    // console.log(numberOfFreeTreeInCercle);
-                    // console.log(numberOfNotFreeTreeInCercle);
-                };
-
-                const isInRadiusLoop = (data) => {
-                    let i;
-                    for (i = 0; i < data.length; i++) {
-                        isInRadiusCheck(
-                            data[i].geoloc.lat,
-                            data[i].geoloc.lon,
-                            data[i]._id,
-                            data[i].free,
-                            data[i].locked,
-                        );
-                    }
-                    if ((i = data.length)) {
-                        //console.log(isInRadius);
-                        isInRadiusLoopValidation(isInRadius);
-                    }
-                };
-
-                isInRadiusLoop(data);
-                console.log(data);
-
-                // // ----------------------------------------------------
-                // // ----------------------------------------------------
-            });
+    fetch("/allthrees").then((response) => {
+        response.json().then((json) => {
+            // traitement du JSON
+            if (getData === true) {
+                setGetData(false);
+                setAllTrees(json);
+            }
         });
     });
 
-    // Récupération de la latitude et longitude au click sur la carte
+    const geolocCircle = (getCenter) => {
+        // console.log(getCenter);
+        // console.log(allTrees);
+        allTrees.forEach((element) => {
+            const center = {lat: getCenter[0], lon: getCenter[1]};
+            const radius = 500;
 
-    const handleClick = (e) => {
-        console.log(e.latlng);
+            const testCircleTree = insideCircle(
+                {lat: element.geoloc.lat, lon: element.geoloc.lon},
+                center,
+                radius,
+            );
+
+            if (testCircleTree === true) {
+                myGetArray.push(element);
+            }
+
+            console.log(myGetArray);
+        });
     };
 
-    if (data.length > 0) {
+    const handleClick = (e) => {
+        console.log("click");
+        test = [e.latlng.lat, e.latlng.lng];
+        if (click === false) {
+            myGetArray = [];
+            geolocCircle(test);
+            setClick(true);
+        } else {
+            setClick(false);
+        }
+        //console.log(test[0]);
+    };
+
+    console.log("ok");
+    if (click === true) {
         return (
             <Map center={position} zoom={13} onClick={handleClick}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 />
+
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
-                {data.map((item) => (
+
+                {myGetArray.map((item) => (
                     <React.Fragment>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
@@ -169,7 +114,7 @@ const App = () => {
         );
     } else {
         return (
-            <Map center={position} zoom={10}>
+            <Map center={position} zoom={13} onClick={handleClick}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -180,86 +125,3 @@ const App = () => {
 };
 
 export default App;
-
-// SAVE
-
-/* becodeorg/mwenbwa
- *
- * /src/client/components/map.js - Map Component
- *
- 
- */
-
-// import React, {useState, useCallback, useEffect} from "react";
-
-// import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
-// //import MakerTools from "./tools/marker";
-
-// const position = [50.65156, 5.5806785];
-// const myGetArray = [];
-// const treeSlectorVar = [];
-// const test = [
-//     [51.505, -0.09],
-//     [51.506, -0.09],
-//     [51.507, -0.09],
-// ];
-// // console.log(test);
-// // test.map((item) => {
-// //     console.log(item[0], item[1]);
-// // });
-
-// const App = () => {
-//     const [data, setData] = useState([]);
-//     const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
-//     const [radiusGeoloc, setRadiusGeoloc] = useState(100);
-//     useEffect(() => {
-//         fetch("/allthrees").then((response) => {
-//             response.json().then((json) => {
-//                 // traitement du JSON
-//                 json.forEach((element) => {
-//                     myGetArray.push(element);
-//                 });
-
-//                 for (let i = 1; i < 20; i++) {
-//                     treeSlectorVar.push(myGetArray[i]);
-//                 }
-//                 setData(treeSlectorVar);
-
-//                 console.log(data);
-//             });
-//         });
-//     });
-//     if (data.length > 0) {
-//         return (
-//             <Map center={position} zoom={13}>
-//                 <TileLayer
-//                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//                 />
-//                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
-//                 {data.map((item) => (
-//                     <React.Fragment>
-//                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
-//                             <Popup>
-//                                 A pretty CSS3 popup.
-//                                 <br />
-//                                 Easily customizable.
-//                             </Popup>
-//                         </Marker>
-//                     </React.Fragment>
-//                 ))}
-//             </Map>
-//         );
-//     } else {
-//         return (
-//             <Map center={position} zoom={10}>
-//                 <TileLayer
-//                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//                 />
-//             </Map>
-//         );
-//     }
-// };
-
-// export default App;

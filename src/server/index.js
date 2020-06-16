@@ -180,6 +180,15 @@ app.get("/tree/:threeIdFree", function (req, res) {
     getTreesIdData(data);
 });
 
+app.get("/tree/:geoloc", function (req, res) {
+    console.log("==> tu es dans geoloc <==");
+
+    const data = req.params;
+
+    app.get("/tree/");
+    console.log(data);
+});
+
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),
 );
