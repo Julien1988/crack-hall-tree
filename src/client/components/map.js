@@ -41,7 +41,7 @@ const App = () => {
 
     // const [treesToShow, setTreesToShow] = useState([]);
 
-    // fetch("/alltrees").then((response) => {
+    // fetch("/trees/alltrees").then((response) => {
     //     response.json().then((json) => {
     //         // traitement du JSON
     //         if (getData === true) {
@@ -57,8 +57,8 @@ const App = () => {
             .catch((erreur) => {
                 console.warn(erreur);
             });
-    });
-
+    }, []);
+    console.log(allTrees);
     const geolocCircle = (getCenter) => {
         allTrees.forEach((element) => {
             const center = {lat: getCenter[0], lon: getCenter[1]};

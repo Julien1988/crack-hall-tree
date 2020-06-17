@@ -1,22 +1,22 @@
 const db = require("../_helpers/db");
 const Trees = db.Trees;
 
-module.exports = {
-    getAllTrees,
-};
-
-async function getAllTrees() {
+async function getAllTrees(req, res) {
     try {
-        const Tree = await Trees.find();
-        console.log("CA PASSE ICI");
-        res.json(Tree);
+        const trees = await Trees.find();
+        console.log(trees);
+        res.json(trees);
     } catch (error) {
         res.send(error.response.data.message);
     }
 }
 
+module.exports = {
+    getAllTrees,
+};
+
 // function getAllTrees() {
-//     Three.find(function (err, trees) {
+//     Threes.find(function (err, trees) {
 //         if (err) return console.error(err);
 
 //         let getAllTrees = trees;
@@ -24,4 +24,14 @@ async function getAllTrees() {
 //         console.log("==> TU ES DANS ALL-THREES");
 //         res.json(getAllTrees);
 //     });
+// }
+
+// async function getAllTrees() {
+//     try {
+//         const Tree = await Trees.find();
+//         console.log(Tree);
+//         res.json(Tree);
+//     } catch (error) {
+//         res.send(error.response.data.message);
+//     }
 // }
