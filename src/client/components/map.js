@@ -34,11 +34,11 @@ const App = () => {
     //stoque la taille du rayon du cercle
     const [radiusGeoloc, setRadiusGeoloc] = useState(100);
     // Stoque la lat et long au click
-    const [geolocClick, setGeolocClick] = useState(undefined);
+    //const [geolocClick, setGeolocClick] = useState(undefined);
 
     const [click, setClick] = useState(false);
 
-    const [treesToShow, setTreesToShow] = useState([]);
+    // const [treesToShow, setTreesToShow] = useState([]);
 
     fetch("/allthrees").then((response) => {
         response.json().then((json) => {
