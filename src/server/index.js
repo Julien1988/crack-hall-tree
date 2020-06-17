@@ -26,7 +26,7 @@ mongoose.connect(uri, options, function (error) {
     // Check error in initial connection. There is no 2nd param to the callback.
     console.log(" !!!! OK  !!!");
 });
-let getAllThrees = [];
+let getAllTrees = [];
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
@@ -57,7 +57,7 @@ db.once("open", function () {
     Three.find(function (err, threes) {
         if (err) return console.error(err);
 
-        getAllThrees = threes;
+        getAllTrees = threes;
         //  -/\\- ADD THE FUNCTION YOU NEED HERE -/\\-
     });
 });
@@ -132,8 +132,8 @@ const findUserTree = [];
 const newUserTree = () => {
     //Netoyage de la variable
     newUserThreeIndex = [];
-    if (getAllThrees.length > 3) {
-        getAllThrees.forEach((element) => {
+    if (getAllTrees.length > 3) {
+        getAllTrees.forEach((element) => {
             if (element.free === true) {
                 findUserTree.push(element);
             }
@@ -152,18 +152,14 @@ const newUserTree = () => {
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
-app.get("/hello", (req, res) => {
-    console.log("==> TU ES DANS HELLO");
-});
-
 app.get("/newuser", (req, res) => {
     console.log("new user");
     newUserTree();
 });
 
-app.get("/allthrees", (req, res) => {
+app.get("/alltrees", (req, res) => {
     console.log("==> TU ES DANS ALL-THREES");
-    res.json(getAllThrees);
+    res.json(getAllTrees);
 });
 
 const getTreesIdData = (data) => {
@@ -180,14 +176,14 @@ app.get("/tree/:threeIdFree", function (req, res) {
     getTreesIdData(data);
 });
 
-app.get("/tree/:geoloc", function (req, res) {
-    console.log("==> tu es dans geoloc <==");
+// app.get("/tree/:geoloc", function (req, res) {
+//     console.log("==> tu es dans geoloc <==");
 
-    const data = req.params;
+//     const data = req.params;
 
-    app.get("/tree/");
-    console.log(data);
-});
+//     app.get("/tree/");
+//     console.log(data);
+// });
 
 app.listen(APP_PORT, () =>
     console.log(`🚀 Server is listening on port ${APP_PORT}.`),

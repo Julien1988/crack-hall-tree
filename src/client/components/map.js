@@ -40,7 +40,7 @@ const App = () => {
 
     // const [treesToShow, setTreesToShow] = useState([]);
 
-    fetch("/allthrees").then((response) => {
+    fetch("/alltrees").then((response) => {
         response.json().then((json) => {
             // traitement du JSON
             if (getData === true) {
