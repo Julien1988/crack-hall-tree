@@ -17,6 +17,7 @@ import {
     insidePolygon,
     insideCircle,
 } from "geolocation-utils";
+import axios from "axios";
 
 const position = [50.65156, 5.5806785];
 let myGetArray = [];
@@ -40,14 +41,22 @@ const App = () => {
 
     // const [treesToShow, setTreesToShow] = useState([]);
 
-    fetch("/alltrees").then((response) => {
-        response.json().then((json) => {
-            // traitement du JSON
-            if (getData === true) {
-                setGetData(false);
-                setAllTrees(json);
-            }
-        });
+    // fetch("/alltrees").then((response) => {
+    //     response.json().then((json) => {
+    //         // traitement du JSON
+    //         if (getData === true) {
+    //             setGetData(false);
+    //             setAllTrees(json);
+    //         }
+    //     });
+    // });
+    useEffect(() => {
+        axios
+            .get("http://localhost/trees/alltrees")
+            .then((res) => setAllTrees(res.data))
+            .catch((erreur) => {
+                console.warn(erreur);
+            });
     });
 
     const geolocCircle = (getCenter) => {
