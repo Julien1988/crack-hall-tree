@@ -21,7 +21,7 @@ import axios from "axios";
 
 const position = [50.65156, 5.5806785];
 let myGetArray = [];
-let test;
+let clickData;
 
 let treeSlectorVar = [];
 
@@ -33,23 +33,10 @@ const App = () => {
     // Stoque le centre geographique
     const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
     //stoque la taille du rayon du cercle
-    const [radiusGeoloc, setRadiusGeoloc] = useState(100);
-    // Stoque la lat et long au click
-    //const [geolocClick, setGeolocClick] = useState(undefined);
+    const [radiusGeoloc, setRadiusGeoloc] = useState(500);
 
     const [click, setClick] = useState(false);
 
-    // const [treesToShow, setTreesToShow] = useState([]);
-
-    // fetch("/trees/alltrees").then((response) => {
-    //     response.json().then((json) => {
-    //         // traitement du JSON
-    //         if (getData === true) {
-    //             setGetData(false);
-    //             setAllTrees(json);
-    //         }
-    //     });
-    // });
     useEffect(() => {
         axios
             .get("http://localhost/trees/alltrees")
@@ -58,7 +45,7 @@ const App = () => {
                 console.warn(erreur);
             });
     }, []);
-    console.log(allTrees);
+    //console.log(allTrees);
     const geolocCircle = (getCenter) => {
         allTrees.forEach((element) => {
             const center = {lat: getCenter[0], lon: getCenter[1]};
@@ -71,7 +58,12 @@ const App = () => {
             );
 
             if (testCircleTree === true) {
-                myGetArray.push(element);
+                if (element.comment == null) {
+                    element.comment = "Pas de commentaire";
+                    myGetArray.push(element);
+                } else {
+                    myGetArray.push(element);
+                }
             }
 
             console.log("chargement des données en cours... Wait for it !");
@@ -79,10 +71,12 @@ const App = () => {
     };
 
     const handleClick = (e) => {
-        test = [e.latlng.lat, e.latlng.lng];
+        clickData = [e.latlng.lat, e.latlng.lng];
+        setCenterGeoloc(clickData);
+
         if (click === false) {
             myGetArray = [];
-            geolocCircle(test);
+            geolocCircle(clickData);
             setClick(true);
         } else {
             setClick(false);
