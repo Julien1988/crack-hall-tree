@@ -9,4 +9,9 @@ router.get("/:getidplayer", treeService.getIdPlayer);
 
 router.get("/newplayer/:treesgenerator", treeService.newPlayerTreesGenerator);
 
+router.get(
+    "/buyotherplayertree/:treeid/:playerid",
+    treeService.buyOtherPlayerTree,
+);
+
 module.exports = router;

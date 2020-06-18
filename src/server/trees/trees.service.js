@@ -1,6 +1,8 @@
 const db = require("../_helpers/db");
 const Trees = db.Trees;
 const newUserFunction = require("../getfreetrees");
+const otherPlayerPrice = require("../otherplayerprice");
+const {createIndexes} = require("./trees.model");
 
 // Récupération de l'ensemble des arbres
 async function getAllTrees(req, res) {
@@ -39,9 +41,24 @@ async function newPlayerTreesGenerator(req, res) {
         res.send(error);
     }
 }
+// lat: 5ece7015b467be4c63b04e4a
+async function buyOtherPlayerTree(req, res) {
+    try {
+        const allTrees = await Trees.find();
+        const idTree = await req.params;
+
+        const getTree = await Trees.findById(idTree.treeid);
+        const playerId = await idTree.playerid;
+
+        otherPlayerPrice(getTree, allTrees, playerId);
+    } catch (error) {
+        res.send(error);
+    }
+}
 
 module.exports = {
     getAllTrees,
     getIdPlayer,
     newPlayerTreesGenerator,
+    buyOtherPlayerTree,
 };
