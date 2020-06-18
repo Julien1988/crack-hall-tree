@@ -5,35 +5,23 @@
  
  */
 
-import React, {useState, useCallback, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 
-import {map, latLng} from "leaflet";
-import {Map, TileLayer, Marker, Popup, Circle, layerPoint} from "react-leaflet";
-import {
-    toLatLon,
-    toLatitudeLongitude,
-    headingDistanceTo,
-    moveTo,
-    insidePolygon,
-    insideCircle,
-} from "geolocation-utils";
+import {Map, TileLayer, Marker, Popup, Circle} from "react-leaflet";
+import {insideCircle} from "geolocation-utils";
 import axios from "axios";
 
 const position = [50.65156, 5.5806785];
 let myGetArray = [];
 let clickData;
 
-let treeSlectorVar = [];
-
 const App = () => {
-    // Stope la recupération des données des arbres
-    const [getData, setGetData] = useState(true);
     // Stoque l'ensemble des arbres
     const [allTrees, setAllTrees] = useState([]);
     // Stoque le centre geographique
     const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
     //stoque la taille du rayon du cercle
-    const [radiusGeoloc, setRadiusGeoloc] = useState(500);
+    const [radiusGeoloc] = useState(500);
 
     const [click, setClick] = useState(false);
 
