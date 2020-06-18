@@ -10,71 +10,52 @@
  * started at 18/05/2020
  */
 
-import * as React from "react";
-import Userinfos from "./userinfo";
-import Login from "./login";
-import Logup from "./logup";
-import "bootstrap/dist/css/bootstrap.css";
-import Popup from "reactjs-popup";
-import "./navbar.css";
+// import * as React from "react";
+// import Userinfos from "./userinfo";
+// import Login from "./login";
+// import Logup from "./logup";
 
-export default class Navbar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showInfos: false,
-        };
-        /* this.onButtonClick = this.onButtonClick.bind(this); */
-    }
-    /*  onButtonClick() {
-        this.setState({
-            showInfos: true,
-        }); 
-    }*/
-    render() {
-        return (
-            <div>
-                <nav className={"navbar navbar-dark bg-dark navbar-expand-lg"}>
-                    <div className={"collpase navbar-collapse"}>
-                        <ul className={"navbar-nav mr-auto"}>
-                            <li className={"navbar-item"}>
-                                <div className={"nav-link"}>
-                                    <Popup
-                                        className={"popup"}
-                                        trigger={<button> {"Profil"}</button>}
-                                        position={"right center"}>
-                                        <div>
-                                            <Userinfos />
-                                        </div>
-                                    </Popup>
-                                </div>
-                            </li>
-                            <li className={"navbar-item"}>
-                                <div className={"nav-link"}>
-                                    <Popup
-                                        trigger={<button> {"Login"}</button>}
-                                        position={"right center"}>
-                                        <div>
-                                            <Login />
-                                        </div>
-                                    </Popup>
-                                </div>
-                            </li>
-                            <li className={"navbar-item"}>
-                                <div className={"nav-link"}>
-                                    <Popup
-                                        trigger={<button> {"Logup"}</button>}
-                                        position={"right center"}>
-                                        <div>
-                                            <Logup />
-                                        </div>
-                                    </Popup>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
+import "./scss/navbar.scss";
+import ToolsInfo from "../tools/toolsinfo";
+
+import React, {useState, useCallback} from "react";
+import ModalHome from "../modal/modalacc";
+import ModalInfo from "../modal/modalinfo";
+
+const HomeConnect = () => {
+    const [modalShowHome, setModalShowHome] = useState(true);
+    const [modalShowInfo, setModalShowInfo] = useState(false);
+
+    const handleCloseModalHome = useCallback(() => {
+        setModalShowHome(false);
+    }, [setModalShowHome]);
+    const handleCloseModalInfo = useCallback(() => {
+        setModalShowInfo(false);
+    }, [setModalShowInfo]);
+    const handleModalInfo = useCallback(() => {
+        setModalShowInfo(true);
+    }, [setModalShowInfo]);
+
+    return (
+        <div
+            className={[
+                "columns",
+                "is-mobile",
+                "is-multiline",
+                "is-centered",
+                "mt-1",
+                "is-full",
+                "sg-up",
+            ].join(" ")}>
+            <div className={"border-sg"}>
+                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalInfo} />
             </div>
-        );
-    }
-}
+
+            <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
+
+            <ModalHome showHome={modalShowHome} onHide={handleCloseModalHome} />
+        </div>
+    );
+};
+
+export default HomeConnect;

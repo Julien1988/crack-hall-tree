@@ -1,4 +1,5 @@
-﻿/* eslint-disable no-use-before-define */
+﻿/* eslint-disable no-undef */
+/* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-extra-parens */
 /* eslint-disable require-atomic-updates */
@@ -16,6 +17,7 @@ const secret =
 
 module.exports = {
     authenticate,
+    revokeToken,
     getAll,
     getById,
     create,
@@ -32,6 +34,14 @@ async function authenticate({pseudo, password}) {
             token,
         };
     }
+}
+async function revokeToken({token, ipAddress}) {
+    const refreshToken = await getRefreshToken(token);
+
+    // revoke token and save
+    refreshToken.revoked = Date.now();
+    refreshToken.revokedByIp = ipAddress;
+    await refreshToken.save();
 }
 
 async function getAll() {

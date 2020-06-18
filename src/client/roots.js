@@ -1,22 +1,18 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable class-methods-use-this */
 import React from "react";
-import Leaflet from "./components/leaflet/leaflet";
-import Navbar from "./components/profil/navbar";
-import "./roots.css";
+import Leaf from "./components/leaflet/leaf";
+import HomeConnect from "./components/profil/navbar";
+import "./components/scss/roots.scss";
 //import Userinfos from "./components/profil/userinfo";
 
 export default class RootComponent extends React.Component {
     render() {
         return (
-            <main>
-                <div className={"rigth"}>
-                    <Leaflet />
-                </div>
-                <div className={"left"}>
-                    <Navbar />
-                </div>
-            </main>
+            <div>
+                <Leaf />
+                <HomeConnect />
+            </div>
         );
     }
 }

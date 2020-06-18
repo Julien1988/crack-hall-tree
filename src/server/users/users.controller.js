@@ -7,6 +7,7 @@ const userService = require("./user.service");
 // routes
 router.post("/authenticate", authenticate);
 router.post("/register", register);
+///router.post("/revoke-token", revoketoken);
 router.get("/", getAll);
 router.get("/current", getCurrent);
 router.get("/:id", getById);

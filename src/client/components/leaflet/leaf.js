@@ -6,7 +6,7 @@ import * as React from "react";
 //import {render} from "react-dom";
 import {Map, Marker, Popup, TileLayer} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./leaflet.css";
+import "./scss/leaflet.scss";
 import L from "leaflet";
 import marker from "leaflet/dist/images/marker-icon.png";
 import marker2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -21,13 +21,15 @@ L.Icon.Default.mergeOptions({
 });
 
 const Leaf = () => {
-    const position = [51.505, -0.09];
+    const position = [50.6412, 5.5718];
     return (
-        <Map className={"map"} center={position} zoom={13}>
+        <Map className={"leaflet-container"} center={position} zoom={13}>
             <TileLayer
-                url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                url={
+                    "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+                }
                 attribution={
-                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
                 }
             />
             <Marker position={position}>
