@@ -34,6 +34,7 @@ async function newPlayerTreesGenerator(req, res) {
         // res.json(freeTrees);
 
         newUserFunction(sendIdPlayer, freeTrees);
+        //console.log(getRandomTrees);
     } catch (error) {
         res.send(error);
     }
