@@ -7,4 +7,6 @@ router.get("/alltrees", treeService.getAllTrees);
 
 router.get("/:getidplayer", treeService.getIdPlayer);
 
+router.get("/newplayer/:treesgenerator", treeService.newPlayerTreesGenerator);
+
 module.exports = router;

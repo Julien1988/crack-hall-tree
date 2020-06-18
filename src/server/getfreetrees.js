@@ -1,47 +1,39 @@
-const newUserFunction = () => {
-    // Attribution des 3 arbres
+const newUserFunction = (getPlayerId, getFreeTrees) => {
+    //const playerId = getPlayerId;
+    const freeTrees = getFreeTrees;
+    const freeTreesNumber = freeTrees.length;
+    const randomTrees = [];
+    const getRandomTrees = [];
+    let i;
 
-    const getFreeTree = (newUserThreeIndex) => {
-        console.log(findUserTree[newUserThreeIndex[0]]._id);
-        console.log(findUserTree[newUserThreeIndex[1]]._id);
-        console.log(findUserTree[newUserThreeIndex[2]]._id);
-    };
-
-    // Algo pour la distribution des arbres des nouveaux joueurs:
-
-    let newUserThreeIndex = [];
-    function getRandomInt(max) {
-        let randomNumb;
-        for (let i = 0; i < 3; i++) {
-            randomNumb = Math.floor(Math.random() * Math.floor(max));
-            if (
-                randomNumb != newUserThreeIndex[0] &&
-                randomNumb != newUserThreeIndex[1] &&
-                randomNumb != newUserThreeIndex[2]
-            ) {
-                newUserThreeIndex.push(randomNumb);
-            } else {
-                i--;
+    if (freeTreesNumber > 10) {
+        const getRandomInt = (max) => {
+            let getRandomTree = Math.floor(Math.random() * Math.floor(max));
+            if (i !== 0) {
+                randomTrees.forEach((element) => {
+                    if (element !== getRandomTree) {
+                        randomTrees.push(getRandomTree);
+                    } else {
+                        i--;
+                    }
+                });
+                randomTrees.push(getRandomTree);
             }
+        };
+        for (i = 0; i < 3; i++) {
+            getRandomInt(freeTreesNumber);
         }
-        getFreeTree(newUserThreeIndex);
-    }
-
-    const findUserTree = [];
-
-    const newUserTree = () => {
-        //Netoyage de la variable
-        newUserThreeIndex = [];
-        //console.log(getAllThrees);
-        getAllThrees.forEach((element) => {
-            if (element.free === true) {
-                findUserTree.push(element);
+        if (i === 3) {
+            for (let index = 0; index < 3; index++) {
+                getRandomTrees.push(freeTrees[randomTrees[index]]);
             }
-        });
-        getRandomInt(findUserTree.length);
-        //console.log(findUserTree.length);
-    };
-    newUserTree();
+            console.log(getRandomTrees);
+        }
+    } else {
+        console.log(
+            "Il n'y a plus assez d'abres disponnible pour un nouveau joueur désolé...",
+        );
+    }
 };
 
 module.exports = newUserFunction;
