@@ -18,9 +18,9 @@ module.exports = router;
 /* function authenticate(req, res, next) {
     gamerService
         .authenticate(req.body)
-        .then(user =>
-            user
-                ? res.json(user)
+        .then(gamer =>
+            gamer
+                ? res.json(gamer)
                 : res
                       .status(400)
                       .json({message: "pseudo or password is incorrect"}),
@@ -38,21 +38,21 @@ function add(req, res, next) {
 function getAll(req, res, next) {
     gamerService
         .getAll()
-        .then(users => res.json(users))
+        .then(gamer => res.json(gamer))
         .catch(err => next(err));
 }
 
 function getCurrent(req, res, next) {
     gamerService
-        .getById(req.user.sub)
-        .then(user => (user ? res.json(user) : res.sendStatus(404)))
+        .getById(req.gamer.sub)
+        .then(gamer => (gamer ? res.json(gamer) : res.sendStatus(404)))
         .catch(err => next(err));
 }
 
 function getById(req, res, next) {
     gamerService
         .getById(req.params.id)
-        .then(user => (user ? res.json(user) : res.sendStatus(404)))
+        .then(gamer => (gamer ? res.json(gamer) : res.sendStatus(404)))
         .catch(err => next(err));
 }
 

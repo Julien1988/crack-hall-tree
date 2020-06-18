@@ -12,6 +12,7 @@ const db = require("../_helpers/db");
 const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
+//const algoService = require("./algo.service");
 
 module.exports = {
     authenticate,
@@ -53,6 +54,8 @@ async function create(userParam) {
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
+    //random 3 threes
+    //await algoService.get3Threes();
 
     // save user
     await user.save();

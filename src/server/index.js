@@ -24,9 +24,7 @@ app.use(jwt());
 app.use("/users", require("./users/users.controller"));
 app.use("/gamer", require("./gamer/gamer.controller"));
 
-app.get("/algo", (req, res) => {
-    res.send(res.data);
-});
+app.use("/algo", require("./algo/algo.controller"));
 
 // global error handler
 app.use(errorHandler);
