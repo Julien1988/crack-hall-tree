@@ -10,8 +10,8 @@ export default class RootComponent extends React.Component {
     render() {
         return (
             <div>
-                <Leaf />
                 <HomeConnect />
+                <Leaf />
             </div>
         );
     }

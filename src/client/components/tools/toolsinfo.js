@@ -14,7 +14,7 @@ import {NBSP} from "./constants";
 import "../scss/roots.scss";
 
 const ToolsInfo = ({onInfo, onOut}) => (
-    <div className={"sg-profilebtn"}>
+    <div className={"columns"}>
         <ButtonSmall
             label={""}
             title={"déconnection"}

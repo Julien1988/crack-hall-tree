@@ -7,6 +7,7 @@
 import React from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
+import {NBSP} from "../tools/constants";
 //import SignupForm from "../tools/from";
 // import {NBSP} from "../tools/constants";
 // import Logup from "../profil/logup";
@@ -28,38 +29,63 @@ const ModalInfo = ({showInfo = false, onHide}) => {
     if (showInfo === true) {
         return createPortal(
             <div style={containerStyles}>
-                <div className={"box"}>
-                    <button
-                        className={"button is-success is-small is-pulled-right"}
-                        label={"Close"}
-                        onClick={onHide}>
-                        {"X"}
-                    </button>
-                    <div>
-                        <h3>{"Profil : Bertho"}</h3>
+                <div className={"title modal-card"}>
+                    <header className={"modal-card-head"}>
+                        <p className={"modal-card-title"}>{"Profile"}</p>
+                    </header>
+                    <section className={"modal-card-body"}>
+                        <div className={""}>
+                            <p className={"title is-4 is-spaced"}>
+                                {"Name : "}
+                            </p>
+                            <p className={"subtitle is-5"}>{"Bertho"}</p>
+                            {NBSP}
+                            <p className={"title is-4 is-spaced"}>
+                                {" Money : "}
+                            </p>
+                            <p className={"subtitle is-5"}>{"8000 £"}</p>
+                            {NBSP}
+                            <p className={"title is-4 is-spaced"}>
+                                {"Classement  : "}
+                            </p>
+                            <p className={"subtitle is-5"}>{" 2"}</p>
+                            {NBSP}
+                            <p className={"title is-4 is-spaced"}>
+                                {"Historique des achats :"}
+                            </p>
+                            <p className={"subtitle is-5"}>
+                                <ul>
+                                    <li>{"monogos"}</li>
+                                    <li>{"popos"}</li>
+                                </ul>
+                            </p>
+                            {NBSP}
+                            <p className={"subtitle is-5"}>
+                                <a href={"#"}>{"Wikipedia"}</a>
+                            </p>
+                            {NBSP}
 
-                        {" Money : 8000 £"}
-
-                        {" Actuellement vous êtesnuméro : 2"}
-
-                        {"Historique des achats"}
-                        <ol>
-                            <li>{"monogos"}</li>
-                            <li>{"popos"}</li>
-                        </ol>
-
-                        <a href={"#"}>{"Wikipedia"}</a>
-
-                        {"Commentaires"}
-                        <ol>
-                            <li>{"comments"}</li>
-                            <li>{"comments"}</li>
-                        </ol>
-
-                        {"Warning"}
-
-                        {"Info"}
-                    </div>
+                            <p className={"title is-4 is-spaced"}>
+                                {"Commentaires :"}
+                            </p>
+                            <p className={"subtitle is-5"}>
+                                <ul>
+                                    <li>{"comments"}</li>
+                                    <li>{"comments"}</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                    <footer className={"modal-card-foot"}>
+                        <button
+                            className={
+                                "button is-success is-small is-pulled-right"
+                            }
+                            label={"Close"}
+                            onClick={onHide}>
+                            {"Close"}
+                        </button>
+                    </footer>
                 </div>
             </div>,
             document.querySelector("#modals"),
