@@ -11,7 +11,7 @@ mongoose.connect(uri, options, function (error) {
     // Check error in initial connection. There is no 2nd param to the callback.
     console.log(" !!!! OK  !!!");
 });
-let getAllTrees = [];
+
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {

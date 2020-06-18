@@ -5,7 +5,7 @@
  * coded by leny@BeCode
  * started at 18/05/2020
  */
-//require("rootpath");
+
 import express from "express";
 import path from "path";
 const bodyParser = require("body-parser");
@@ -15,7 +15,6 @@ const cors = require("cors");
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors());
-// import {nameByRace} from "fantasy-name-generator";
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
