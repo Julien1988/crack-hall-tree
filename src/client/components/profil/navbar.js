@@ -38,16 +38,10 @@ const HomeConnect = () => {
 
     return (
         <div
-            className={[
-                "columns",
-                "is-mobile",
-                "is-multiline",
-                "is-centered",
-                "mt-1",
-                "is-full",
-                "sg-up",
-            ].join(" ")}>
-            <div className={"border-sg"}>
+            className={["is-mobile", "is-multiline", "is-full", "sg-up"].join(
+                " ",
+            )}>
+            <div className={"buttons has-addons is-centered btn-sg"}>
                 <ToolsInfo onInfo={handleModalInfo} onOut={handleModalInfo} />
             </div>
 

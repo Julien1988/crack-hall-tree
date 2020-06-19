@@ -15,13 +15,7 @@ const Button = ({label, title, disabled = false, onClick}) => (
     <button
         onClick={onClick}
         disabled={disabled}
-        className={[
-            "button",
-            "is-success",
-            "is-outlined",
-            "is-fullwidth",
-            "sg-btn",
-        ].join(" ")}
+        className={["button"].join(" ")}
         type={"button"}
         title={title || label}>
         <i className={"fas fa-users"} />
