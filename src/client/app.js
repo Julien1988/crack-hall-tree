@@ -8,9 +8,6 @@
 
 import * as React from "react";
 import ReactDOM from "react-dom";
+import RootComponent from "./roots";
 
-import Map from "./components/map";
-
-import "./style/map.scss";
-
-ReactDOM.render(<Map />, document.querySelector("#mapid"));
+ReactDOM.render(<RootComponent />, document.querySelector("#app"));

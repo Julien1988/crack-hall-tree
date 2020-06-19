@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /* becodeorg/mwenbwa
  *
  * /webpack.config.js - Webpack configuration
@@ -6,13 +7,11 @@
  * started at 18/05/2020
  */
 
-/* eslint-disable */
-
 const webpack = require("webpack");
 const {resolve} = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = (env) => {
+module.exports = env => {
     const plugins = [
         new webpack.EnvironmentPlugin({
             NODE_ENV: env === "dev" ? "development" : "production",
@@ -73,8 +72,12 @@ module.exports = (env) => {
                     ],
                 },
                 {
-                    test: /.css$/,
+                    test: /\.css$/,
                     use: ["style-loader", "css-loader"],
+                },
+                {
+                    test: /\.scss$/,
+                    use: ["style-loader", "css-loader", "sass-loader"],
                 },
                 {
                     test: /\.js$/,

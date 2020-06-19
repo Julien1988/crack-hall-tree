@@ -1,26 +1,25 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
+/* eslint-disable no-sync */
+/* eslint-disable global-require */
+//const config = require("config.json");
 const mongoose = require("mongoose");
-const uri = "mongodb://mongo:27017/";
-const options = {
+const connectionOptions = {
+    useCreateIndex: true,
     useNewUrlParser: true,
-    dbName: "crack-hall-three",
-    user: "dev",
-    pass: "dev",
+    useUnifiedTopology: true,
+    useFindAndModify: false,
 };
+//mongoose.connect(process.env.MONGODB_URI || config.connectionString, connectionOptions);//connexion locale required config.json
+const uri =
+    "mongodb+srv://dbUser:dYhU1vxb81ZX9yyT@bertholdmongodb-ztfz0.mongodb.net/crakehalltrees?retryWrites=true&w=majority";
+mongoose.connect(uri, connectionOptions);
+mongoose.Promise = global.Promise;
 
-mongoose.connect(uri, options, function (error) {
-    // Check error in initial connection. There is no 2nd param to the callback.
-    console.log(" !!!! OK  !!!");
-});
-
-let db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function () {
-    // we're connected!
-    console.log("==> CONNECTE <==");
-});
-
-db.on("error", console.error.bind(console, "connection error:"));
-
+//
 module.exports = {
-    Trees: require("../trees/trees.model"),
+    User: require("../users/user.model"),
+    Gamer: require("../gamer/gamer.model"),
+    Arbustum: require("../algo/arbustum.model"),
 };
