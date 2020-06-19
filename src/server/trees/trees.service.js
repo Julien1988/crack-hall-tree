@@ -1,8 +1,8 @@
 const db = require("../_helpers/db");
 const Trees = db.Trees;
-const newUserFunction = require("../getfreetrees");
-const otherPlayerPrice = require("../otherplayerprice");
-//const {createIndexes} = require("./trees.model");
+const newUserFunction = require("./utils/getfreetrees");
+const otherPlayerPrice = require("./utils/otherplayerprice");
+//const current = require("../users/users.controller");
 
 // Récupération de l'ensemble des arbres
 async function getAllTrees(req, res) {
@@ -14,6 +14,10 @@ async function getAllTrees(req, res) {
         res.send(error.response.data.message);
     }
 }
+/* async function getCurrent(req, res) {
+    const momo = await current.getCurrent();
+    res.json(momo);
+} */
 
 // Recupération de l'id d'un joueur et envois des arbres correspondant
 async function getIdPlayer(req, res) {
