@@ -40,8 +40,14 @@ export default class Login extends React.Component {
         //let messsageError "";
         axios
             .post("http://localhost/users/authenticate", user)
-            .then(res => console.log(res.data))
-            .catch(erreur => {
+            .then((res) => {
+                localStorage.setItem(
+                    "tokenUserId",
+                    JSON.stringify(res.data.id),
+                );
+                console.log(res.data.id);
+            })
+            .catch((erreur) => {
                 console.warn(`Error${erreur.response.data.message}`);
                 //this.messsageError = erreur.response.data.message;
             });

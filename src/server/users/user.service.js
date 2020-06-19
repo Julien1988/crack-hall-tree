@@ -18,6 +18,7 @@ const secret =
 module.exports = {
     authenticate,
     getAll,
+
     getById,
     create,
     update,
@@ -27,7 +28,12 @@ module.exports = {
 async function authenticate({pseudo, password}) {
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
+        console.log(" ===> !!! ici authenticate !!! <===");
+        //console.log(user.id);
+        //CURRENT_ID.push(user.id);
+        //console.log(CURRENT_ID);
         const token = jwt.sign({sub: user.id}, secret);
+
         return {
             ...user.toJSON(),
             token,

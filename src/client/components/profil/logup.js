@@ -59,8 +59,11 @@ export default class Logup extends React.Component {
         //let messsageError "";
         axios
             .post("http://localhost/users/register", user)
-            .then(res => console.log(res.data))
-            .catch(erreur => {
+            .then((res) => {
+                localStorage.setItem("tokenUser", JSON.stringify(res.data.id));
+                console.log(res.data);
+            })
+            .catch((erreur) => {
                 console.warn(`Error${erreur.response.data.message}`);
             });
         //sinon redirection
