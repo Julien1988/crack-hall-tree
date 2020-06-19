@@ -7,6 +7,7 @@ const algoService = require("./algo.service");
 // routes
 router.get("/tree", algoService.getAll);
 router.get("/3Trees", algoService.get3Threes);
+router.get("/gamerupdate", algoService.update);
 //router.get("/show", algoService.sheete);
 //router.get("/:id", getById);
 //router.put("/:id", update);

@@ -6,7 +6,7 @@ const schema = new Schema({
     hash: {type: String, required: true},
     email: {type: String, required: true},
     color: {type: String, required: true},
-    score: {type: Number},
+    money: {type: Number},
     ranking: {type: Number},
     history: {type: Date},
     update: {type: Date},
