@@ -35,8 +35,9 @@ async function getAllUsers(req, res) {
 }
 async function getAll(req, res) {
     try {
-        const threes = await Arbustum.find();
-        res.json(threes.map(three => three.nom_complet));
+        const trees = await Arbustum.find();
+        //res.json(threes.map(tree => tree.nom_complet));
+        res.json(trees[0]);
     } catch (error) {
         res.send(error);
         // expected output: ReferenceError: nonExistentFunction is not defined

@@ -17,7 +17,6 @@ const secret =
 
 module.exports = {
     authenticate,
-    revokeToken,
     getAll,
     getById,
     create,
@@ -34,14 +33,6 @@ async function authenticate({pseudo, password}) {
             token,
         };
     }
-}
-async function revokeToken({token, ipAddress}) {
-    const refreshToken = await getRefreshToken(token);
-
-    // revoke token and save
-    refreshToken.revoked = Date.now();
-    refreshToken.revokedByIp = ipAddress;
-    await refreshToken.save();
 }
 
 async function getAll() {

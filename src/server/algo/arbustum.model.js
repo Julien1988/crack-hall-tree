@@ -2,6 +2,25 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
+    nom_complet: {type: String},
+    arbotag: {type: Number},
+    geoloc: {
+        lat: {type: Number},
+        lon: {type: Number},
+    },
+    hauteur_totale: {type: Number},
+    diametre_cime: {type: Number},
+    circonf: {type: Number},
+    player_id: {type: Number},
+    player_color: {type: Number},
+    leave: {type: Number},
+    random_name: {type: String},
+    locked: {type: Boolean},
+    free: {type: Boolean},
+    wikilink: {type: String},
+    comment: {type: String},
+});
+/* const schema = new Schema({
     y_lambert72: {type: Number},
     arbotag: {type: Number},
     date_donnees: {type: Date},
@@ -16,7 +35,7 @@ const schema = new Schema({
     nom_complet: {type: String},
     diametre_cime: {type: Number},
     circonf: {type: Number},
-});
+}); */
 
 schema.set("toJSON", {
     virtuals: true,

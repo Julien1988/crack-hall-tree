@@ -8,7 +8,7 @@ module.exports = jwt;
 function jwt() {
     const secret =
         "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
-    return expressJwt({secret, isRevoked}, {expiresIn: "60m"}).unless({
+    return expressJwt({secret, isRevoked}, {expiresIn: "1m"}).unless({
         path: [
             // public routes that don"t require authentication
             "/users/authenticate",
