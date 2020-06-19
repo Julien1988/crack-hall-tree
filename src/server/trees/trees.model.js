@@ -30,4 +30,4 @@ treeSchema.set("toJSON", {
     },
 });
 
-module.exports = mongoose.model("Trees", treeSchema, "threes");
+module.exports = mongoose.model("Trees", treeSchema, "arbustum");

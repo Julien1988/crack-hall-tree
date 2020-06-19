@@ -2,7 +2,7 @@ const db = require("../_helpers/db");
 const Trees = db.Trees;
 const newUserFunction = require("../getfreetrees");
 const otherPlayerPrice = require("../otherplayerprice");
-const {createIndexes} = require("./trees.model");
+//const {createIndexes} = require("./trees.model");
 
 // Récupération de l'ensemble des arbres
 async function getAllTrees(req, res) {

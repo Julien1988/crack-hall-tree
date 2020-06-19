@@ -1,7 +1,8 @@
-﻿const express = require("express");
+﻿/* eslint-disable no-unused-vars */
+const express = require("express");
 const router = express.Router();
 const treeService = require("./trees.service");
-const {RuleTester} = require("eslint");
+//const {RuleTester} = require("eslint");
 
 router.get("/alltrees", treeService.getAllTrees);
 
