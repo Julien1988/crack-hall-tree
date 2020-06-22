@@ -30,13 +30,13 @@ async function getIdPlayer(req, res) {
 
 async function newPlayerTreesGenerator(req, res) {
     try {
-        const idPlayer = await req.params;
-        const sendIdPlayer = await idPlayer.treesgenerator;
+        const idPlayer = await req.params.getidplayer;
+        //const sendIdPlayer = await idPlayer.treesgenerator;
         //console.log(sendIdPlayer);
         const freeTrees = await Trees.find({free: true});
         // res.json(freeTrees);
 
-        newUserFunction(sendIdPlayer, freeTrees);
+        newUserFunction(idPlayer, freeTrees);
         //console.log(getRandomTrees);
     } catch (error) {
         res.send(error);
@@ -57,9 +57,23 @@ async function buyOtherPlayerTree(req, res) {
     }
 }
 
+async function lockFreeTree(req, res) {
+    try {
+        const idPlayer = await req.params.getidplayer;
+        const idTree = await req.params.getidtree;
+
+        const getTreeToLock = await Trees.findById(idTree.idTree);
+        const allTrees = await Trees.find();
+        lockFreeTree(idPlayer, getTreeToLock, allTrees);
+    } catch (error) {
+        res.send(error);
+    }
+}
+
 module.exports = {
     getAllTrees,
     getIdPlayer,
     newPlayerTreesGenerator,
     buyOtherPlayerTree,
+    lockFreeTree,
 };

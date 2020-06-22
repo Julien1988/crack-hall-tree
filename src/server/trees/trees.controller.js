@@ -8,11 +8,13 @@ router.get("/alltrees", treeService.getAllTrees);
 
 router.get("/:getidplayer", treeService.getIdPlayer);
 
-router.get("/newplayer/:treesgenerator", treeService.newPlayerTreesGenerator);
+router.get("/newplayer/:getidplayer", treeService.newPlayerTreesGenerator);
 
 router.get(
     "/buyotherplayertree/:treeid/:playerid",
     treeService.buyOtherPlayerTree,
 );
+
+router.get("/locktree/:getidplayer/:getidtree", treeService.lockFreeTree);
 
 module.exports = router;

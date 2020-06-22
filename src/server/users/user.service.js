@@ -14,6 +14,7 @@ const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 //const algoService = require("./algo.service");
+import("../global");
 
 module.exports = {
     authenticate,
@@ -29,7 +30,8 @@ async function authenticate({pseudo, password}) {
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
         console.log(" ===> !!! ici authenticate !!! <===");
-        //console.log(user.id);
+        console.log(user.id);
+
         //CURRENT_ID.push(user.id);
         //console.log(CURRENT_ID);
         const token = jwt.sign({sub: user.id}, secret);
