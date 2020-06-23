@@ -15,6 +15,7 @@ export default class Login extends React.Component {
         this.state = {
             pseudo: "",
             password: "",
+            onClose: true,
         };
     }
     onChangePseudo(e) {
@@ -35,19 +36,21 @@ export default class Login extends React.Component {
             pseudo: this.state.pseudo,
             password: this.state.password,
         };
+        this.state.onClose = false;
+        console.log(this.state.onClose);
 
         // console.log(user);
         //let messsageError "";
         axios
             .post("http://localhost/users/authenticate", user)
-            .then((res) => {
+            .then(res => {
                 localStorage.setItem(
                     "tokenUserId",
                     JSON.stringify(res.data.id),
                 );
                 console.log(res.data.id);
             })
-            .catch((erreur) => {
+            .catch(erreur => {
                 console.warn(`Error${erreur.response.data.message}`);
                 //this.messsageError = erreur.response.data.message;
             });

@@ -4,11 +4,11 @@
  * creation for montagne
  * creat 25/05/2020
  */
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
 import {NBSP} from "../tools/constants";
-// import axios from "axios";
+import axios from "axios";
 //import SignupForm from "../tools/from";
 // import {NBSP} from "../tools/constants";
 // import Logup from "../profil/logup";
@@ -27,6 +27,24 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
+    // const [currentId, setCurrentId] = useState();
+    // const [state, setState] = useState();
+
+    // useEffect(() => {
+    //     setState(localStorage.getItem("tokenUserId"));
+
+    //     if (state !== undefined) {
+    //         console.log(state);
+
+    //         axios
+    //             .get(`http://localhost/users/${state}`)
+    //             .then(res => console.log(res.data))
+    //             .catch(erreur => {
+    //                 console.warn(erreur);
+    //             });
+    //     }
+    // });
+
     if (showInfo === true) {
         return createPortal(
             <div style={containerStyles}>
