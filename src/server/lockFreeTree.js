@@ -6,6 +6,7 @@ const lockFreeTree = (idPlayer, getTreeToLock, allTrees) => {
     const treeToOtherPlayers = [];
     let treePrinceInRadius = 0;
     let treeInRadiusValiue = 0;
+    let value;
 
     const center = {
         lat: getTreeToLock.geoloc.lat,
@@ -52,4 +53,8 @@ const lockFreeTree = (idPlayer, getTreeToLock, allTrees) => {
         treeInRadiusValiue / uniqueIdPlayerTree.length;
 
     console.log(treeLockPrice);
+
+    value = treeLockPrice;
+
+    return value;
 };
