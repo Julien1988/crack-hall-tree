@@ -8,6 +8,7 @@ import React from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
 import {NBSP} from "../tools/constants";
+// import axios from "axios";
 //import SignupForm from "../tools/from";
 // import {NBSP} from "../tools/constants";
 // import Logup from "../profil/logup";
@@ -38,7 +39,7 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"title is-4 is-spaced"}>
                                 {"Name : "}
                             </p>
-                            <p className={"subtitle is-5"}>{"Bertho"}</p>
+                            <p className={"subtitle is-5"} />
                             {NBSP}
                             <p className={"title is-4 is-spaced"}>
                                 {" Money : "}
