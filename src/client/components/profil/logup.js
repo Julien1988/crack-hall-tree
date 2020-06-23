@@ -120,6 +120,7 @@ export default class Logup extends React.Component {
                             value={this.state.color}
                             onChange={this.onChangeColor}>
                             <select>
+                                <option>{"color choice"}</option>
                                 <option>{"red"}</option>
                                 <option>{"yellow"}</option>
                                 <option>{"green"}</option>
