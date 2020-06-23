@@ -27,23 +27,22 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
-    // const [currentId, setCurrentId] = useState();
-    // const [state, setState] = useState();
+    const [currentId, setCurrentId] = useState();
+    const [state, setState] = useState(localStorage.getItem("tokenUserId"));
+    localStorage.getItem("tokenUserId");
 
-    // useEffect(() => {
-    //     setState(localStorage.getItem("tokenUserId"));
+    useEffect(() => {
+        if (state != undefined) {
+            console.log(state);
 
-    //     if (state !== undefined) {
-    //         console.log(state);
-
-    //         axios
-    //             .get(`http://localhost/users/${state}`)
-    //             .then(res => console.log(res.data))
-    //             .catch(erreur => {
-    //                 console.warn(erreur);
-    //             });
-    //     }
-    // });
+            axios
+                .get(`http://localhost/users/${state}`)
+                .then(res => console.log(res.data))
+                .catch(erreur => {
+                    console.warn(erreur);
+                });
+        }
+    }, []);
 
     if (showInfo === true) {
         return createPortal(
