@@ -28,22 +28,29 @@ const containerStyles = {
 
 const ModalInfo = ({showInfo = false, onHide}) => {
     const [currentId, setCurrentId] = useState();
-    const [state, setState] = useState("5eecad6736513b0049e8efc4");
-    //localStorage.getItem("tokenUserId")
-    console.log(localStorage.getItem("tokenUserId"));
-
+    const [state, setState] = useState();
+    const [userInfo, setUserInfo] = useState([]);
+    const [requestDone, setRequestDone] = useState(false);
     useEffect(() => {
-        if (state != undefined) {
-            console.log(state);
+        setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
+        console.log(state);
+        let getRequest = "http://localhost/users/" + state;
+        console.log(getRequest);
+        if (getRequest != undefined && requestDone != true) {
             axios
-                .get(`http://localhost/users/${state}`)
-                .then((res) => console.log(res.data))
+                .get(getRequest)
+                .then((res) => setUserInfo(res.data))
                 .catch((erreur) => {
                     console.warn(erreur);
                 });
+
+            if (userInfo.id != undefined) {
+                setRequestDone(true);
+            }
         }
-    }, []);
+    });
+    console.log(userInfo);
 
     if (showInfo === true) {
         return createPortal(
