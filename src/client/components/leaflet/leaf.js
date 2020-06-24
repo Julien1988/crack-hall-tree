@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-no-literals */
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 //
 //import {render} from "react-dom";
 import {Map, Marker, Popup, TileLayer, Circle} from "react-leaflet";
@@ -131,25 +131,65 @@ const Leaf = () => {
                     <React.Fragment key={item._id}>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
-                                Nom de l'arbre: {item.random_name}
-                                <br />
-                                Nombre de feuilles : {item.leave}
-                                <br /> <a href={item.wikilink}> Lien wiki</a>
-                                <br /> Commentaire : {item.comment}
-                                <br /> lat: {item.geoloc.lat} long:
-                                {item.geoloc.lon}
-                                <br /> Buy :
-                                <button
-                                    className={
-                                        "button is-success is-small is-pulled-right"
-                                    }
-                                    label={"Close"}
-                                    // {() => this.handleClick(id)}
-                                    onClick={() =>
-                                        handelbuyTree(item.buyButton)
-                                    }>
-                                    {item.free}
-                                </button>
+                                <div
+                                    className={[
+                                        "title",
+                                        "modal-card",
+                                        "sg-tree",
+                                    ].join(" ")}>
+                                    <header className={"modal-card-head"}>
+                                        <p
+                                            className={
+                                                "modal-card-title is-6 is-spaced"
+                                            }>
+                                            <strong>{"Profile tree"}</strong>
+                                        </p>
+                                    </header>
+                                    <section className={"modal-card-body"}>
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"Nom de l'arbre:"}</strong>{" "}
+                                            {item.random_name}{" "}
+                                        </p>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>
+                                                {"Nombre de feuilles :"}
+                                            </strong>{" "}
+                                            {item.leave}
+                                        </p>
+
+                                        <a
+                                            className={"subtitle is-5"}
+                                            href={item.wikilink}>
+                                            {"Lien wikipédia"}
+                                        </a>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"Commentaire :"}</strong>{" "}
+                                            {item.comment}
+                                        </p>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"lat:"}</strong>{" "}
+                                            {item.geoloc.lat} <br />{" "}
+                                            <strong>{"long:"}</strong>
+                                            {item.geoloc.lon}
+                                        </p>
+                                    </section>
+                                    <footer className={"modal-card-foot"}>
+                                        <button
+                                            className={
+                                                "button is-success is-small is-pulled-right"
+                                            }
+                                            label={"Close"}
+                                            // {() => this.handleClick(id)}
+                                            onClick={() =>
+                                                handelbuyTree(item.buyButton)
+                                            }>
+                                            {"Buy Me !"}
+                                        </button>
+                                    </footer>
+                                </div>
                             </Popup>
                         </Marker>
                     </React.Fragment>
@@ -174,9 +214,5 @@ const Leaf = () => {
         </Map>
     );
 };
-
-// Leaf.propTypes = {
-//     buyTree: PropTypes.func.isRequired,
-// };
 
 export default Leaf;

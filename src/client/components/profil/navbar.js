@@ -35,6 +35,9 @@ const HomeConnect = () => {
     const handleModalInfo = useCallback(() => {
         setModalShowInfo(true);
     }, [setModalShowInfo]);
+    const handleModalDeco = () => {
+        window.location = "/";
+    };
 
     return (
         <div
@@ -42,7 +45,7 @@ const HomeConnect = () => {
                 " ",
             )}>
             <div className={"buttons has-addons is-centered btn-sg"}>
-                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalInfo} />
+                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalDeco} />
             </div>
 
             <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />

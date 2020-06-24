@@ -4,13 +4,13 @@
  * creation for montagne
  * creat 25/05/2020
  */
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
-import {NBSP} from "../tools/constants";
-import axios from "axios";
+
+// import axios from "axios";
 //import SignupForm from "../tools/from";
-// import {NBSP} from "../tools/constants";
+
 // import Logup from "../profil/logup";
 
 const containerStyles = {
@@ -27,22 +27,22 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
-    const [currentId, setCurrentId] = useState();
-    const [state, setState] = useState(localStorage.getItem("tokenUserId"));
-    localStorage.getItem("tokenUserId");
+    // const [currentId, setCurrentId] = useState();
+    // const [state, setState] = useState(localStorage.getItem("tokenUserId"));
+    // localStorage.getItem("tokenUserId");
 
-    useEffect(() => {
-        if (state != undefined) {
-            console.log(state);
+    // useEffect(() => {
+    //     if (state != undefined) {
+    //         console.log(state);
 
-            axios
-                .get(`http://localhost/users/${state}`)
-                .then(res => console.log(res.data))
-                .catch(erreur => {
-                    console.warn(erreur);
-                });
-        }
-    }, []);
+    //         axios
+    //             .get(`http://localhost/users/${state}`)
+    //             .then(res => console.log(res.data))
+    //             .catch(erreur => {
+    //                 console.warn(erreur);
+    //             });
+    //     }
+    // }, []);
 
     if (showInfo === true) {
         return createPortal(
@@ -50,25 +50,27 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                 <div className={"title modal-card"}>
                     <header className={"modal-card-head"}>
                         <p className={"modal-card-title"}>{"Profile"}</p>
+                        <button
+                            className={
+                                "button is-success is-small is-pulled-right"
+                            }
+                            label={"Close"}
+                            onClick={onHide}>
+                            {"X"}
+                        </button>
                     </header>
                     <section className={"modal-card-body"}>
                         <div className={""}>
-                            <p className={"title is-4 is-spaced"}>
-                                {"Name : "}
-                            </p>
+                            <p className={"title is-4"}>{"Name : "}</p>
                             <p className={"subtitle is-5"} />
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
-                                {" Money : "}
-                            </p>
+
+                            <p className={"title is-4"}>{" Money : "}</p>
                             <p className={"subtitle is-5"}>{"8000 £"}</p>
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
-                                {"Classement  : "}
-                            </p>
+
+                            <p className={"title is-4"}>{"Classement  : "}</p>
                             <p className={"subtitle is-5"}>{" 2"}</p>
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
+
+                            <p className={"title is-4"}>
                                 {"Historique des achats :"}
                             </p>
                             <div className={"subtitle is-5"}>
@@ -77,15 +79,12 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                                     <li>{"popos"}</li>
                                 </ul>
                             </div>
-                            {NBSP}
+
                             <p className={"subtitle is-5"}>
                                 <a href={"#"}>{"Wikipedia"}</a>
                             </p>
-                            {NBSP}
 
-                            <p className={"title is-4 is-spaced"}>
-                                {"Commentaires :"}
-                            </p>
+                            <p className={"title is-4"}>{"Commentaires :"}</p>
                             <div className={"subtitle is-5"}>
                                 <ul>
                                     <li>{"comments"}</li>
@@ -94,16 +93,7 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             </div>
                         </div>
                     </section>
-                    <footer className={"modal-card-foot"}>
-                        <button
-                            className={
-                                "button is-success is-small is-pulled-right"
-                            }
-                            label={"Close"}
-                            onClick={onHide}>
-                            {"Close"}
-                        </button>
-                    </footer>
+                    <footer className={"modal-card-foot"} />
                 </div>
             </div>,
             document.querySelector("#modals"),
