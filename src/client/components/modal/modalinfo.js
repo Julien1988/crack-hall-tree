@@ -32,12 +32,12 @@ const ModalInfo = ({showInfo = false, onHide}) => {
     const [userInfo, setUserInfo] = useState([]);
     const [requestDone, setRequestDone] = useState(false);
     useEffect(() => {
-        setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
+        setState(localStorage.getItem("tokenUserId").replace(/"/g, ""));
 
-        console.log(state);
+        console.warn(state);
         let getRequest = "http://localhost/users/" + state;
-        console.log(getRequest);
-        if (getRequest != undefined && requestDone != true) {
+        console.warn(getRequest);
+        if (getRequest !== undefined && requestDone !== true) {
             axios
                 .get(getRequest)
                 .then((res) => setUserInfo(res.data))
@@ -45,12 +45,12 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                     console.warn(erreur);
                 });
 
-            if (userInfo.id != undefined) {
+            if (userInfo.id !== undefined) {
                 setRequestDone(true);
             }
         }
     });
-    console.log(userInfo);
+    console.warn(userInfo);
 
     if (showInfo === true) {
         return createPortal(
@@ -75,36 +75,31 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"subtitle is-5"}>{userInfo.email}</p> 
                             <p className={"title is-4"}>{"Color : "}</p>
                             <p className={"subtitle is-5"}>{userInfo.color}</p>
-                            <p className={"title is-4"}>{"Date Creation : "}</p>
-                            <p className={"subtitle is-5"}>{userInfo.createdDate}</p>
-
                             <p className={"title is-4"}>{" Money : "}</p>
                             <p className={"subtitle is-5"}>{"8000 £"}</p>
-
                             <p className={"title is-4"}>{"Classement  : "}</p>
                             <p className={"subtitle is-5"}>{" 2"}</p>
-
                             <p className={"title is-4"}>
                                 {"Historique des achats :"}
                             </p>
-                            <div className={"subtitle is-5"}>
-                                <ul>
+                           
+                                <ul className={"subtitle is-5"}>
                                     <li>{"monogos"}</li>
                                     <li>{"popos"}</li>
                                 </ul>
-                            </div>
-
+                            
                             <p className={"subtitle is-5"}>
                                 <a href={"#"}>{"Wikipedia"}</a>
                             </p>
-
                             <p className={"title is-4"}>{"Commentaires :"}</p>
-                            <div className={"subtitle is-5"}>
-                                <ul>
+                            
+                                <ul className={"subtitle is-5"}>
                                     <li>{"comments"}</li>
                                     <li>{"comments"}</li>
                                 </ul>
-                            </div>
+                        
+                            <p className={"title is-4"}>{"Date Creation : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.createdDate}</p>
                         </div>
                     </section>
                     <footer className={"modal-card-foot"} />
