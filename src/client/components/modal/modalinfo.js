@@ -28,8 +28,9 @@ const containerStyles = {
 
 const ModalInfo = ({showInfo = false, onHide}) => {
     const [currentId, setCurrentId] = useState();
-    const [state, setState] = useState(localStorage.getItem("tokenUserId"));
-    localStorage.getItem("tokenUserId");
+    const [state, setState] = useState("5eecad6736513b0049e8efc4");
+    //localStorage.getItem("tokenUserId")
+    console.log(localStorage.getItem("tokenUserId"));
 
     useEffect(() => {
         if (state != undefined) {
@@ -37,8 +38,8 @@ const ModalInfo = ({showInfo = false, onHide}) => {
 
             axios
                 .get(`http://localhost/users/${state}`)
-                .then(res => console.log(res.data))
-                .catch(erreur => {
+                .then((res) => console.log(res.data))
+                .catch((erreur) => {
                     console.warn(erreur);
                 });
         }
