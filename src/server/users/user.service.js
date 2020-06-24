@@ -33,6 +33,9 @@ async function authenticate({pseudo, password}) {
             token,
         };
     }
+    Object.assign(user, userParam);
+
+    await user.save();
 }
 
 async function getAll() {
@@ -42,7 +45,18 @@ async function getAll() {
 async function getById(id) {
     return await User.findById(id);
 }
-
+/* async function current(req.user.sub) {
+    try {
+        const trees = await Arbustum.find();
+        //res.json(threes.map(tree => tree.nom_complet));
+        //console.log(trees);
+        res.json(trees[0]);
+    } catch (error) {
+        res.send(error);
+        // expected output: ReferenceError: nonExistentFunction is not defined
+        // Note - error messages will vary depending on browser
+    }
+} */
 async function create(userParam) {
     // validate
     if (await User.findOne({pseudo: userParam.pseudo})) {
