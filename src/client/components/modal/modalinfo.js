@@ -4,11 +4,11 @@
  * creation for montagne
  * creat 25/05/2020
  */
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
 
-// import axios from "axios";
+import axios from "axios";
 //import SignupForm from "../tools/from";
 
 // import Logup from "../profil/logup";
@@ -28,21 +28,29 @@ const containerStyles = {
 
 const ModalInfo = ({showInfo = false, onHide}) => {
     // const [currentId, setCurrentId] = useState();
-    // const [state, setState] = useState(localStorage.getItem("tokenUserId"));
-    // localStorage.getItem("tokenUserId");
+    const [state, setState] = useState();
+    const [userInfo, setUserInfo] = useState([]);
+    const [requestDone, setRequestDone] = useState(false);
+    useEffect(() => {
+        setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
-    // useEffect(() => {
-    //     if (state != undefined) {
-    //         console.log(state);
+        console.log(state);
+        let getRequest = "http://localhost/users/" + state;
+        console.log(getRequest);
+        if (getRequest != undefined && requestDone != true) {
+            axios
+                .get(getRequest)
+                .then((res) => setUserInfo(res.data))
+                .catch((erreur) => {
+                    console.warn(erreur);
+                });
 
-    //         axios
-    //             .get(`http://localhost/users/${state}`)
-    //             .then(res => console.log(res.data))
-    //             .catch(erreur => {
-    //                 console.warn(erreur);
-    //             });
-    //     }
-    // }, []);
+            if (userInfo.id != undefined) {
+                setRequestDone(true);
+            }
+        }
+    });
+    console.log(userInfo);
 
     if (showInfo === true) {
         return createPortal(
@@ -62,7 +70,13 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                     <section className={"modal-card-body"}>
                         <div className={""}>
                             <p className={"title is-4"}>{"Name : "}</p>
-                            <p className={"subtitle is-5"} />
+                            <p className={"subtitle is-5"}>{userInfo.pseudo}</p>
+                            <p className={"title is-4"}>{"Email : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.email}</p> 
+                            <p className={"title is-4"}>{"Color : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.color}</p>
+                            <p className={"title is-4"}>{"Date Creation : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.createdDate}</p>
 
                             <p className={"title is-4"}>{" Money : "}</p>
                             <p className={"subtitle is-5"}>{"8000 £"}</p>
