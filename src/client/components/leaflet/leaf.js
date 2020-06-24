@@ -4,8 +4,8 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 // import PropTypes from "prop-types";
-//
 //import {render} from "react-dom";
+//import MarkerClusterGroup from "react-leaflet-markercluster";
 import {Map, Marker, Popup, TileLayer, Circle} from "react-leaflet";
 import {insideCircle} from "geolocation-utils";
 import "leaflet/dist/leaflet.css";

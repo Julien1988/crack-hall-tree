@@ -6,13 +6,11 @@ import HomeConnect from "./components/profil/navbar";
 import "./components/scss/roots.scss";
 //import Userinfos from "./components/profil/userinfo";
 
-export default class RootComponent extends React.Component {
-    render() {
-        return (
-            <div>
-                <HomeConnect />
-                <Leaf />
-            </div>
-        );
-    }
-}
+const RootComponent = () => (
+    <div>
+        <HomeConnect />
+        <Leaf />
+    </div>
+);
+
+export default RootComponent;
