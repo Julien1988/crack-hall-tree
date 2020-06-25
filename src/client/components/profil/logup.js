@@ -71,16 +71,15 @@ const Logup = () => {
             <div className={"field box"}>
                 <p className={"control"}>
                     <label>{"Colors "}</label>
-                    <p
-                        className={"select"}
-                        as={"select"}
-                        type={"text"}
-                        name={"colors"}
-                        id={"colors"}
-                        placeholder={"Your color"}
-                        value={formik.values.color}
-                        onChange={formik.handleChange}>
-                        <select>
+                    <p className={"select"}>
+                        <select
+                            as={"select"}
+                            type={"text"}
+                            name={"color"}
+                            id={"color"}
+                            placeholder={"Your color"}
+                            value={formik.values.color}
+                            onChange={formik.handleChange}>
                             <option>{"color choice"}</option>
                             <option>{"red"}</option>
                             <option>{"yellow"}</option>
