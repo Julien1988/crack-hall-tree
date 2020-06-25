@@ -10,7 +10,7 @@ const newUserFunction = (getPlayerId, getFreeTrees) => {
     const getRandomTrees = [];
     let i;
     let getRandomTreeNumber;
-
+    console.log("==> GETFREETREES <==");
     if (freeTreesNumber > 10) {
         const getRandomInt = (max) => {
             getRandomTreeNumber = Math.floor(Math.random() * Math.floor(max));
@@ -45,8 +45,9 @@ const newUserFunction = (getPlayerId, getFreeTrees) => {
                         treeArray._id,
                         function (err, doc) {
                             doc.player_id = getPlayerId;
+                            doc.free = false;
                             doc.save();
-                            console.log(doc);
+                            console.log("modification de l'abre");
                         },
                     );
                 } catch (error) {

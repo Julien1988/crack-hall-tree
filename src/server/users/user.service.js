@@ -16,6 +16,8 @@ const secret =
 //const algoService = require("./algo.service");
 import("../global");
 
+const treeService = require("../trees/trees.service");
+
 module.exports = {
     authenticate,
     getAll,
@@ -63,11 +65,27 @@ async function create(userParam) {
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
-    //random 3 threes
-    //await algoService.get3Threes();
 
-    // save user
+
+    console.log("coucou", user.pseudo);
     await user.save();
+    const findIdPlayer = await findUserId(user.pseudo);
+    console.log("this is a test: ", findIdPlayer);
+    console.log(findIdPlayer._id);
+
+  
+
+async function findUserId(playerPseudo) {
+    const user = await User.findOne({pseudo: playerPseudo}, (err) => {
+        if (err) {
+            console.log(err);
+            return null;
+        }
+        // console.log(user);
+    });
+    // console.log("finding user: ", user);
+    return user;
+    // console.log(userInfo);
 }
 
 async function update(id, userParam) {

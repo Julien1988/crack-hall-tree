@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 const treeService = require("./trees.service");
+const userService = require("../users/user.service");
+const {User} = require("../_helpers/db");
 //const {RuleTester} = require("eslint");
 
 router.get("/alltrees", treeService.getAllTrees);

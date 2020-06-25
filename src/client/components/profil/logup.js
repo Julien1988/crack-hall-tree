@@ -8,6 +8,8 @@ export default class Logup extends React.Component {
     constructor(props) {
         super(props);
 
+        this.nextStape = false;
+
         this.onChangePseudo = this.onChangePseudo.bind(this);
         this.onChangeColor = this.onChangeColor.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -57,18 +59,20 @@ export default class Logup extends React.Component {
 
         console.log(user);
         //let messsageError "";
+
         axios
             .post("http://localhost/users/register", user)
-            .then(res => {
+            .then((res) => {
                 localStorage.setItem(
                     "tokenUserId",
                     JSON.stringify(res.data.id),
                 );
                 console.log(res.data);
             })
-            .catch(erreur => {
+            .catch((erreur) => {
                 console.warn(`Error${erreur.response.data.message}`);
             });
+
         //sinon redirection
         window.location = "/";
     }

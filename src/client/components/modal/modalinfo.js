@@ -27,29 +27,31 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
-    const [currentId, setCurrentId] = useState();
     const [state, setState] = useState();
     const [userInfo, setUserInfo] = useState([]);
     const [requestDone, setRequestDone] = useState(false);
-    useEffect(() => {
-        setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
-        console.log(state);
-        let getRequest = "http://localhost/users/" + state;
-        console.log(getRequest);
-        if (getRequest != undefined && requestDone != true) {
-            axios
-                .get(getRequest)
-                .then((res) => setUserInfo(res.data))
-                .catch((erreur) => {
-                    console.warn(erreur);
-                });
+    if (localStorage.getItem("tokenUserId") != undefined) {
+        useEffect(() => {
+            setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
-            if (userInfo.id != undefined) {
-                setRequestDone(true);
+            // console.log(state);
+            let getRequest = "http://localhost/users/" + state;
+            console.log(getRequest);
+            if (getRequest != undefined && requestDone != true) {
+                axios
+                    .get(getRequest)
+                    .then((res) => setUserInfo(res.data))
+                    .catch((erreur) => {
+                        console.warn(erreur);
+                    });
+
+                if (userInfo.id != undefined) {
+                    setRequestDone(true);
+                }
             }
-        }
-    });
+        });
+    }
     console.log(userInfo);
 
     if (showInfo === true) {
