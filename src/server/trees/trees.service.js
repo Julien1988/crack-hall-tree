@@ -73,10 +73,57 @@ async function lockFreeTree(req, res) {
     }
 }
 
+async function buyAFreeTree(req, res) {
+    try {
+        // 5ef4723884fda30011baf3d6
+        // 5eec6ae2a4b8a100666f6358
+        const treeId = req.params.gettreeid;
+        const playerId = req.params.playerid;
+        const findTree = await Trees.find({_id: treeId});
+        const treeLeave = await findTree[0].leave;
+
+        const user = await User.findById(playerId);
+        if (
+            user.money != null &&
+            user.money != undefined &&
+            user.money >= treeLeave
+        ) {
+            const buyingTree = await Trees.findById(treeId, function (
+                err,
+                doc,
+            ) {
+                doc.player_id = playerId;
+                doc.free = false;
+                doc.player_color = user.color;
+                doc.save();
+                console.log("modification de l'abre");
+            });
+        } else {
+            console.log(
+                "Tu n'as pas assez d'argent, vas donc tondre des pelouses !!!!",
+            );
+        }
+
+        // const findTree = await Trees.findById(
+        //     treeId,
+        //     function (err, doc) {
+        //         doc.player_id = playerId;
+        //         doc.free = false;
+        //         doc.player_color = colorPlayer;
+        //         doc.save();
+        //         console.log("modification de l'abre");
+        //     },
+        // );
+    } catch (error) {
+        res.send(error);
+    }
+}
+
 module.exports = {
     getAllTrees,
     getIdPlayer,
     newPlayerTreesGenerator,
     buyOtherPlayerTree,
     lockFreeTree,
+    buyAFreeTree,
 };

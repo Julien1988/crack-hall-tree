@@ -17,6 +17,8 @@ router.get(
     treeService.buyOtherPlayerTree,
 );
 
+router.get("/buyafreetree/:gettreeid/:playerid", treeService.buyAFreeTree);
+
 router.get("/locktree/:getidplayer/:getidtree", treeService.lockFreeTree);
 
 module.exports = router;
