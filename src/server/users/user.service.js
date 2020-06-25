@@ -1,4 +1,5 @@
-﻿/* eslint-disable no-undef */
+﻿/* eslint-disable no-console */
+/* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-extra-parens */
@@ -14,7 +15,7 @@ const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 //const algoService = require("./algo.service");
-import("../global");
+//import("../global");
 
 const treeService = require("../trees/trees.service");
 
@@ -85,7 +86,7 @@ async function create(userParam) {
 }
 
 async function findUserId(playerPseudo) {
-    const user = await User.findOne({pseudo: playerPseudo}, (err) => {
+    const user = await User.findOne({pseudo: playerPseudo}, err => {
         if (err) {
             console.log(err);
             return null;
