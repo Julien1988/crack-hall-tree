@@ -33,9 +33,6 @@ async function authenticate({pseudo, password}) {
             token,
         };
     }
-    Object.assign(user, userParam);
-
-    await user.save();
 }
 
 async function getAll() {

@@ -19,7 +19,6 @@ app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
 // use JWT auth t<o secure the api
-app.use(jwt());
 // / api routes
 app.use("/users", require("./users/users.controller"));
 app.use("/gamer", require("./gamer/gamer.controller"));
@@ -28,6 +27,7 @@ app.use("/algo", require("./algo/algo.controller"));
 
 // global error handler
 app.use(errorHandler);
+app.use(jwt());
 
 // start server
 const {APP_PORT} = process.env;
