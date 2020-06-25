@@ -1,4 +1,5 @@
 ﻿/* eslint-disable no-unused-vars */
+
 const express = require("express");
 const router = express.Router();
 const treeService = require("./trees.service");
@@ -19,6 +20,6 @@ router.get(
 
 router.get("/buyafreetree/:gettreeid/:playerid", treeService.buyAFreeTree);
 
-router.get("/locktree/:getidplayer/:getidtree", treeService.lockFreeTree);
+router.get("/locktree/:playerid/:treeid", treeService.lockFreeTree);
 
 module.exports = router;

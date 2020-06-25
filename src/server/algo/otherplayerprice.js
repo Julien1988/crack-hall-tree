@@ -1,4 +1,4 @@
-const db = require("./_helpers/db");
+const db = require("../_helpers/db");
 const {doc} = require("prettier");
 const Trees = db.Trees;
 import {insideCircle} from "geolocation-utils";

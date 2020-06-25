@@ -2,8 +2,9 @@ const db = require("../_helpers/db");
 const Trees = db.Trees;
 const User = db.User;
 const newUserFunction = require("../algo/getfreetrees");
-const otherPlayerPrice = require("../otherplayerprice");
+const otherPlayerPrice = require("../algo/otherplayerprice");
 const userService = require("../users/user.service");
+const lockFreeTreeAlgo = require("../algo/lockfreetree");
 
 //const {createIndexes} = require("./trees.model");
 
@@ -61,19 +62,22 @@ async function buyOtherPlayerTree(req, res) {
 }
 
 async function lockFreeTree(req, res) {
+    // joueur : 5eec6ae2a4b8a100666f6358
+    // arbre:  5ece7015b467be4c63b04e47
     try {
-        const idPlayer = await req.params.getidplayer;
-        const idTree = await req.params.getidtree;
+        const playerId = req.params.playerid;
+        const treeId = req.params.treeid;
+        const playerInfo = await User.find({_id: playerId});
+        const treeInfo = await Trees.find({_id: treeId});
 
-        const getTreeToLock = await Trees.findById(idTree.idTree);
-        const allTrees = await Trees.find();
-        lockFreeTree(idPlayer, getTreeToLock, allTrees);
+        await lockFreeTreeAlgo(playerInfo[0], treeInfo[0]);
     } catch (error) {
         res.send(error);
     }
 }
 
 async function buyAFreeTree(req, res) {
+    // http://localhost/trees/locktree/5eec6ae2a4b8a100666f6358/5ece7015b467be4c63b04e47
     try {
         // 5ef4723884fda30011baf3d6
         // 5eec6ae2a4b8a100666f6358
@@ -114,6 +118,6 @@ module.exports = {
     getIdPlayer,
     newPlayerTreesGenerator,
     buyOtherPlayerTree,
-    lockFreeTree,
     buyAFreeTree,
+    lockFreeTree,
 };
