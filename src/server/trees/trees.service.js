@@ -84,9 +84,10 @@ async function buyAFreeTree(req, res) {
 
         const user = await User.findById(playerId);
         if (
-            user.money != null &&
-            user.money != undefined &&
-            user.money >= treeLeave
+            user.money != null ||
+            user.money != undefined ||
+            user.money >= treeLeave ||
+            playerId != findTree[0].player_id
         ) {
             const buyingTree = await Trees.findById(treeId, function (
                 err,
@@ -103,17 +104,6 @@ async function buyAFreeTree(req, res) {
                 "Tu n'as pas assez d'argent, vas donc tondre des pelouses !!!!",
             );
         }
-
-        // const findTree = await Trees.findById(
-        //     treeId,
-        //     function (err, doc) {
-        //         doc.player_id = playerId;
-        //         doc.free = false;
-        //         doc.player_color = colorPlayer;
-        //         doc.save();
-        //         console.log("modification de l'abre");
-        //     },
-        // );
     } catch (error) {
         res.send(error);
     }
