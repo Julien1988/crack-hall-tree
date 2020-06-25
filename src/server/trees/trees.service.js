@@ -1,7 +1,7 @@
 const db = require("../_helpers/db");
 const Trees = db.Trees;
 const User = db.User;
-const newUserFunction = require("../getfreetrees");
+const newUserFunction = require("../algo/getfreetrees");
 const otherPlayerPrice = require("../otherplayerprice");
 const userService = require("../users/user.service");
 
