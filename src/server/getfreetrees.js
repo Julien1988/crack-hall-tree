@@ -2,7 +2,7 @@ const db = require("./_helpers/db");
 const {doc} = require("prettier");
 const Trees = db.Trees;
 
-const newUserFunction = (getPlayerId, getFreeTrees) => {
+function newUserFunction(getPlayerId, getFreeTrees, pseudoPlayer, colorPlayer) {
     const playerId = getPlayerId;
     const freeTrees = getFreeTrees;
     const freeTreesNumber = freeTrees.length;
@@ -44,8 +44,9 @@ const newUserFunction = (getPlayerId, getFreeTrees) => {
                     const freeTrees = await Trees.findById(
                         treeArray._id,
                         function (err, doc) {
-                            doc.player_id = getPlayerId;
+                            doc.player_id = playerId;
                             doc.free = false;
+                            doc.player_color = colorPlayer;
                             doc.save();
                             console.log("modification de l'abre");
                         },
@@ -65,6 +66,6 @@ const newUserFunction = (getPlayerId, getFreeTrees) => {
     }
     //console.log(getRandomTrees);
     //module.exports = getRandomTrees;
-};
+}
 
 module.exports = newUserFunction;

@@ -66,14 +66,12 @@ async function create(userParam) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
-
-    console.log("coucou", user.pseudo);
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
     console.log("this is a test: ", findIdPlayer);
-    console.log(findIdPlayer._id);
 
-  
+    await treeService.newPlayerTreesGenerator(findIdPlayer);
+}
 
 async function findUserId(playerPseudo) {
     const user = await User.findOne({pseudo: playerPseudo}, (err) => {

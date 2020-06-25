@@ -5,7 +5,6 @@ const newUserFunction = require("../getfreetrees");
 const otherPlayerPrice = require("../otherplayerprice");
 const userService = require("../users/user.service");
 
-
 //const {createIndexes} = require("./trees.model");
 
 // Récupération de l'ensemble des arbres
@@ -33,25 +32,18 @@ async function getIdPlayer(req, res) {
 
 async function newPlayerTreesGenerator(req, res) {
     console.log("============newPlayerTreesGenerator=======");
-    const idPlayer = req.pseudo;
-    console.log(idPlayer);
-    // console.log(localStorage.getItem("tokenUserId"));
+    const idPlayer = req._id;
+    const pseudoPlayer = req.pseudo;
+    const colorPlayer = req.color;
+    console.log(idPlayer, pseudoPlayer, colorPlayer);
 
     try {
-        const findPlayer = await User.find();
-        res.json(findPlayer);
+        const freeTrees = await Trees.find({free: true});
+
+        newUserFunction(idPlayer, freeTrees, pseudoPlayer, colorPlayer);
     } catch (error) {
         res.send(error);
     }
-    // try {
-    //     const idPlayer = await req.params.getidplayer;
-
-    //     const freeTrees = await Trees.find({free: true});
-
-    //     newUserFunction(idPlayer, freeTrees);
-    // } catch (error) {
-    //     res.send(error);
-    // }
 }
 // lat: 5ece7015b467be4c63b04e4a
 async function buyOtherPlayerTree(req, res) {
