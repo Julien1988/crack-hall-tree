@@ -5,10 +5,11 @@
  * creation for montagne
  * creat 25/05/2020
  */
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
 import {NBSP} from "../tools/constants";
+import axios from "axios";
 //import SignupForm from "../tools/from";
 // import {NBSP} from "../tools/constants";
 // import Logup from "../profil/logup";
@@ -27,6 +28,33 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
+    const [state, setState] = useState();
+    const [userInfo, setUserInfo] = useState([]);
+    const [requestDone, setRequestDone] = useState(false);
+
+    if (localStorage.getItem("tokenUserId") != undefined) {
+        useEffect(() => {
+            setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
+
+            // console.log(state);
+            let getRequest = "http://localhost/users/" + state;
+            console.log(getRequest);
+            if (getRequest != undefined && requestDone != true) {
+                axios
+                    .get(getRequest)
+                    .then((res) => setUserInfo(res.data))
+                    .catch((erreur) => {
+                        console.warn(erreur);
+                    });
+
+                if (userInfo.id != undefined) {
+                    setRequestDone(true);
+                }
+            }
+        });
+    }
+    console.log(userInfo);
+
     if (showInfo === true) {
         return createPortal(
             <div style={containerStyles}>
@@ -39,7 +67,7 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"title is-4 is-spaced"}>
                                 {"Name : "}
                             </p>
-                            <p className={"subtitle is-5"}>{"Bertho"}</p>
+                            <p className={"subtitle is-5"} />
                             {NBSP}
                             <p className={"title is-4 is-spaced"}>
                                 {" Money : "}
@@ -54,12 +82,12 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"title is-4 is-spaced"}>
                                 {"Historique des achats :"}
                             </p>
-                            <p className={"subtitle is-5"}>
+                            <div className={"subtitle is-5"}>
                                 <ul>
                                     <li>{"monogos"}</li>
                                     <li>{"popos"}</li>
                                 </ul>
-                            </p>
+                            </div>
                             {NBSP}
                             <p className={"subtitle is-5"}>
                                 <a href={"#"}>{"Wikipedia"}</a>
@@ -69,12 +97,12 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"title is-4 is-spaced"}>
                                 {"Commentaires :"}
                             </p>
-                            <p className={"subtitle is-5"}>
+                            <div className={"subtitle is-5"}>
                                 <ul>
                                     <li>{"comments"}</li>
                                     <li>{"comments"}</li>
                                 </ul>
-                            </p>
+                            </div>
                         </div>
                     </section>
                     <footer className={"modal-card-foot"}>

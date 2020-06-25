@@ -28,14 +28,14 @@ const App = () => {
     useEffect(() => {
         axios
             .get("http://localhost/trees/alltrees")
-            .then((res) => setAllTrees(res.data))
-            .catch((erreur) => {
+            .then(res => setAllTrees(res.data))
+            .catch(erreur => {
                 console.warn(erreur);
             });
     }, []);
     //console.log(allTrees);
-    const geolocCircle = (getCenter) => {
-        allTrees.forEach((element) => {
+    const geolocCircle = getCenter => {
+        allTrees.forEach(element => {
             const center = {lat: getCenter[0], lon: getCenter[1]};
             const radius = 500;
 
@@ -58,7 +58,7 @@ const App = () => {
         });
     };
 
-    const handleClick = (e) => {
+    const handleClick = e => {
         clickData = [e.latlng.lat, e.latlng.lng];
         setCenterGeoloc(clickData);
 
@@ -75,13 +75,15 @@ const App = () => {
         return (
             <Map center={position} zoom={13} onClick={handleClick}>
                 <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                    attribution={
+                        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    }
                 />
 
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
 
-                {myGetArray.map((item) => (
+                {myGetArray.map(item => (
                     <React.Fragment key={item._id}>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>
@@ -98,16 +100,17 @@ const App = () => {
                 ))}
             </Map>
         );
-    } else {
-        return (
-            <Map center={position} zoom={13} onClick={handleClick}>
-                <TileLayer
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                />
-            </Map>
-        );
     }
+    return (
+        <Map center={position} zoom={13} onClick={handleClick}>
+            <TileLayer
+                url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
+                attribution={
+                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }
+            />
+        </Map>
+    );
 };
 
 export default App;

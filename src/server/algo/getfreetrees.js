@@ -1,10 +1,14 @@
-/* eslint-disable prefer-arrow-callback */
+<<<<<<< HEAD:src/server/trees/utils/getfreetrees.js
 /* eslint-disable no-shadow */
 /* eslint-disable no-inner-declarations */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
+const db = require("../../_helpers/db");
+//const {doc} = require("prettier");
+=======
 const db = require("../_helpers/db");
 const {doc} = require("prettier");
+>>>>>>> pre-prod-julien-03:src/server/algo/getfreetrees.js
 const Trees = db.Trees;
 
 function newUserFunction(getPlayerId, getFreeTrees, pseudoPlayer, colorPlayer) {
@@ -49,10 +53,15 @@ function newUserFunction(getPlayerId, getFreeTrees, pseudoPlayer, colorPlayer) {
                 try {
                     const freeTrees = await Trees.findById(
                         treeArray._id,
+<<<<<<< HEAD:src/server/trees/utils/getfreetrees.js
+                        (err, doc) => {
+                            doc.player_id = getPlayerId;
+=======
                         function (err, doc) {
                             doc.player_id = playerId;
                             doc.free = false;
                             doc.player_color = colorPlayer;
+>>>>>>> pre-prod-julien-03:src/server/algo/getfreetrees.js
                             doc.save();
                             console.log("modification de l'abre");
                         },

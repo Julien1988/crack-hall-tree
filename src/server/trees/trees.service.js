@@ -1,8 +1,12 @@
+/* eslint-disable no-console */
 const db = require("../_helpers/db");
 const Trees = db.Trees;
-const newUserFunction = require("./utils/getfreetrees");
-const otherPlayerPrice = require("./utils/otherplayerprice");
-//const current = require("../users/users.controller");
+//const User = db.User;
+const newUserFunction = require("../algo/getfreetrees");
+const otherPlayerPrice = require("../otherplayerprice");
+//const userService = require("../users/user.service");
+
+//const {createIndexes} = require("./trees.model");
 
 // Récupération de l'ensemble des arbres
 async function getAllTrees(req, res) {
@@ -32,15 +36,16 @@ async function getIdPlayer(req, res) {
 }
 
 async function newPlayerTreesGenerator(req, res) {
-    try {
-        const idPlayer = await req.params;
-        const sendIdPlayer = await idPlayer.treesgenerator;
-        //console.log(sendIdPlayer);
-        const freeTrees = await Trees.find({free: true});
-        // res.json(freeTrees);
+    console.log("============newPlayerTreesGenerator=======");
+    const idPlayer = req._id;
+    const pseudoPlayer = req.pseudo;
+    const colorPlayer = req.color;
+    console.log(idPlayer, pseudoPlayer, colorPlayer);
 
-        newUserFunction(sendIdPlayer, freeTrees);
-        //console.log(getRandomTrees);
+    try {
+        const freeTrees = await Trees.find({free: true});
+
+        newUserFunction(idPlayer, freeTrees, pseudoPlayer, colorPlayer);
     } catch (error) {
         res.send(error);
     }
@@ -60,9 +65,23 @@ async function buyOtherPlayerTree(req, res) {
     }
 }
 
+async function lockFreeTree(req, res) {
+    try {
+        const idPlayer = await req.params.getidplayer;
+        const idTree = await req.params.getidtree;
+
+        const getTreeToLock = await Trees.findById(idTree.idTree);
+        const allTrees = await Trees.find();
+        lockFreeTree(idPlayer, getTreeToLock, allTrees);
+    } catch (error) {
+        res.send(error);
+    }
+}
+
 module.exports = {
     getAllTrees,
     getIdPlayer,
     newPlayerTreesGenerator,
     buyOtherPlayerTree,
+    lockFreeTree,
 };

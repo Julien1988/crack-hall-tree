@@ -8,6 +8,8 @@ export default class Logup extends React.Component {
     constructor(props) {
         super(props);
 
+        this.nextStape = false;
+
         this.onChangePseudo = this.onChangePseudo.bind(this);
         this.onChangeColor = this.onChangeColor.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
@@ -57,12 +59,20 @@ export default class Logup extends React.Component {
 
         console.log(user);
         //let messsageError "";
+
         axios
             .post("http://localhost/users/register", user)
-            .then(res => console.log(res.data))
-            .catch(erreur => {
+            .then((res) => {
+                localStorage.setItem(
+                    "tokenUserId",
+                    JSON.stringify(res.data.id),
+                );
+                console.log(res.data);
+            })
+            .catch((erreur) => {
                 console.warn(`Error${erreur.response.data.message}`);
             });
+
         //sinon redirection
         window.location = "/";
     }
@@ -120,6 +130,7 @@ export default class Logup extends React.Component {
                             value={this.state.color}
                             onChange={this.onChangeColor}>
                             <select>
+                                <option>{"color choice"}</option>
                                 <option>{"red"}</option>
                                 <option>{"yellow"}</option>
                                 <option>{"green"}</option>

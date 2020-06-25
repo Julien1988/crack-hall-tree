@@ -14,10 +14,14 @@ const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 //const algoService = require("./algo.service");
+import("../global");
+
+const treeService = require("../trees/trees.service");
 
 module.exports = {
     authenticate,
     getAll,
+
     getById,
     create,
     update,
@@ -27,7 +31,13 @@ module.exports = {
 async function authenticate({pseudo, password}) {
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
+        console.log(" ===> !!! ici authenticate !!! <===");
+        console.log(user.id);
+
+        //CURRENT_ID.push(user.id);
+        //console.log(CURRENT_ID);
         const token = jwt.sign({sub: user.id}, secret);
+
         return {
             ...user.toJSON(),
             token,
@@ -66,11 +76,25 @@ async function create(userParam) {
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
-    //random 3 threes
-    //await algoService.get3Threes();
 
-    // save user
     await user.save();
+    const findIdPlayer = await findUserId(user.pseudo);
+    console.log("this is a test: ", findIdPlayer);
+
+    await treeService.newPlayerTreesGenerator(findIdPlayer);
+}
+
+async function findUserId(playerPseudo) {
+    const user = await User.findOne({pseudo: playerPseudo}, (err) => {
+        if (err) {
+            console.log(err);
+            return null;
+        }
+        // console.log(user);
+    });
+    // console.log("finding user: ", user);
+    return user;
+    // console.log(userInfo);
 }
 
 async function update(id, userParam) {
