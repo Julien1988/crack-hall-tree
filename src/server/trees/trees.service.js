@@ -85,7 +85,7 @@ async function buyOtherPlayerTree(req, res) {
                 err,
                 doc,
             ) {
-                doc.money = playerInfo.money - treeInfo.leave;
+                doc.money = playerInfo.money - buyATreeNotFree;
 
                 doc.save();
                 console.log("le prix de l'abre a été déduit");
