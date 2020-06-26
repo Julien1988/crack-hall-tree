@@ -67,30 +67,33 @@ async function buyOtherPlayerTree(req, res) {
                 treeInfo,
                 playerInfo,
             );
-            console.log(buyATreeNotFree);
 
-            const updateTree = await Trees.findById(treeId, function (
-                err,
-                doc,
-            ) {
-                doc.free = false;
-                doc.player_id = playerId;
-                doc.player_color = playerInfo.color;
-                doc.save();
-                console.log("L'abre a changé d'appartencance");
-                console.log(treeInfo);
-            });
+            if (playerInfo.money >= buyATreeNotFree) {
+                //console.log(buyATreeNotFree);
 
-            const updateUser = await User.findById(playerId, function (
-                err,
-                doc,
-            ) {
-                doc.money = playerInfo.money - buyATreeNotFree;
+                const updateTree = await Trees.findById(treeId, function (
+                    err,
+                    doc,
+                ) {
+                    doc.free = false;
+                    doc.player_id = playerId;
+                    doc.player_color = playerInfo.color;
+                    doc.save();
+                    console.log("L'abre a changé d'appartencance");
+                    console.log(treeInfo);
+                });
 
-                doc.save();
-                console.log("le prix de l'abre a été déduit");
-                console.log(playerInfo);
-            });
+                const updateUser = await User.findById(playerId, function (
+                    err,
+                    doc,
+                ) {
+                    doc.money = playerInfo.money - buyATreeNotFree;
+
+                    doc.save();
+                    console.log("le prix de l'abre a été déduit");
+                    console.log(playerInfo);
+                });
+            }
         } else {
             console.warn("tu ne peux pas l'acheter");
         }
