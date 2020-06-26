@@ -1,22 +1,36 @@
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
+/* creation du model button pour l'app arbre
+ * /src/components/profil/logup.js - model fromulaire de inscription au jeux
+ * code by sarahG4000 for becode formation
+ * creation for montagne
+ * creat 25/05/2020
+ */
 import React from "react";
-// import axios from "axios";
+import axios from "axios";
 import {useFormik} from "formik";
 
 const Logup = () => {
     const formik = useFormik({
         initialValues: {
             pseudo: "",
-            password: "",
             email: "",
             color: "",
+            password: "",
         },
         onSubmit: values => {
             console.warn(JSON.stringify(values, null, 2));
         },
     });
+    axios
+        .post("http://localhost/users/register", formik.values)
+        .then(res => console.log(res.data))
+        .catch(erreur => {
+            console.warn(`Error${erreur.response.data.message}`);
+            //this.messsageError = erreur.response.data.message;
+        });
+    console.warn(formik.values.pseudo);
     //sinon redirection
     // window.location = "/"
 
@@ -86,9 +100,7 @@ const Logup = () => {
                             <option>{"green"}</option>
                             <option>{"dark"}</option>
                             <option>{"grey"}</option>
-                            <option>{"brown"}</option>
                             <option>{"orange"}</option>
-                            <option>{"pink"}</option>
                             <option>{"purple"}</option>
                             <option>{"white"}</option>
                         </select>

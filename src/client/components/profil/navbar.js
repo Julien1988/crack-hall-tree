@@ -37,6 +37,7 @@ const HomeConnect = () => {
     }, [setModalShowInfo]);
     const handleModalDeco = () => {
         window.location = "/";
+        localStorage.removeItem("tokenUserId");
     };
 
     return (
