@@ -105,10 +105,7 @@ async function lockFreeTree(req, res) {
 }
 
 async function buyAFreeTree(req, res) {
-    // http://localhost/trees/locktree/5eec6ae2a4b8a100666f6358/5ece7015b467be4c63b04e47
     try {
-        // 5ef4723884fda30011baf3d6
-        // 5eec6ae2a4b8a100666f6358
         const treeId = req.params.gettreeid;
         const playerId = req.params.playerid;
         const findTree = await Trees.find({_id: treeId});
@@ -116,9 +113,11 @@ async function buyAFreeTree(req, res) {
 
         const user = await User.findById(playerId);
         if (
-            user.money != null ||
-            user.money != undefined ||
-            user.money >= treeLeave ||
+            user.money != null &&
+            user.money != undefined &&
+            user.money >= treeLeave &&
+            findTree[0].free == true &&
+            findTree[0].locked == false &&
             playerId != findTree[0].player_id
         ) {
             const buyingTree = await Trees.findById(treeId, function (
@@ -130,6 +129,14 @@ async function buyAFreeTree(req, res) {
                 doc.player_color = user.color;
                 doc.save();
                 console.log("modification de l'abre");
+            });
+            const payThePrice = await User.findById(playerId, function (
+                err,
+                doc,
+            ) {
+                doc.money = doc.money - treeLeave;
+                doc.save();
+                console.log("L'abre est payé");
             });
         } else {
             console.log(
