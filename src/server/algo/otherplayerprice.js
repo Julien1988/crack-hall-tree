@@ -3,16 +3,32 @@ const {doc} = require("prettier");
 const Trees = db.Trees;
 import {insideCircle} from "geolocation-utils";
 
-const otherPlayerPrice = (getTree, allTrees, playerId) => {
-    const otherTreesInCercle = [];
-    const NotFreeTreesInCercle = [];
-    const playerIdTreesInCercle = [];
-    let NotFreeTreesInCercleTotalLeave = 0;
-    let playerIdTreeInCercleTotalLeave = 0;
-    //console.log(getTree);
+async function otherPlayerPrice(treeInfo, playerInfo) {
+    // ----- geoloc -----
 
-    const center = {lat: getTree.geoloc.lat, lon: getTree.geoloc.lon};
-    const radius = 100; // meters
+    const allTrees = await Trees.find();
+    const treeGeoloc = treeInfo.geoloc;
+    const treesInRadius = [];
+    const center = {lat: treeGeoloc.lat, lon: treeGeoloc.lon};
+    const radius = 100;
+    const otherPlayerTree = [];
+    const myTreeInCercle = [];
+
+    let otherPlayerTreeValiue = 0;
+
+    // ----- donnée de calcule de l'algo -----
+
+    // valeur de l'arbre ciblé
+    const treeLeave = treeInfo.leave;
+
+    // nombre d'arbres dans un rayon de 100 m : treesInRadius.length
+
+    // quantité d'arbre du joueur ciblé dans un rayon de 100m : otherPlayerTree.length
+
+    // valeur de tous les autres arbres du joueur dans un rayon de 100m
+    let otherPlayerTreeValiueUtile = otherPlayerTreeValiue - treeInfo.leave;
+    // valeur de tout votre arbre dans un rayon de 100m
+    let myTreeInCercleValiue = 0;
 
     allTrees.forEach((element) => {
         const inCercleRadius = insideCircle(
@@ -22,39 +38,33 @@ const otherPlayerPrice = (getTree, allTrees, playerId) => {
         );
 
         if (inCercleRadius === true) {
-            if (
-                element.player_id === getTree.player_id &&
-                element.player_id !== null
-            ) {
-                NotFreeTreesInCercle.push(element);
-            } else if (
-                element.player_id === playerId &&
-                element.player_id !== null
-            ) {
-                playerIdTreesInCercle.push(element);
-            } else {
-                otherTreesInCercle.push(element);
+            treesInRadius.push(element);
+            if (element.player_id == treeInfo.player_id) {
+                otherPlayerTree.push(element);
+                otherPlayerTreeValiue += element.leave;
+            } else if (element.player_id == playerInfo._id) {
+                myTreeInCercle.push(element);
             }
         }
     });
 
-    NotFreeTreesInCercle.forEach((element) => {
-        NotFreeTreesInCercleTotalLeave += element;
-    });
-    playerIdTreesInCercle.forEach((element) => {
-        playerIdTreeInCercleTotalLeave += element;
+    myTreeInCercle.forEach((element) => {
+        myTreeInCercleValiue += element.leave;
     });
 
-    let treePrice =
-        getTree.leave +
-        (NotFreeTreesInCercleTotalLeave *
-            (otherTreesInCercle.length + NotFreeTreesInCercle.length)) /
-            NotFreeTreesInCercle.length +
-        playerIdTreesInCercle.length -
-        playerIdTreeInCercleTotalLeave;
+    if (otherPlayerTreeValiueUtile < 0) {
+        otherPlayerTreeValiueUtile = 0;
+    }
 
-    console.log(treePrice);
-};
+    const treePrice =
+        treeLeave +
+        (otherPlayerTreeValiueUtile * treesInRadius.length) /
+            otherPlayerTree.length +
+        otherPlayerTreeValiueUtile -
+        myTreeInCercleValiue;
+
+    return treePrice;
+}
 
 module.exports = otherPlayerPrice;
 

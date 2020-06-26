@@ -46,16 +46,56 @@ async function newPlayerTreesGenerator(req, res) {
         res.send(error);
     }
 }
-// lat: 5ece7015b467be4c63b04e4a
+// http://localhost/trees/buyotherplayertree/:treeid/:playerid
+// http://localhost/trees/buyotherplayertree/5ece7015b467be4c63b04e4c/5eec6ae2a4b8a100666f6358
 async function buyOtherPlayerTree(req, res) {
     try {
-        const allTrees = await Trees.find();
-        const idTree = await req.params;
+        const playerId = req.params.playerid;
+        const treeId = req.params.treeid;
+        const treeInfo = await Trees.findById(treeId);
+        const playerInfo = await User.findById(playerId);
+        // console.log(treeInfo);
+        // console.log(playerInfo);
+        if (
+            treeInfo.free == false &&
+            treeInfo.locked == false &&
+            playerInfo.money >= treeInfo.leave &&
+            playerInfo._id != treeInfo.player_id
+        ) {
+            console.log("tu peux l'acheter");
+            const buyATreeNotFree = await otherPlayerPrice(
+                treeInfo,
+                playerInfo,
+            );
+            console.log(buyATreeNotFree);
 
-        const getTree = await Trees.findById(idTree.treeid);
-        const playerId = await idTree.playerid;
+            const updateTree = await Trees.findById(treeId, function (
+                err,
+                doc,
+            ) {
+                doc.free = false;
+                doc.player_id = playerId;
+                doc.player_color = playerInfo.color;
+                doc.save();
+                console.log("L'abre a changé d'appartencance");
+                console.log(treeInfo);
+            });
 
-        otherPlayerPrice(getTree, allTrees, playerId);
+            const updateUser = await User.findById(playerId, function (
+                err,
+                doc,
+            ) {
+                doc.money = playerInfo.money - treeInfo.leave;
+
+                doc.save();
+                console.log("le prix de l'abre a été déduit");
+                console.log(playerInfo);
+            });
+        } else {
+            console.warn("tu ne peux pas l'acheter");
+        }
+
+        //otherPlayerPrice();
     } catch (error) {
         res.send(error);
     }

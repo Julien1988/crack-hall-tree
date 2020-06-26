@@ -9,8 +9,8 @@ async function lockFreeTreeAlgo(playerInfo, treeInfo) {
     // console.log(playerInfo, treeInfo);
     // valeur de l'arbre
     const treeLeave = treeInfo.leave;
-    const teeGeoloc = treeInfo.geoloc;
-    const center = {lat: teeGeoloc.lat, lon: teeGeoloc.lon};
+    const treeGeoloc = treeInfo.geoloc;
+    const center = {lat: treeGeoloc.lat, lon: treeGeoloc.lon};
     const radius = 100;
     const treesInRadius = [];
     const playerInRadius = [];
