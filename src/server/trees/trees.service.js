@@ -64,13 +64,16 @@ async function buyOtherPlayerTree(req, res) {
 async function lockFreeTree(req, res) {
     // joueur : 5eec6ae2a4b8a100666f6358
     // arbre:  5ece7015b467be4c63b04e47
+
+    //http://localhost/trees/locktree/5eec6ae2a4b8a100666f6358/5ece7015b467be4c63b04e47
     try {
         const playerId = req.params.playerid;
         const treeId = req.params.treeid;
         const playerInfo = await User.find({_id: playerId});
         const treeInfo = await Trees.find({_id: treeId});
 
-        await lockFreeTreeAlgo(playerInfo[0], treeInfo[0]);
+        const priceForLock = await lockFreeTreeAlgo(playerInfo[0], treeInfo[0]);
+        console.log(priceForLock);
     } catch (error) {
         res.send(error);
     }
