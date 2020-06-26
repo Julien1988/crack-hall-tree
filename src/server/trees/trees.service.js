@@ -73,7 +73,32 @@ async function lockFreeTree(req, res) {
         const treeInfo = await Trees.find({_id: treeId});
 
         const priceForLock = await lockFreeTreeAlgo(playerInfo[0], treeInfo[0]);
-        console.log(priceForLock);
+        console.log(playerInfo[0].money);
+        if (playerInfo[0].money >= priceForLock) {
+            const lockTheTree = await Trees.findById(treeId, function (
+                err,
+                doc,
+            ) {
+                doc.locked = true;
+                doc.save();
+                console.log("L'abre est lock");
+                console.log(treeInfo);
+            });
+
+            // diminution de la somme du joueur
+
+            const payThePrice = await User.findById(playerId, function (
+                err,
+                doc,
+            ) {
+                doc.money = doc.money - priceForLock;
+                doc.save();
+                console.log("L'abre est lock");
+                console.log(treeInfo);
+            });
+        } else {
+            console.log("Tu n'as pas assez d'argent");
+        }
     } catch (error) {
         res.send(error);
     }
