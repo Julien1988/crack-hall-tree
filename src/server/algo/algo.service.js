@@ -1,23 +1,16 @@
-/* eslint-disable no-extra-parens */
-/* eslint-disable no-sync */
-/* eslint-disable require-atomic-updates */
-/* eslint-disable no-throw-literal */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
+/* eslint-disable no-undef */
+/* eslint-disable array-callback-return */
+/* eslint-disable prefer-const */
 /* eslint-disable no-use-before-define */
+/* eslint-disable no-unused-vars */
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const db = require("../_helpers/db");
-//import faker from "faker";
-//const {response} = require("express");
 const Arbustum = db.Arbustum;
 const User = db.User;
 
 module.exports = {
-    getAll,
-    get3Threes,
-    update,
+    getById,
 };
 //time work
 /* function sheete() {
@@ -27,21 +20,54 @@ module.exports = {
     now = new Date(now); // Date object
     console.log(`time : ${now}`);
 }
+{
+            player_id: "5ef4e5295760d500a1a1b41b",
+        }
  */
-async function getAll(req, res) {
+async function getById(id) {
     try {
-        const trees = await Arbustum.find();
-        //res.json(threes.map(tree => tree.nom_complet));
-        //console.log(trees);
-        res.json(trees[0]);
+        let user = await User.findById(id);
+        const id_player = user._id;
+        //console.log("test1", id_player);
+        let cashes = 0;
+        cashes = await getMoney(id_player);
+
+        user.money = cashes;
+        await user.save();
+        return cashes; //facultaif
     } catch (error) {
-        res.send(error);
-        // expected output: ReferenceError: nonExistentFunction is not defined
-        // Note - error messages will vary depending on browser
+        return error;
+    }
+}
+async function getMoney(id_player) {
+    try {
+        const arbust = await Arbustum.find({player_id: id_player});
+        let myTable = [];
+        arbust.map(tree => {
+            myTable.push(tree.leave);
+        });
+        const reducer = (accumulator, currentValue) =>
+            accumulator + currentValue;
+        const variable = myTable.reduce(reducer);
+        return variable;
+    } catch (error) {
+        return error;
+    }
+}
+async function upGrateMoney(id) {
+    try {
+        let user = await User.findById(id);
+        let money = 0;
+        //console.log("user money :", user.money);
+
+        await user.save();
+        return money; //facultaif
+    } catch (error) {
+        return error;
     }
 }
 
-async function get3Threes(req, res) {
+/* async function get3Threes(req, res) {
     try {
         const threes = await Arbustum.find();
         const trois = [];
@@ -65,29 +91,4 @@ async function get3Threes(req, res) {
         // expected output: ReferenceError: nonExistentFunction is not defined
         // Note - error messages will vary depending on browser
     }
-}
-
-async function update(id, userParam) {
-    const user = await User.findById(id);
-
-    // validate
-    if (!user) {
-        throw "User not found";
-    }
-    /* if (
-        user.pseudo !== userParam.pseudo &&
-        (await User.findOne({pseudo: userParam.pseudo}))
-    ) {
-        throw `pseudo "${userParam.pseudo}" is already taken`;
-    } */
-
-    // hash password if it was entered
-    if (userParam.password) {
-        userParam.hash = bcrypt.hashSync(userParam.password, 10);
-    }
-
-    // copy userParam properties to user
-    Object.assign(user, userParam);
-
-    await user.save();
-}
+} */

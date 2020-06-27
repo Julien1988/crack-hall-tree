@@ -1,4 +1,5 @@
-﻿/* eslint-disable no-console */
+﻿/* eslint-disable no-unreachable */
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
@@ -18,11 +19,11 @@ const secret =
 //import("../global");
 
 const treeService = require("../trees/trees.service");
+const algoService = require("../algo/algo.service");
 
 module.exports = {
     authenticate,
     getAll,
-
     getById,
     create,
     update,
@@ -32,11 +33,6 @@ module.exports = {
 async function authenticate({pseudo, password}) {
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
-        console.log(" ===> !!! ici authenticate !!! <===");
-        console.log(user.id);
-
-        //CURRENT_ID.push(user.id);
-        //console.log(CURRENT_ID);
         const token = jwt.sign({sub: user.id}, secret);
 
         return {
@@ -53,26 +49,12 @@ async function getAll() {
 async function getById(id) {
     return await User.findById(id);
 }
-/* async function current(req.user.sub) {
-    try {
-        const trees = await Arbustum.find();
-        //res.json(threes.map(tree => tree.nom_complet));
-        //console.log(trees);
-        res.json(trees[0]);
-    } catch (error) {
-        res.send(error);
-        // expected output: ReferenceError: nonExistentFunction is not defined
-        // Note - error messages will vary depending on browser
-    }
-} */
 async function create(userParam) {
     // validate
     if (await User.findOne({pseudo: userParam.pseudo})) {
         throw `pseudo "${userParam.pseudo}" is already taken`;
     }
-
     const user = new User(userParam);
-
     // hash password
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
@@ -80,9 +62,8 @@ async function create(userParam) {
 
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
-    console.log("this is a test: ", findIdPlayer);
-
     await treeService.newPlayerTreesGenerator(findIdPlayer);
+    await algoService.getById(findIdPlayer); //generate money for new user
 }
 
 async function findUserId(playerPseudo) {
@@ -91,11 +72,8 @@ async function findUserId(playerPseudo) {
             console.log(err);
             return null;
         }
-        // console.log(user);
     });
-    // console.log("finding user: ", user);
     return user;
-    // console.log(userInfo);
 }
 
 async function update(id, userParam) {

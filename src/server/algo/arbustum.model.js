@@ -11,7 +11,7 @@ const schema = new Schema({
     hauteur_totale: {type: Number},
     diametre_cime: {type: Number},
     circonf: {type: Number},
-    player_id: {type: Number},
+    player_id: {type: String},
     player_color: {type: Number},
     leave: {type: Number},
     random_name: {type: String},
