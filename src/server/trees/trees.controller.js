@@ -7,19 +7,25 @@ const userService = require("../users/user.service");
 const {User} = require("../_helpers/db");
 //const {RuleTester} = require("eslint");
 
+// Renvois l'ensemble des abres
 router.get("/alltrees", treeService.getAllTrees);
 
+// Renvois l'id d'un joueur
 router.get("/:getidplayer", treeService.getIdPlayer);
 
+// Donne 3 abres libre aléatoire à un joueur -- :getidplayer => Id du joueur connecté
 router.get("/newplayer/:getidplayer", treeService.newPlayerTreesGenerator);
 
+// Permet d'acheter un abre appartenant à un autre joueur non-lock -- :treeid => id de l'abre ciblé :playerid => id du joueur connecté
 router.get(
     "/buyotherplayertree/:treeid/:playerid",
     treeService.buyOtherPlayerTree,
 );
 
+// Permet d'acheter un abre libre -- :treeid => id de l'abre ciblé :playerid => id du joueur connecté
 router.get("/buyafreetree/:treeid/:playerid", treeService.buyAFreeTree);
 
+// Permet de lock un abre en sa possession -- :playerid => id du joueur connecté , :treeid => id de l'abre ciblé
 router.get("/locktree/:playerid/:treeid", treeService.lockFreeTree);
 
 module.exports = router;

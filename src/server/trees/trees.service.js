@@ -31,6 +31,7 @@ async function getIdPlayer(req, res) {
     }
 }
 
+// Donne les  abres aléatoire à un joueur
 async function newPlayerTreesGenerator(req, res) {
     console.log("============newPlayerTreesGenerator=======");
     const idPlayer = req._id;
@@ -46,8 +47,8 @@ async function newPlayerTreesGenerator(req, res) {
         res.send(error);
     }
 }
-// http://localhost/trees/buyotherplayertree/:treeid/:playerid
-// http://localhost/trees/buyotherplayertree/5ece7015b467be4c63b04e4c/5eec6ae2a4b8a100666f6358
+
+// Permet d'acheetr un abre non lock appartenant à un autre joueur
 async function buyOtherPlayerTree(req, res) {
     try {
         const playerId = req.params.playerid;
@@ -104,11 +105,8 @@ async function buyOtherPlayerTree(req, res) {
     }
 }
 
+// Fonction pour lock un arbre
 async function lockFreeTree(req, res) {
-    // joueur : 5eec6ae2a4b8a100666f6358
-    // arbre:  5ece7015b467be4c63b04e47
-
-    //http://localhost/trees/locktree/5eec6ae2a4b8a100666f6358/5ece7015b467be4c63b04e47
     try {
         const playerId = req.params.playerid;
         const treeId = req.params.treeid;
@@ -147,6 +145,7 @@ async function lockFreeTree(req, res) {
     }
 }
 
+// Permet d'acheter un abre libre
 async function buyAFreeTree(req, res) {
     try {
         const treeId = req.params.gettreeid;
