@@ -12,8 +12,14 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 const db = require("../_helpers/db");
+const {type} = require("os");
 const Arbustum = db.Arbustum;
 const User = db.User;
+const Trees = db.Trees;
+import date from "date-and-time";
+const updateConnectionAlgo = require("./updateconnectiondate");
+
+// https://www.npmjs.com/package/date-and-time
 //var ObjectId = require("mongodb").ObjectID;
 
 module.exports = {
@@ -43,7 +49,7 @@ async function getMoney(id_player) {
     try {
         const arbust = await Arbustum.find({player_id: id_player});
         let myTable = [];
-        arbust.map(tree => {
+        arbust.map((tree) => {
             myTable.push(tree.leave);
         });
         const reducer = (accumulator, currentValue) =>
@@ -84,14 +90,34 @@ async function checkTime(id) {
         //return error;
     }
 }
+
+// Toutes les quinze minutes dans la vraie vie, chaque joueur recevra une quantité de feuilles égale au total de chacun de ses arbres.
+// Chaque heure dans la vraie vie, chaque joueur perd la moitié de ses feuilles.
 async function updateConnectionDate(id) {
     try {
-        let user = await User.findById(id);
-        console.log(` users ${user.pseudo}`);
-        const now = new Date();
-        user.dateConnect = now;
-        console.log(`connect `);
-        await user.save();
+        console.log("== updateConnectionDate ==");
+        const user = await User.findById(id);
+        const treesUser = await Trees.find({player_id: id});
+        const leaveToGive = await updateConnectionAlgo(user, treesUser);
+        if (leaveToGive != false) {
+            // console.log(leaveToGive.totalUserLeaveToGive);
+            // console.log(leaveToGive.totalLeaveDivision);
+
+            const userMoney = Math.floor(
+                (user.money + leaveToGive.totalUserLeaveToGive) /
+                    leaveToGive.totalLeaveDivision,
+            );
+            const updateDateTime = new Date();
+            const updateUser = await User.findById(id, function (err, doc) {
+                doc.money = userMoney;
+                doc.dateConnect = updateDateTime;
+                doc.save();
+                console.log("le prix de l'abre a été déduit");
+                //console.log(updateUser);
+            });
+        } else {
+            console.log("Il ne s'est pas assez écoulé de temps");
+        }
     } catch (error) {
         console.log(error);
     }
