@@ -1,4 +1,7 @@
-﻿/* eslint-disable no-undef */
+﻿/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
 /* eslint-disable consistent-return */
 /* eslint-disable no-extra-parens */
@@ -14,14 +17,14 @@ const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
 //const algoService = require("./algo.service");
-import("../global");
+//import("../global");
 
 const treeService = require("../trees/trees.service");
+const algoService = require("../algo/algo.service");
 
 module.exports = {
     authenticate,
     getAll,
-
     getById,
     create,
     update,
@@ -29,15 +32,20 @@ module.exports = {
 };
 
 async function authenticate({pseudo, password}) {
+    let status = false; //status connexion
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
-        console.log(" ===> !!! ici authenticate !!! <===");
-        console.log(user.id);
-
-        //CURRENT_ID.push(user.id);
-        //console.log(CURRENT_ID);
         const token = jwt.sign({sub: user.id}, secret);
 
+        status = true;
+        user.status = status; //change status true
+
+        await user.save(); //save change
+
+        //turn 15 minutes algo
+        algoService.checkTime(user._id);
+
+        algoService.updateConnectionDate(user._id);
         return {
             ...user.toJSON(),
             token,
@@ -52,15 +60,12 @@ async function getAll() {
 async function getById(id) {
     return await User.findById(id);
 }
-
 async function create(userParam) {
     // validate
     if (await User.findOne({pseudo: userParam.pseudo})) {
         throw `pseudo "${userParam.pseudo}" is already taken`;
     }
-
     const user = new User(userParam);
-
     // hash password
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
@@ -68,22 +73,18 @@ async function create(userParam) {
 
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
-    console.log("this is a test: ", findIdPlayer);
-
     await treeService.newPlayerTreesGenerator(findIdPlayer);
+    await algoService.getMoneyById(findIdPlayer); //generate money for new user
 }
 
 async function findUserId(playerPseudo) {
-    const user = await User.findOne({pseudo: playerPseudo}, (err) => {
+    const user = await User.findOne({pseudo: playerPseudo}, err => {
         if (err) {
             console.log(err);
             return null;
         }
-        // console.log(user);
     });
-    // console.log("finding user: ", user);
     return user;
-    // console.log(userInfo);
 }
 
 async function update(id, userParam) {
