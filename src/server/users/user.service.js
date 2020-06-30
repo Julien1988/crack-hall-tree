@@ -1,4 +1,5 @@
-﻿/* eslint-disable no-unreachable */
+﻿/* eslint-disable no-unused-vars */
+/* eslint-disable no-unreachable */
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable no-use-before-define */
@@ -31,10 +32,17 @@ module.exports = {
 };
 
 async function authenticate({pseudo, password}) {
+    let status = false; //status connexion
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
         const token = jwt.sign({sub: user.id}, secret);
 
+        status = true;
+        user.status = status; //change status true
+        await user.save(); //save change
+
+        //turn 15 minutes algo
+        algoService.checkTime({id: user.id});
         return {
             ...user.toJSON(),
             token,
@@ -63,7 +71,7 @@ async function create(userParam) {
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
     await treeService.newPlayerTreesGenerator(findIdPlayer);
-    await algoService.getById(findIdPlayer); //generate money for new user
+    await algoService.getMoneyById(findIdPlayer); //generate money for new user
 }
 
 async function findUserId(playerPseudo) {

@@ -1,30 +1,25 @@
+/* eslint-disable consistent-return */
+/* eslint-disable require-await */
+/* eslint-disable no-return-await */
+/* eslint-disable no-unmodified-loop-condition */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-console */
 /* eslint-disable no-undef */
 /* eslint-disable array-callback-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
 const db = require("../_helpers/db");
 const Arbustum = db.Arbustum;
 const User = db.User;
 
 module.exports = {
-    getById,
+    getMoneyById,
+    returnMoney15M,
+    checkTime,
 };
-//time work
-/* function sheete() {
-    const sheetes = 0;
-    let now = new Date();
-    now.setMinutes(now.getMinutes() + 30); // timestamp
-    now = new Date(now); // Date object
-    console.log(`time : ${now}`);
-}
-{
-            player_id: "5ef4e5295760d500a1a1b41b",
-        }
- */
-async function getById(id) {
+//get money for current user
+async function getMoneyById(id) {
     try {
         let user = await User.findById(id);
         const id_player = user._id;
@@ -39,6 +34,7 @@ async function getById(id) {
         return error;
     }
 }
+// calcul money
 async function getMoney(id_player) {
     try {
         const arbust = await Arbustum.find({player_id: id_player});
@@ -54,41 +50,32 @@ async function getMoney(id_player) {
         return error;
     }
 }
-async function upGrateMoney(id) {
+async function returnMoney15M(id) {
     try {
         let user = await User.findById(id);
-        let money = 0;
-        //console.log("user money :", user.money);
+        let cashes = user.money;
+        console.log(`cashes : ${cashes}`);
+        cashes = cashes + cashes / 2;
+        console.log(`cashes 2 : ${cashes}`);
 
+        /* let setTime = createdDate.setMinutes(createdDate.getMinutes() + 1); // timestamp
+            let createdDate2 = new Date(setTime); // Date object */
+        //console.log(`time : ${createdDate2}`);
+        user.money = cashes;
         await user.save();
-        return money; //facultaif
+        return cashes; //facultaif
     } catch (error) {
         return error;
     }
 }
-
-/* async function get3Threes(req, res) {
+async function checkTime(id) {
     try {
-        const threes = await Arbustum.find();
-        const trois = [];
+        let user = await User.findById(id);
         do {
-            const num = Math.floor(Math.random() * threes.length);
-            const choice = threes[num];
-            if (
-                choice.id !== trois[choice.id] &&
-                choice.circonf !== 0 &&
-                choice.arbotag !== 0 &&
-                choice.hauteur_totale !== 0 &&
-                choice.diametre_cime !== 0
-            ) {
-                //const threefake = fakerName();
-                trois.push(choice);
-            }
-        } while (trois.length < 3);
-        res.json(trois);
+            console.log("===test===");
+            setTimeout(() => returnMoney15M({id: user.id}), 5000);
+        } while (user.status);
     } catch (error) {
-        res.send(error);
-        // expected output: ReferenceError: nonExistentFunction is not defined
-        // Note - error messages will vary depending on browser
+        return error;
     }
-} */
+}
