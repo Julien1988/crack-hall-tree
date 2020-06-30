@@ -1,3 +1,5 @@
+/* eslint-disable no-var */
+/* eslint-disable object-shorthand */
 /* eslint-disable consistent-return */
 /* eslint-disable require-await */
 /* eslint-disable no-return-await */
@@ -12,11 +14,13 @@
 const db = require("../_helpers/db");
 const Arbustum = db.Arbustum;
 const User = db.User;
+//var ObjectId = require("mongodb").ObjectID;
 
 module.exports = {
     getMoneyById,
     returnMoney15M,
     checkTime,
+    updateConnectionDate,
 };
 //get money for current user
 async function getMoneyById(id) {
@@ -72,10 +76,23 @@ async function checkTime(id) {
     try {
         let user = await User.findById(id);
         do {
-            console.log("===test===");
-            setTimeout(() => returnMoney15M({id: user.id}), 5000);
+            console.log("===check===");
+            //setTimeout(() => returnMoney15M({id: user.id}), 5000);
         } while (user.status);
     } catch (error) {
-        return error;
+        console.log(error);
+        //return error;
+    }
+}
+async function updateConnectionDate(id) {
+    try {
+        let user = await User.findById(id);
+        console.log(` users ${user.pseudo}`);
+        const now = new Date();
+        user.dateConnect = now;
+        console.log(`connect `);
+        await user.save();
+    } catch (error) {
+        console.log(error);
     }
 }

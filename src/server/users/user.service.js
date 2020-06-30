@@ -39,10 +39,13 @@ async function authenticate({pseudo, password}) {
 
         status = true;
         user.status = status; //change status true
+
         await user.save(); //save change
 
         //turn 15 minutes algo
-        algoService.checkTime({id: user.id});
+        algoService.checkTime(user._id);
+
+        algoService.updateConnectionDate(user._id);
         return {
             ...user.toJSON(),
             token,

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+//const ObjectId = Schema.Types.ObjectId;
 
 const schema = new Schema({
     nom_complet: {type: String},
@@ -11,7 +12,8 @@ const schema = new Schema({
     hauteur_totale: {type: Number},
     diametre_cime: {type: Number},
     circonf: {type: Number},
-    player_id: {type: String},
+    //player_id: [{type: ObjectId}],
+    player_id: {type: Schema.Types.ObjectId},
     player_color: {type: Number},
     leave: {type: Number},
     random_name: {type: String},

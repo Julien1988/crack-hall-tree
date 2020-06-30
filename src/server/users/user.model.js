@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+//const ObjectId = Schema.Types.ObjectId;
 
 const schema = new Schema({
     pseudo: {type: String, unique: true, required: true},
@@ -10,17 +11,17 @@ const schema = new Schema({
     status: {type: Boolean},
     history: {type: Date},
     gradeUpdate: {type: Date},
-    gradeUpdate2: {type: Date},
+    dateConnect: {type: Date},
     createdDate: {type: Date, default: Date.now},
 });
 // c'est quoi ce bout de code
 schema.set("toJSON", {
     virtuals: true,
     versionKey: false,
-    transform(doc, ret) {
+    transform(ret) {
         delete ret._id;
         delete ret.hash;
     },
 });
 
-module.exports = mongoose.model("User", schema);
+module.exports = mongoose.model("User", schema, "users");
