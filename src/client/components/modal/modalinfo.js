@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-depth */
 /* creation du model button pour l'app arbre
  * /src/components/modal/modal.js - creation du modal
  * code by sarahG4000 for becode formation

@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 const db = require("../_helpers/db");
 const Trees = db.Trees;
-const User = db.User;
+//const User = db.User;
 const newUserFunction = require("../algo/getfreetrees");
 const otherPlayerPrice = require("../algo/otherplayerprice");
 const userService = require("../users/user.service");
@@ -18,6 +19,10 @@ async function getAllTrees(req, res) {
         res.send(error.response.data.message);
     }
 }
+/* async function getCurrent(req, res) {
+    const momo = await current.getCurrent();
+    res.json(momo);
+} */
 
 // Recupération de l'id d'un joueur et envois des arbres correspondant
 async function getIdPlayer(req, res) {
