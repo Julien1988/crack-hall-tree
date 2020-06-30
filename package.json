@@ -87,6 +87,7 @@
     "react-leaflet": "^2.7.0",
     "react-leaflet-markercluster": "^2.0.0",
     "react-router-dom": "^5.2.0",
+    "react-use-storage": "^0.4.2",
     "reactjs-popup": "^1.5.0",
     "rootpath": "^0.1.2",
     "serialize-javascript": "^4.0.0"
