@@ -1,15 +1,10 @@
-﻿/* eslint-disable no-unused-vars */
-/* eslint-disable no-unreachable */
+﻿/* eslint-disable require-atomic-updates */
 /* eslint-disable no-console */
-/* eslint-disable no-undef */
-/* eslint-disable no-use-before-define */
-/* eslint-disable consistent-return */
-/* eslint-disable no-extra-parens */
-/* eslint-disable require-atomic-updates */
-/* eslint-disable no-sync */
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-return-await */
-//const config = require("config.json");
+/* eslint-disable no-sync */
+/* eslint-disable consistent-return */
+/* eslint-disable no-use-before-define */
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const db = require("../_helpers/db");
@@ -42,9 +37,7 @@ async function authenticate({pseudo, password}) {
 
         await user.save(); //save change
 
-        //turn 15 minutes algo
-        algoService.checkTime(user._id);
-
+        //to upDate dateConnect
         algoService.updateConnectionDate(user._id);
         return {
             ...user.toJSON(),
@@ -96,7 +89,8 @@ async function update(id, userParam) {
     }
     if (
         user.pseudo !== userParam.pseudo &&
-        (await User.findOne({pseudo: userParam.pseudo}))
+        // eslint-disable-next-line prettier/prettier
+        await User.findOne({pseudo: userParam.pseudo})
     ) {
         throw `pseudo "${userParam.pseudo}" is already taken`;
     }
