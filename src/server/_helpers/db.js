@@ -22,5 +22,5 @@ module.exports = {
     User: require("../users/user.model"),
     Gamer: require("../gamer/gamer.model"),
     Arbustum: require("../algo/arbustum.model"),
-    Trees: require("../trees/trees.model")
+    Trees: require("../trees/trees.model"),
 };

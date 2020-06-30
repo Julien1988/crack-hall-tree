@@ -37,7 +37,7 @@ const HomeConnect = () => {
     }, [setModalShowInfo]);
     const handleModalDeco = () => {
         window.location = "/";
-        localStorage.removeItem("tokenUserId");
+        // localStorage.removeItem("tokenUserId");
     };
 
     return (
@@ -49,9 +49,8 @@ const HomeConnect = () => {
                 <ToolsInfo onInfo={handleModalInfo} onOut={handleModalDeco} />
             </div>
 
-            <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
-
             <ModalHome showHome={modalShowHome} onHide={handleCloseModalHome} />
+            <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
         </div>
     );
 };

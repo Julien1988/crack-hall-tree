@@ -32,7 +32,7 @@ const Logup = () => {
         });
     console.warn(formik.values.pseudo);
     //sinon redirection
-    // window.location = "/"
+    window.location = "/";
 
     return (
         <form onSubmit={formik.handleSubmit}>

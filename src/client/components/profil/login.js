@@ -25,7 +25,7 @@ const Login = () => {
         .post("http://localhost/users/authenticate", formik.values)
         .then(res => {
             localStorage.setItem("tokenUserId", JSON.stringify(res.data.id));
-            console.log(res.data.id);
+            console.warn(res.data.id);
         })
         .catch(erreur => {
             console.warn(`Error${erreur.response.data.message}`);
