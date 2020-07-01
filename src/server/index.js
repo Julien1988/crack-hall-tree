@@ -22,7 +22,6 @@ app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 //app.use(jwt());
 // / api routes
 app.use("/users", require("./users/users.controller"));
-app.use("/gamer", require("./gamer/gamer.controller"));
 app.use("/trees", require("./trees/trees.controller"));
 app.use("/algo", require("./algo/algo.controller"));
 
