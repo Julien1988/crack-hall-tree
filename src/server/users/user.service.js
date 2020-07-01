@@ -16,11 +16,10 @@ const db = require("../_helpers/db");
 const User = db.User;
 const secret =
     "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING";
-//const algoService = require("./algo.service");
-//import("../global");
 
 const treeService = require("../trees/trees.service");
 const algoService = require("../algo/algo.service");
+import date from "date-and-time";
 
 module.exports = {
     authenticate,
@@ -30,22 +29,19 @@ module.exports = {
     update,
     delete: _delete,
 };
-
+// SuperToto
 async function authenticate({pseudo, password}) {
     let status = false; //status connexion
     const user = await User.findOne({pseudo});
     if (user && bcrypt.compareSync(password, user.hash)) {
         const token = jwt.sign({sub: user.id}, secret);
-
+        console.log(user);
         status = true;
         user.status = status; //change status true
 
+        await algoService.updateConnectionDate(user._id);
         await user.save(); //save change
 
-        //turn 15 minutes algo
-        algoService.checkTime(user._id);
-
-        algoService.updateConnectionDate(user._id);
         return {
             ...user.toJSON(),
             token,
@@ -70,6 +66,7 @@ async function create(userParam) {
     if (userParam.password) {
         user.hash = bcrypt.hashSync(userParam.password, 10);
     }
+    user.dateConnect = Date();
 
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
@@ -78,7 +75,7 @@ async function create(userParam) {
 }
 
 async function findUserId(playerPseudo) {
-    const user = await User.findOne({pseudo: playerPseudo}, err => {
+    const user = await User.findOne({pseudo: playerPseudo}, (err) => {
         if (err) {
             console.log(err);
             return null;

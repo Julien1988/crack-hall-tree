@@ -11,7 +11,7 @@ const User = db.User;
 router.get("/score/:id", getMoneyById);
 router.get("/scores/:id", returnMoney15M);
 router.get("/money/:playerid", getMoney);
-router.get("/updatetime/:playerid", updateUserTime);
+// router.get("/updatetime/:playerid", updateUserTime);
 
 //annexe return money way from algoService
 function getMoneyById(req, res, next) {
@@ -27,16 +27,15 @@ function returnMoney15M(req, res, next) {
         .catch((err) => next(err));
 }
 
-async function updateUserTime(req, res) {
-    try {
-        //const playerInfo = await User.findById(playerId);
-        const playerId = req.params.playerid;
-        algoService.updateConnectionDate(playerId);
-        //console.log(playerInfo);
-    } catch (error) {
-        console.log(error);
-    }
-}
+// Lancement de la fonction d'update du temps et de répartition de l'argent tous les X temps
+// async function updateUserTime(req, res) {
+//     try {
+//         const playerId = req.params.playerid;
+//         algoService.updateConnectionDate(playerId);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 // 5efb1aad427e0d015970daf7
 async function getMoney(req, res) {

@@ -16,18 +16,12 @@ const {type} = require("os");
 const Arbustum = db.Arbustum;
 const User = db.User;
 const Trees = db.Trees;
-import date from "date-and-time";
 const updateConnectionAlgo = require("./updateconnectiondate");
+import date from "date-and-time";
 
 // https://www.npmjs.com/package/date-and-time
 //var ObjectId = require("mongodb").ObjectID;
 
-module.exports = {
-    getMoneyById,
-    returnMoney15M,
-    checkTime,
-    updateConnectionDate,
-};
 //get money for current user
 async function getMoneyById(id) {
     try {
@@ -60,49 +54,15 @@ async function getMoney(id_player) {
         return error;
     }
 }
-async function returnMoney15M(id) {
-    try {
-        let user = await User.findById(id);
-        let cashes = user.money;
-        console.log(`cashes : ${cashes}`);
-        cashes = cashes + cashes / 2;
-        console.log(`cashes 2 : ${cashes}`);
 
-        /* let setTime = createdDate.setMinutes(createdDate.getMinutes() + 1); // timestamp
-            let createdDate2 = new Date(setTime); // Date object */
-        //console.log(`time : ${createdDate2}`);
-        user.money = cashes;
-        await user.save();
-        return cashes; //facultaif
-    } catch (error) {
-        return error;
-    }
-}
-async function checkTime(id) {
-    try {
-        let user = await User.findById(id);
-        do {
-            console.log("===check===");
-            //setTimeout(() => returnMoney15M({id: user.id}), 5000);
-        } while (user.status);
-    } catch (error) {
-        console.log(error);
-        //return error;
-    }
-}
-
-// Toutes les quinze minutes dans la vraie vie, chaque joueur recevra une quantité de feuilles égale au total de chacun de ses arbres.
-// Chaque heure dans la vraie vie, chaque joueur perd la moitié de ses feuilles.
+// Calcule de l'argent à recevoir tous les X temps
 async function updateConnectionDate(id) {
     try {
-        console.log("== updateConnectionDate ==");
+        console.log("updateConnectionDate");
         const user = await User.findById(id);
         const treesUser = await Trees.find({player_id: id});
         const leaveToGive = await updateConnectionAlgo(user, treesUser);
         if (leaveToGive != false) {
-            // console.log(leaveToGive.totalUserLeaveToGive);
-            // console.log(leaveToGive.totalLeaveDivision);
-
             const userMoney = Math.floor(
                 (user.money + leaveToGive.totalUserLeaveToGive) /
                     leaveToGive.totalLeaveDivision,
@@ -113,7 +73,6 @@ async function updateConnectionDate(id) {
                 doc.dateConnect = updateDateTime;
                 doc.save();
                 console.log("le prix de l'abre a été déduit");
-                //console.log(updateUser);
             });
         } else {
             console.log("Il ne s'est pas assez écoulé de temps");
@@ -122,3 +81,9 @@ async function updateConnectionDate(id) {
         console.log(error);
     }
 }
+
+module.exports = {
+    getMoneyById,
+    updateConnectionDate,
+    getMoney,
+};
