@@ -1,7 +1,4 @@
-const db = require("../_helpers/db");
 const {doc} = require("prettier");
-const Trees = db.Trees;
-const User = db.User;
 import date from "date-and-time";
 
 async function updateConnectionAlgo(user, treesUser) {
