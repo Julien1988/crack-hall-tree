@@ -19,15 +19,15 @@ const Logup = () => {
             color: "",
             password: "",
         },
-        onSubmit: values => {
+        onSubmit: (values) => {
             console.warn(JSON.stringify(values, null, 2));
             window.location = "/";
         },
     });
     axios
         .post("http://localhost/users/register", formik.values)
-        .then(res => console.log(res.data))
-        .catch(erreur => {
+        .then((res) => console.log(res.data))
+        .catch((erreur) => {
             console.warn(`Error${erreur.response.data.message}`);
             //this.messsageError = erreur.response.data.message;
         });

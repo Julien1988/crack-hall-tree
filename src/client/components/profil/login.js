@@ -17,17 +17,17 @@ const Login = () => {
             password: "",
             pseudo: "",
         },
-        onSubmit: values => {
+        onSubmit: (values) => {
             console.warn(JSON.stringify(values, null, 2));
         },
     });
     axios
         .post("http://localhost/users/authenticate", formik.values)
-        .then(res => {
+        .then((res) => {
             localStorage.setItem("tokenUserId", JSON.stringify(res.data.id));
             console.warn(res.data.id);
         })
-        .catch(erreur => {
+        .catch((erreur) => {
             console.warn(`Error${erreur.response.data.message}`);
             //this.messsageError = erreur.response.data.message;
         });

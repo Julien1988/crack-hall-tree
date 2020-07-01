@@ -44,8 +44,8 @@ const ModalInfo = ({showInfo = false, onHide}) => {
             if (getRequest != undefined && requestDone != true) {
                 axios
                     .get(getRequest)
-                    .then(res => setUserInfo(res.data))
-                    .catch(erreur => {
+                    .then((res) => setUserInfo(res.data))
+                    .catch((erreur) => {
                         console.warn(erreur);
                     });
 

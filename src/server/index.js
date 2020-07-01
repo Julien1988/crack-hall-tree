@@ -19,10 +19,9 @@ app.use(cors());
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
 // use JWT auth t<o secure the api
-// app.use(jwt());
+//app.use(jwt());
 // / api routes
 app.use("/users", require("./users/users.controller"));
-app.use("/gamer", require("./gamer/gamer.controller"));
 app.use("/trees", require("./trees/trees.controller"));
 app.use("/algo", require("./algo/algo.controller"));
 
