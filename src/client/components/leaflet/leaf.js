@@ -48,32 +48,12 @@ const myColourWhite = "#fcfbfc";
 const myColourDefault = "#03f3d2";
 // let myColorista;
 
-let myColorista = myGetArrayColor.map(itemColor => {
+let myColorista = myGetArrayColor.map((itemColor) => {
     if (itemColor.player_color === null) {
         myColorista = "#03f3d2";
         console.log(myColorista);
     }
 });
-
-// if (colors.player_color === "red") {
-//     myColorista = myColourRed;
-// } else if (colors.player_color === "yellow") {
-//     myColorista = myColourYellow;
-// } else if (colors.player_color === "green") {
-//     myColorista = myColourGreen;
-// } else if (colors.player_color === "dark") {
-//     myColorista = myColourDark;
-// } else if (colors.player_color === "grey") {
-//     myColorista = myColourGrey;
-// } else if (colors.player_color === "orange") {
-//     myColorista = myColourOrange;
-// } else if (colors.player_color === "purple") {
-//     myColorista = myColourPurple;
-// } else if (colors.player_color === "white") {
-//     myColorista = myColourWhite;
-// } else {
-//     myColorista = myColourDefault;
-// }
 
 const markerHtmlStyles = `
 background-color: ${myColorista};
@@ -96,34 +76,21 @@ const icon = Leaflet.divIcon({
 });
 
 const LeafMyMap = () => {
-    const handelbuyTree = args => {
+    const handelbuyTree = (args) => {
         console.log(args);
-        //"href-buy";
-        // "href-buy-cher";
-        // "Non non non";
-        // switch();
     };
-
-    // Stoque l'ensemble des arbres
-    const [allTrees, setAllTrees] = useState([]);
-    // Stoque le centre geographique
-    const [centerGeoloc, setCenterGeoloc] = useState([50.65156, 5.5806785]);
-    //stoque la taille du rayon du cercle
-    const [radiusGeoloc] = useState(500);
-
-    const [click, setClick] = useState(false);
 
     useEffect(() => {
         axios
             .get("http://localhost/trees/alltrees")
-            .then(res => setAllTrees(res.data))
-            .catch(erreur => {
+            .then((res) => setAllTrees(res.data))
+            .catch((erreur) => {
                 console.warn(erreur); // c'est la ligne 71
             });
     }, []);
 
-    const geolocCircle = getCenter => {
-        allTrees.forEach(element => {
+    const geolocCircle = (getCenter) => {
+        allTrees.forEach((element) => {
             const center = {lat: getCenter[0], lon: getCenter[1]};
             const radius = 500;
 
@@ -164,126 +131,10 @@ const LeafMyMap = () => {
         });
     };
 
-    const handleClick = e => {
-        clickData = [e.latlng.lat, e.latlng.lng];
-        setCenterGeoloc(clickData);
-
-        if (click === false) {
-            myGetArray = [];
-            geolocCircle(clickData);
-            setClick(true);
-        } else {
-            setClick(false);
-        }
-    };
-
     console.log(allTrees);
 
-    if (click === true) {
-        return (
-            <Map
-                className={"leaflet-container"}
-                center={position}
-                zoom={13}
-                onClick={handleClick}>
-                <TileLayer
-                    url={
-                        "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-                    }
-                    attribution={
-                        '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-                    }
-                />
-                <MarkerClusterGroup>
-                    <Circle center={centerGeoloc} radius={radiusGeoloc} />
-
-                    {myGetArray.map(item => (
-                        <React.Fragment key={item._id}>
-                            <Marker
-                                icon={icon}
-                                position={[item.geoloc.lat, item.geoloc.lon]}>
-                                <Popup>
-                                    <div
-                                        className={[
-                                            "title",
-                                            "modal-card",
-                                            "sg-tree",
-                                        ].join(" ")}>
-                                        <header className={"modal-card-head"}>
-                                            <p
-                                                className={
-                                                    "modal-card-title is-6 is-spaced"
-                                                }>
-                                                <strong>
-                                                    {"Profile tree"}
-                                                </strong>
-                                            </p>
-                                        </header>
-                                        <section className={"modal-card-body"}>
-                                            <p className={"subtitle is-5"}>
-                                                <strong>
-                                                    {"Nom de l'arbre:"}
-                                                </strong>{" "}
-                                                {item.random_name}{" "}
-                                            </p>
-
-                                            <p className={"subtitle is-5"}>
-                                                <strong>
-                                                    {"Nombre de feuilles :"}
-                                                </strong>{" "}
-                                                {item.leave}
-                                            </p>
-
-                                            <a
-                                                className={"subtitle is-5"}
-                                                href={item.wikilink}>
-                                                {"Lien wikipédia"}
-                                            </a>
-
-                                            <p className={"subtitle is-5"}>
-                                                <strong>
-                                                    {"Commentaire :"}
-                                                </strong>{" "}
-                                                {item.comment}
-                                            </p>
-
-                                            <p className={"subtitle is-5"}>
-                                                <strong>{"lat:"}</strong>{" "}
-                                                {item.geoloc.lat} <br />{" "}
-                                                <strong>{"long:"}</strong>
-                                                {item.geoloc.lon}
-                                            </p>
-                                        </section>
-                                        <footer className={"modal-card-foot"}>
-                                            <button
-                                                className={
-                                                    "button is-success is-small is-pulled-right"
-                                                }
-                                                label={"Close"}
-                                                // {() => this.handleClick(id)}
-                                                onClick={() =>
-                                                    handelbuyTree(
-                                                        item.buyButton,
-                                                    )
-                                                }>
-                                                {"Buy Me !"}
-                                            </button>
-                                        </footer>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        </React.Fragment>
-                    ))}
-                </MarkerClusterGroup>
-            </Map>
-        );
-    }
     return (
-        <Map
-            className={"leaflet-container"}
-            center={position}
-            zoom={13}
-            onClick={handleClick}>
+        <Map className={"leaflet-container"} center={position} zoom={13}>
             <TileLayer
                 url={
                     "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
@@ -292,6 +143,77 @@ const LeafMyMap = () => {
                     '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
                 }
             />
+            <MarkerClusterGroup>
+                {allTrees.map((item) => (
+                    <React.Fragment key={item._id}>
+                        <Marker
+                            icon={icon}
+                            position={[item.geoloc.lat, item.geoloc.lon]}>
+                            <Popup>
+                                <div
+                                    className={[
+                                        "title",
+                                        "modal-card",
+                                        "sg-tree",
+                                    ].join(" ")}>
+                                    <header className={"modal-card-head"}>
+                                        <p
+                                            className={
+                                                "modal-card-title is-6 is-spaced"
+                                            }>
+                                            <strong>{"Profile tree"}</strong>
+                                        </p>
+                                    </header>
+                                    <section className={"modal-card-body"}>
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"Nom de l'arbre:"}</strong>{" "}
+                                            {item.random_name}{" "}
+                                        </p>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>
+                                                {"Nombre de feuilles :"}
+                                            </strong>{" "}
+                                            {item.leave}
+                                        </p>
+
+                                        <a
+                                            className={"subtitle is-5"}
+                                            href={item.wikilink}>
+                                            {"Lien wikipédia"}
+                                        </a>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"Commentaire :"}</strong>{" "}
+                                            {item.comment}
+                                        </p>
+
+                                        <p className={"subtitle is-5"}>
+                                            <strong>{"lat:"}</strong>{" "}
+                                            {item.geoloc.lat} <br />{" "}
+                                            <strong>{"long:"}</strong>
+                                            {item.geoloc.lon}
+                                        </p>
+                                    </section>
+                                    <footer className={"modal-card-foot"}>
+                                        <button
+                                            className={
+                                                "button is-success is-small is-pulled-right"
+                                            }
+                                            label={"Close"}
+                                            // {() => this.handleClick(id)}
+                                            onClick={() =>
+                                                handelbuyTree(item.buyButton)
+                                            }>
+                                            {"Buy Me !"}
+                                        </button>
+                                    </footer>
+                                </div>
+                            </Popup>
+                        </Marker>
+                    </React.Fragment>
+                ))}
+            </MarkerClusterGroup>
         </Map>
     );
 };
