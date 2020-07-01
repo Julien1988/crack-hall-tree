@@ -12,48 +12,13 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 const db = require("../_helpers/db");
-const {type} = require("os");
-const Arbustum = db.Arbustum;
+
 const User = db.User;
 const Trees = db.Trees;
 const updateConnectionAlgo = require("./updateconnectiondate");
 import date from "date-and-time";
 
 // https://www.npmjs.com/package/date-and-time
-//var ObjectId = require("mongodb").ObjectID;
-
-//get money for current user
-async function getMoneyById(id) {
-    try {
-        let user = await User.findById(id);
-        const id_player = user._id;
-        //console.log("test1", id_player);
-        let cashes = 0;
-        cashes = await getMoney(id_player);
-
-        user.money = cashes;
-        await user.save();
-        return cashes; //facultaif
-    } catch (error) {
-        return error;
-    }
-}
-// calcul money
-async function getMoney(id_player) {
-    try {
-        const arbust = await Arbustum.find({player_id: id_player});
-        let myTable = [];
-        arbust.map((tree) => {
-            myTable.push(tree.leave);
-        });
-        const reducer = (accumulator, currentValue) =>
-            accumulator + currentValue;
-        const variable = myTable.reduce(reducer);
-        return variable;
-    } catch (error) {
-        return error;
-    }
-}
 
 // Calcule de l'argent à recevoir tous les X temps
 async function updateConnectionDate(id) {
@@ -83,7 +48,5 @@ async function updateConnectionDate(id) {
 }
 
 module.exports = {
-    getMoneyById,
     updateConnectionDate,
-    getMoney,
 };

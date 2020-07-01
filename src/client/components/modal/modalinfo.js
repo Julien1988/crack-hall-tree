@@ -37,7 +37,8 @@ const ModalInfo = ({showInfo = false, onHide}) => {
             setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
             // console.log(state);
-            let getRequest = "http://localhost/users/" + state;
+            const URI = "http://localhost/users/";
+            let getRequest = URI + state;
             console.log(getRequest);
             if (getRequest != undefined && requestDone != true) {
                 axios

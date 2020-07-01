@@ -62,6 +62,7 @@ export default class Logup extends React.Component {
 
         axios
             .post("http://localhost/users/register", user)
+
             .then((res) => {
                 localStorage.setItem(
                     "tokenUserId",
