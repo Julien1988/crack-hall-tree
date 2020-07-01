@@ -80,6 +80,9 @@ const LeafMyMap = () => {
         console.log(args);
     };
 
+    // Stoque l'ensemble des arbres
+    const [allTrees, setAllTrees] = useState([]);
+
     useEffect(() => {
         axios
             .get("http://localhost/trees/alltrees")
