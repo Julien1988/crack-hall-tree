@@ -35,6 +35,10 @@ const HomeConnect = () => {
     const handleModalInfo = useCallback(() => {
         setModalShowInfo(true);
     }, [setModalShowInfo]);
+    const handleModalDeco = () => {
+        window.location = "/";
+        // localStorage.removeItem("tokenUserId");
+    };
 
     return (
         <div
@@ -42,12 +46,11 @@ const HomeConnect = () => {
                 " ",
             )}>
             <div className={"buttons has-addons is-centered btn-sg"}>
-                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalInfo} />
+                <ToolsInfo onInfo={handleModalInfo} onOut={handleModalDeco} />
             </div>
 
-            <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
-
             <ModalHome showHome={modalShowHome} onHide={handleCloseModalHome} />
+            <ModalInfo showInfo={modalShowInfo} onHide={handleCloseModalInfo} />
         </div>
     );
 };

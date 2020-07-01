@@ -1,162 +1,124 @@
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable no-console */
 /* eslint-disable class-methods-use-this */
-import * as React from "react";
+/* creation du model button pour l'app arbre
+ * /src/components/profil/logup.js - model fromulaire de inscription au jeux
+ * code by sarahG4000 for becode formation
+ * creation for montagne
+ * creat 25/05/2020
+ */
+import React from "react";
 import axios from "axios";
+import {useFormik} from "formik";
 
-export default class Logup extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.nextStape = false;
-
-        this.onChangePseudo = this.onChangePseudo.bind(this);
-        this.onChangeColor = this.onChangeColor.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        //this.onChangeUserCreated = this.onChangeUserCreated.bind(this);
-        //this.onChangeUserMessage = this.onChangeUserMessage.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-        this.state = {
+const Logup = () => {
+    const formik = useFormik({
+        initialValues: {
             pseudo: "",
-            color: "",
             email: "",
+            color: "",
             password: "",
-            userCreated: "",
-            message: "",
-        };
-    }
-    onChangePseudo(e) {
-        this.setState({
-            pseudo: e.target.value,
+        },
+        onSubmit: (values) => {
+            console.warn(JSON.stringify(values, null, 2));
+            window.location = "/";
+        },
+    });
+    axios
+        .post("http://localhost/users/register", formik.values)
+        .then((res) => console.log(res.data))
+        .catch((erreur) => {
+            console.warn(`Error${erreur.response.data.message}`);
+            //this.messsageError = erreur.response.data.message;
         });
-    }
-    onChangeColor(e) {
-        this.setState({
-            color: e.target.value,
-        });
-    }
-    onChangeEmail(e) {
-        this.setState({
-            email: e.target.value,
-        });
-    }
-    onChangePassword(e) {
-        this.setState({
-            password: e.target.value,
-        });
-    }
-    onSubmit(e) {
-        e.preventDefault();
+    console.warn(formik.values.pseudo);
+    //sinon redirection
 
-        const user = {
-            pseudo: this.state.pseudo,
-            color: this.state.color,
-            email: this.state.email,
-            password: this.state.password,
-        };
-
-        console.log(user);
-        //let messsageError "";
-
-        axios
-            .post("http://localhost/users/register", user)
-
-            .then((res) => {
-                localStorage.setItem(
-                    "tokenUserId",
-                    JSON.stringify(res.data.id),
-                );
-                console.log(res.data);
-            })
-            .catch((erreur) => {
-                console.warn(`Error${erreur.response.data.message}`);
-            });
-
-        //sinon redirection
-        window.location = "/";
-    }
-    render() {
-        return (
-            <form onSubmit={this.onSubmit}>
-                <div className={"field box"}>
-                    <p className={"control"}>
-                        <label>{"Pseudo"}</label>
-                        <input
-                            className={"input"}
-                            type={"text"}
-                            placeholder={"Your Pseudo"}
-                            value={this.state.pseudo}
-                            onChange={this.onChangePseudo}
-                        />
-                        <p className={"text-muted"}>
-                            {"We'll never share your email with anyone else."}
-                        </p>
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <div className={"field box"}>
+                <p className={"control"}>
+                    <label>{"Pseudo"}</label>
+                    <input
+                        className={"input"}
+                        type={"name"}
+                        name={"pseudo"}
+                        id={"pseudo"}
+                        placeholder={"Your Pseudo"}
+                        value={formik.values.pseudo}
+                        onChange={formik.handleChange}
+                    />
+                    <p className={"text-muted"}>
+                        {"We'll never share your email with anyone else."}
                     </p>
-                </div>
+                </p>
+            </div>
 
-                <div className={"field box"}>
-                    <p className={"control"}>
-                        <label>{"Password"}</label>
-                        <input
-                            className={"input"}
-                            type={"password"}
-                            placeholder={"Password"}
-                            value={this.state.password}
-                            onChange={this.onChangePassword}
-                        />
-                    </p>
-                </div>
-                <div className={"field box"}>
-                    <p className={"control"}>
-                        <label>{"Email address"}</label>
-                        <input
-                            className={"input"}
-                            type={"email"}
-                            placeholder={"name@example.com"}
-                            value={this.state.email}
-                            onChange={this.onChangeEmail}
-                        />
-                    </p>
-                </div>
-                <div className={"field box"}>
-                    <p className={"control"}>
-                        <label>{"Colors "}</label>
-                        <div
-                            className={"select"}
+            <div className={"field box"}>
+                <p className={"control"}>
+                    <label>{"Password"}</label>
+                    <input
+                        className={"input"}
+                        type={"password"}
+                        name={"password"}
+                        id={"password"}
+                        placeholder={"Password"}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                    />
+                </p>
+            </div>
+            <div className={"field box"}>
+                <p className={"control"}>
+                    <label>{"Email address"}</label>
+                    <input
+                        className={"input"}
+                        type={"email"}
+                        name={"email"}
+                        id={"email"}
+                        placeholder={"name@example.com"}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                    />
+                </p>
+            </div>
+            <div className={"field box"}>
+                <p className={"control"}>
+                    <label>{"Colors "}</label>
+                    <p className={"select"}>
+                        <select
                             as={"select"}
                             type={"text"}
+                            name={"color"}
+                            id={"color"}
                             placeholder={"Your color"}
-                            value={this.state.color}
-                            onChange={this.onChangeColor}>
-                            <select>
-                                <option>{"color choice"}</option>
-                                <option>{"red"}</option>
-                                <option>{"yellow"}</option>
-                                <option>{"green"}</option>
-                                <option>{"dark"}</option>
-                                <option>{"grey"}</option>
-                                <option>{"brown"}</option>
-                                <option>{"orange"}</option>
-                                <option>{"pink"}</option>
-                                <option>{"purple"}</option>
-                                <option>{"white"}</option>
-                            </select>
-                        </div>
+                            value={formik.values.color}
+                            onChange={formik.handleChange}>
+                            <option>{"color choice"}</option>
+                            <option>{"red"}</option>
+                            <option>{"yellow"}</option>
+                            <option>{"green"}</option>
+                            <option>{"dark"}</option>
+                            <option>{"grey"}</option>
+                            <option>{"orange"}</option>
+                            <option>{"purple"}</option>
+                            <option>{"white"}</option>
+                        </select>
                     </p>
-                </div>
-                <div className={"field box"}>
-                    <p className={"control"}>
-                        <button
-                            className={"button is-success"}
-                            variant={"success"}
-                            type={"submit"}>
-                            {"Submit"}
-                        </button>
-                    </p>
-                </div>
-            </form>
-        );
-    }
-}
+                </p>
+            </div>
+            <div className={"field box"}>
+                <p className={"control"}>
+                    <button
+                        className={"button is-success"}
+                        variant={"success"}
+                        type={"submit"}>
+                        {"Submit"}
+                    </button>
+                </p>
+            </div>
+        </form>
+    );
+};
+
+export default Logup;

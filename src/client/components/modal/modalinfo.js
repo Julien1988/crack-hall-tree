@@ -8,10 +8,10 @@
 import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import PropTypes from "prop-types";
-import {NBSP} from "../tools/constants";
+
 import axios from "axios";
 //import SignupForm from "../tools/from";
-// import {NBSP} from "../tools/constants";
+
 // import Logup from "../profil/logup";
 
 const containerStyles = {
@@ -28,6 +28,7 @@ const containerStyles = {
 };
 
 const ModalInfo = ({showInfo = false, onHide}) => {
+    // const [currentId, setCurrentId] = useState();
     const [state, setState] = useState();
     const [userInfo, setUserInfo] = useState([]);
     const [requestDone, setRequestDone] = useState(false);
@@ -38,7 +39,7 @@ const ModalInfo = ({showInfo = false, onHide}) => {
 
             // console.log(state);
             const URI = "http://localhost/users/";
-            let getRequest = URI + state;
+            const getRequest = URI + state;
             console.log(getRequest);
             if (getRequest != undefined && requestDone != true) {
                 axios
@@ -62,60 +63,53 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                 <div className={"title modal-card"}>
                     <header className={"modal-card-head"}>
                         <p className={"modal-card-title"}>{"Profile"}</p>
-                    </header>
-                    <section className={"modal-card-body"}>
-                        <div className={""}>
-                            <p className={"title is-4 is-spaced"}>
-                                {"Name : "}
-                            </p>
-                            <p className={"subtitle is-5"} />
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
-                                {" Money : "}
-                            </p>
-                            <p className={"subtitle is-5"}>{"8000 £"}</p>
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
-                                {"Classement  : "}
-                            </p>
-                            <p className={"subtitle is-5"}>{" 2"}</p>
-                            {NBSP}
-                            <p className={"title is-4 is-spaced"}>
-                                {"Historique des achats :"}
-                            </p>
-                            <div className={"subtitle is-5"}>
-                                <ul>
-                                    <li>{"monogos"}</li>
-                                    <li>{"popos"}</li>
-                                </ul>
-                            </div>
-                            {NBSP}
-                            <p className={"subtitle is-5"}>
-                                <a href={"#"}>{"Wikipedia"}</a>
-                            </p>
-                            {NBSP}
-
-                            <p className={"title is-4 is-spaced"}>
-                                {"Commentaires :"}
-                            </p>
-                            <div className={"subtitle is-5"}>
-                                <ul>
-                                    <li>{"comments"}</li>
-                                    <li>{"comments"}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-                    <footer className={"modal-card-foot"}>
                         <button
                             className={
                                 "button is-success is-small is-pulled-right"
                             }
                             label={"Close"}
                             onClick={onHide}>
-                            {"Close"}
+                            {"X"}
                         </button>
-                    </footer>
+                    </header>
+                    <section className={"modal-card-body"}>
+                        <div className={""}>
+                            <p className={"title is-4"}>{"Name : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.pseudo}</p>
+                            <p className={"title is-4"}>{"Email : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.email}</p>
+                            <p className={"title is-4"}>{"Color : "}</p>
+                            <p className={"subtitle is-5"}>{userInfo.color}</p>
+                            <p className={"title is-4"}>{" Money : "}</p>
+                            <p className={"subtitle is-5"}>{"8000 £"}</p>
+                            <p className={"title is-4"}>{"Classement  : "}</p>
+                            <p className={"subtitle is-5"}>{" 2"}</p>
+                            <p className={"title is-4"}>
+                                {"Historique des achats :"}
+                            </p>
+
+                            <ul className={"subtitle is-5"}>
+                                <li>{"monogos"}</li>
+                                <li>{"popos"}</li>
+                            </ul>
+
+                            <p className={"subtitle is-5"}>
+                                <a href={"#"}>{"Wikipedia"}</a>
+                            </p>
+                            <p className={"title is-4"}>{"Commentaires :"}</p>
+
+                            <ul className={"subtitle is-5"}>
+                                <li>{"comments"}</li>
+                                <li>{"comments"}</li>
+                            </ul>
+
+                            <p className={"title is-4"}>{"Date Creation : "}</p>
+                            <p className={"subtitle is-5"}>
+                                {userInfo.createdDate}
+                            </p>
+                        </div>
+                    </section>
+                    <footer className={"modal-card-foot"} />
                 </div>
             </div>,
             document.querySelector("#modals"),
