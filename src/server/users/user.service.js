@@ -29,7 +29,8 @@ module.exports = {
     update,
     delete: _delete,
 };
-// SuperToto
+
+// GreatToto
 async function authenticate({pseudo, password}) {
     let status = false; //status connexion
     const user = await User.findOne({pseudo});
