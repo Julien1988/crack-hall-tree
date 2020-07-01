@@ -10,6 +10,7 @@ const User = db.User;
 // routes
 
 router.get("/money/:playerid", getMoney);
+// router.get("/newplayermoney/:playerid", newPlayerMoney);
 // router.get("/updatetime/:playerid", updateUserTime);
 
 async function getMoney(req, res) {

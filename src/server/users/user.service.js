@@ -72,6 +72,7 @@ async function create(userParam) {
     await user.save();
     const findIdPlayer = await findUserId(user.pseudo);
     await treeService.newPlayerTreesGenerator(findIdPlayer);
+    await algoService.newPlayerMoney(findIdPlayer);
     // donner l'argent
 }
 

@@ -16,6 +16,7 @@ const db = require("../_helpers/db");
 const User = db.User;
 const Trees = db.Trees;
 const updateConnectionAlgo = require("./updateconnectiondate");
+const newPlayerMoneyGenerator = require("./newplayermoneygenerator");
 import date from "date-and-time";
 
 // https://www.npmjs.com/package/date-and-time
@@ -47,6 +48,27 @@ async function updateConnectionDate(id) {
     }
 }
 
+async function newPlayerMoney(req, res) {
+    try {
+        console.log("==> newPlayerMoney <==");
+        console.log(req._id);
+        const playerId = req._id;
+        const playerInfo = await User.findById(playerId);
+        const allUsers = await User.find();
+        const money = await newPlayerMoneyGenerator(allUsers);
+        const updateUser = await User.findById(playerId, function (err, doc) {
+            doc.money = money;
+            doc.dateConnect = new Date();
+            doc.status = true;
+            doc.save();
+            console.log("Le joueur a recus ses 1er crédits");
+        });
+    } catch (error) {
+        res.send(error.response.data.message);
+    }
+}
+
 module.exports = {
     updateConnectionDate,
+    newPlayerMoney,
 };
