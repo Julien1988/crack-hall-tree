@@ -13,7 +13,7 @@ module.exports = {
 async function updateConnectionDate(id) {
     try {
         const user = await User.findById(id);
-        console.log(` users ${user.pseudo}`);
+        console.log(` user : ${user.pseudo}`);
         const now = new Date();
         user.dateConnect = now;
         console.log(`connect `);
