@@ -129,8 +129,6 @@ const LeafMyMap = () => {
                     myGetArray.push(element);
                 }
             }
-
-            console.log("chargement des données en cours... Wait for it !");
         });
     };
 
