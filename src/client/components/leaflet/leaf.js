@@ -9,6 +9,7 @@
  */
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 import {Map, Marker, Popup, TileLayer, Circle} from "react-leaflet";
 import {insideCircle} from "geolocation-utils";
 
@@ -33,7 +34,9 @@ L.Icon.Default.mergeOptions({
 
 const position = [50.65156, 5.5806785];
 let myGetArray = [];
+const myGetArrayColor = [];
 let clickData;
+
 const myColourRed = "#d81205";
 const myColourYellow = "#f1ca08";
 const myColourGreen = "#0ca702";
@@ -43,7 +46,54 @@ const myColourOrange = "#e56704";
 const myColourPurple = "#8002de";
 const myColourWhite = "#fcfbfc";
 const myColourDefault = "#03f3d2";
-let myColorista = "";
+// let myColorista;
+
+let myColorista = myGetArrayColor.map(itemColor => {
+    if (itemColor.player_color === null) {
+        myColorista = "#03f3d2";
+        console.log(myColorista);
+    }
+});
+
+// if (colors.player_color === "red") {
+//     myColorista = myColourRed;
+// } else if (colors.player_color === "yellow") {
+//     myColorista = myColourYellow;
+// } else if (colors.player_color === "green") {
+//     myColorista = myColourGreen;
+// } else if (colors.player_color === "dark") {
+//     myColorista = myColourDark;
+// } else if (colors.player_color === "grey") {
+//     myColorista = myColourGrey;
+// } else if (colors.player_color === "orange") {
+//     myColorista = myColourOrange;
+// } else if (colors.player_color === "purple") {
+//     myColorista = myColourPurple;
+// } else if (colors.player_color === "white") {
+//     myColorista = myColourWhite;
+// } else {
+//     myColorista = myColourDefault;
+// }
+
+const markerHtmlStyles = `
+background-color: ${myColorista};
+width: 3rem;
+height: 3rem;
+display: block;
+left: -1.5rem;
+top: -1.5rem;
+position: relative;
+border-radius: 3rem 3rem 0;
+transform: rotate(45deg);
+border: 1px solid #FFFFFF`;
+
+const icon = Leaflet.divIcon({
+    className: "my-custom-pin",
+    iconAnchor: [0, 24],
+    labelAnchor: [-6, 0],
+    popupAnchor: [0, -36],
+    html: `<span style="${markerHtmlStyles}" />`,
+});
 
 const LeafMyMap = () => {
     const handelbuyTree = args => {
@@ -68,7 +118,7 @@ const LeafMyMap = () => {
             .get("http://localhost/trees/alltrees")
             .then(res => setAllTrees(res.data))
             .catch(erreur => {
-                console.warn(erreur);
+                console.warn(erreur); // c'est la ligne 71
             });
     }, []);
 
@@ -128,44 +178,6 @@ const LeafMyMap = () => {
     };
 
     console.log(allTrees);
-
-    if (allTrees.player_color === null) {
-        myColorista = myColourDefault;
-    } else if (allTrees.player_color === "yellow") {
-        myColorista = myColourYellow;
-    } else if (allTrees.player_color === "green") {
-        myColorista = myColourGreen;
-    } else if (allTrees.player_color === "dark") {
-        myColorista = myColourDark;
-    } else if (allTrees.player_color === "grey") {
-        myColorista = myColourGrey;
-    } else if (allTrees.player_color === "orange") {
-        myColorista = myColourOrange;
-    } else if (allTrees.player_color === "purple") {
-        myColorista = myColourPurple;
-    } else if (allTrees.player_color === "white") {
-        myColorista = myColourWhite;
-    } else if (allTrees.player_color === "red") {
-        myColorista = myColourRed;
-    }
-    const markerHtmlStyles = `
-    background-color: ${myColorista};
-    width: 3rem;
-    height: 3rem;
-    display: block;
-    left: -1.5rem;
-    top: -1.5rem;
-    position: relative;
-    border-radius: 3rem 3rem 0;
-    transform: rotate(45deg);
-    border: 1px solid #FFFFFF`;
-    const icon = Leaflet.divIcon({
-        className: "my-custom-pin",
-        iconAnchor: [0, 24],
-        labelAnchor: [-6, 0],
-        popupAnchor: [0, -36],
-        html: `<span style="${markerHtmlStyles}" />`,
-    });
 
     if (click === true) {
         return (

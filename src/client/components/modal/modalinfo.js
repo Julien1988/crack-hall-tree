@@ -33,14 +33,15 @@ const ModalInfo = ({showInfo = false, onHide}) => {
     const [userInfo, setUserInfo] = useState([]);
     const [requestDone, setRequestDone] = useState(false);
 
-    if (localStorage.getItem("tokenUserId") !== undefined) {
+    if (localStorage.getItem("tokenUserId") != undefined) {
         useEffect(() => {
             setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
             // console.log(state);
-            const getRequest = `http://localhost/users/${state}`;
+            const URI = "http://localhost/users/";
+            const getRequest = URI + state;
             console.log(getRequest);
-            if (getRequest !== undefined && requestDone !== true) {
+            if (getRequest != undefined && requestDone != true) {
                 axios
                     .get(getRequest)
                     .then(res => setUserInfo(res.data))
@@ -48,7 +49,7 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                         console.warn(erreur);
                     });
 
-                if (userInfo.id !== undefined) {
+                if (userInfo.id != undefined) {
                     setRequestDone(true);
                 }
             }

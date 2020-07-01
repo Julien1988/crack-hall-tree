@@ -21,6 +21,7 @@ const Logup = () => {
         },
         onSubmit: values => {
             console.warn(JSON.stringify(values, null, 2));
+            window.location = "/";
         },
     });
     axios
@@ -32,7 +33,6 @@ const Logup = () => {
         });
     console.warn(formik.values.pseudo);
     //sinon redirection
-    window.location = "/";
 
     return (
         <form onSubmit={formik.handleSubmit}>
