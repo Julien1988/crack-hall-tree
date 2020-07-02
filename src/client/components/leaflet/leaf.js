@@ -93,35 +93,42 @@ const LeafMyMap = () => {
     };
 
     console.log(allTrees);
-    const myColourRed = "#d81205";
-    const myColourYellow = "#f1ca08";
-    const myColourGreen = "#0ca702";
-    const myColourDark = "#030303";
-    const myColourGrey = "#737171";
-    const myColourOrange = "#e56704";
-    const myColourPurple = "#8002de";
-    const myColourWhite = "#fcfbfc";
-    // const myColourDefault = ;
-    // let myColorista;
 
-    let myColorista = allTrees.map(itemColor => {
-        if (itemColor.player_color === null) {
+    let myColorista;
+
+    allTrees.map(itemColor => {
+        if (itemColor.player_color === "red") {
+            myColorista = "#d81205";
+        } else if (itemColor.player_color === "yellow") {
+            myColorista = "#f1ca08";
+        } else if (itemColor.player_color === "green") {
+            myColorista = "#0ca702";
+        } else if (itemColor.player_color === "dark") {
+            myColorista = "#030303";
+        } else if (itemColor.player_color === "grey") {
+            myColorista = "#737171";
+        } else if (itemColor.player_color === "orange") {
+            myColorista = "#e56704";
+        } else if (itemColor.player_color === "purple") {
+            myColorista = "#8002de";
+        } else if (itemColor.player_color === "white") {
+            myColorista = "#fcfbfc";
+        } else {
             myColorista = "#03f3d2";
-            console.log(myColorista);
         }
     });
 
     const markerHtmlStyles = `
-        background-color: ${myColorista};
-        width: 3rem;
-        height: 3rem;
-        display: block;
-        left: -1.5rem;
-        top: -1.5rem;
-        position: relative;
-        border-radius: 3rem 3rem 0;
-        transform: rotate(45deg);
-        border: 1px solid #FFFFFF`;
+    background-color: ${myColorista};
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    left: -1.5rem;
+    top: -1.5rem;
+    position: relative;
+    border-radius: 3rem 3rem 0;
+    transform: rotate(45deg);
+    border: 1px solid #FFFFFF`;
 
     const icon = Leaflet.divIcon({
         className: "my-custom-pin",
