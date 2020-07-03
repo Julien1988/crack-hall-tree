@@ -33,7 +33,6 @@ L.Icon.Default.mergeOptions({
 });
 
 const position = [50.65156, 5.5806785];
-const myGetArray = [];
 
 // UserForTest
 const LeafMyMap = () => {
@@ -43,10 +42,10 @@ const LeafMyMap = () => {
         const postParams = [playerId, treeId];
         axios
             .post(hrefLink, postParams)
-            .then(res => {
+            .then((res) => {
                 console.log(res.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.repsonse.data.message);
             });
     };
@@ -60,13 +59,13 @@ const LeafMyMap = () => {
         setPlayerId(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
         axios
             .get("http://localhost/trees/alltrees")
-            .then(res => setAllTrees(res.data))
-            .catch(erreur => {
+            .then((res) => setAllTrees(res.data))
+            .catch((erreur) => {
                 console.warn(erreur); // c'est la ligne 71
             });
     }, []);
 
-    allTrees.forEach(element => {
+    allTrees.forEach((element) => {
         if (element.comment == null) {
             element.comment = "Pas de commentaire";
             myGetArray.push(element);
@@ -98,7 +97,7 @@ const LeafMyMap = () => {
 
     let myColorista;
 
-    allTrees.map(itemColor => {
+    myGetArray.map((itemColor) => {
         if (itemColor.player_color === "red") {
             myColorista = "#d81205";
         } else if (itemColor.player_color === "yellow") {
@@ -151,7 +150,7 @@ const LeafMyMap = () => {
                 }
             />
             <MarkerClusterGroup>
-                {myGetArray.map(item => (
+                {myGetArray.map((item) => (
                     <React.Fragment key={item._id}>
                         <Marker
                             icon={icon}
