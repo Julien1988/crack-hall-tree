@@ -33,46 +33,8 @@ L.Icon.Default.mergeOptions({
 });
 
 const position = [50.65156, 5.5806785];
-let myGetArray = [];
-const myGetArrayColor = [];
+const myGetArray = [];
 
-const myColourRed = "#d81205";
-const myColourYellow = "#f1ca08";
-const myColourGreen = "#0ca702";
-const myColourDark = "#030303";
-const myColourGrey = "#737171";
-const myColourOrange = "#e56704";
-const myColourPurple = "#8002de";
-const myColourWhite = "#fcfbfc";
-const myColourDefault = "#03f3d2";
-// let myColorista;
-
-let myColorista = myGetArrayColor.map((itemColor) => {
-    if (itemColor.player_color === null) {
-        myColorista = "#03f3d2";
-        console.log(myColorista);
-    }
-});
-
-const markerHtmlStyles = `
-background-color: ${myColorista};
-width: 3rem;
-height: 3rem;
-display: block;
-left: -1.5rem;
-top: -1.5rem;
-position: relative;
-border-radius: 3rem 3rem 0;
-transform: rotate(45deg);
-border: 1px solid #FFFFFF`;
-
-const icon = Leaflet.divIcon({
-    className: "my-custom-pin",
-    iconAnchor: [0, 24],
-    labelAnchor: [-6, 0],
-    popupAnchor: [0, -36],
-    html: `<span style="${markerHtmlStyles}" />`,
-});
 // UserForTest
 const LeafMyMap = () => {
     const handelbuyTree = (hrefLink, playerId, treeId) => {
@@ -81,10 +43,10 @@ const LeafMyMap = () => {
         const postParams = [playerId, treeId];
         axios
             .post(hrefLink, postParams)
-            .then((res) => {
+            .then(res => {
                 console.log(res.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.log(error.repsonse.data.message);
             });
     };
@@ -98,13 +60,13 @@ const LeafMyMap = () => {
         setPlayerId(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
         axios
             .get("http://localhost/trees/alltrees")
-            .then((res) => setAllTrees(res.data))
-            .catch((erreur) => {
+            .then(res => setAllTrees(res.data))
+            .catch(erreur => {
                 console.warn(erreur); // c'est la ligne 71
             });
     }, []);
 
-    allTrees.forEach((element) => {
+    allTrees.forEach(element => {
         if (element.comment == null) {
             element.comment = "Pas de commentaire";
             myGetArray.push(element);
@@ -136,7 +98,7 @@ const LeafMyMap = () => {
 
     let myColorista;
 
-    myGetArray.map((itemColor) => {
+    allTrees.map(itemColor => {
         if (itemColor.player_color === "red") {
             myColorista = "#d81205";
         } else if (itemColor.player_color === "yellow") {
@@ -189,7 +151,7 @@ const LeafMyMap = () => {
                 }
             />
             <MarkerClusterGroup>
-                {myGetArray.map((item) => (
+                {myGetArray.map(item => (
                     <React.Fragment key={item._id}>
                         <Marker
                             icon={icon}
