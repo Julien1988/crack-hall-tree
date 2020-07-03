@@ -44,8 +44,8 @@ const ModalInfo = ({showInfo = false, onHide}) => {
             if (getRequest != undefined && requestDone != true) {
                 axios
                     .get(getRequest)
-                    .then((res) => setUserInfo(res.data))
-                    .catch((erreur) => {
+                    .then(res => setUserInfo(res.data))
+                    .catch(erreur => {
                         console.warn(erreur);
                     });
 
@@ -81,31 +81,23 @@ const ModalInfo = ({showInfo = false, onHide}) => {
                             <p className={"title is-4"}>{"Color : "}</p>
                             <p className={"subtitle is-5"}>{userInfo.color}</p>
                             <p className={"title is-4"}>{" Money : "}</p>
-                            <p className={"subtitle is-5"}>{"8000 £"}</p>
-                            <p className={"title is-4"}>{"Classement  : "}</p>
-                            <p className={"subtitle is-5"}>{" 2"}</p>
-                            <p className={"title is-4"}>
-                                {"Historique des achats :"}
-                            </p>
-
-                            <ul className={"subtitle is-5"}>
-                                <li>{"monogos"}</li>
-                                <li>{"popos"}</li>
-                            </ul>
-
+                            <p className={"subtitle is-5"}>{userInfo.money}</p>
                             <p className={"subtitle is-5"}>
                                 <a href={"#"}>{"Wikipedia"}</a>
                             </p>
-                            <p className={"title is-4"}>{"Commentaires :"}</p>
-
-                            <ul className={"subtitle is-5"}>
-                                <li>{"comments"}</li>
-                                <li>{"comments"}</li>
-                            </ul>
-
                             <p className={"title is-4"}>{"Date Creation : "}</p>
                             <p className={"subtitle is-5"}>
                                 {userInfo.createdDate}
+                            </p>
+                            <p className={"title is-4"}>
+                                {"Dernière connection : "}
+                            </p>
+                            <p className={"subtitle is-5"}>
+                                {userInfo.dateConnect}
+                            </p>
+                            <p className={"title is-4"}>{"Classement  : "}</p>
+                            <p className={"subtitle is-5"}>
+                                {"Pas disponible.."}
                             </p>
                         </div>
                     </section>
