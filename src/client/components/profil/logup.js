@@ -25,7 +25,10 @@ const Logup = () => {
         },
     });
     axios
-        .post("http://localhost/users/register", formik.values)
+        .post(
+            "https://crack-hall-trees.herokuapp.com/users/register",
+            formik.values,
+        )
         .then((res) => console.log(res.data))
         .catch((erreur) => {
             console.warn(`Error${erreur.response.data.message}`);

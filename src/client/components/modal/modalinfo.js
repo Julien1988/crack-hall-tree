@@ -38,14 +38,14 @@ const ModalInfo = ({showInfo = false, onHide}) => {
             setState(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
 
             // console.log(state);
-            const URI = "http://localhost/users/";
+            const URI = "https://crack-hall-trees.herokuapp.com/users/";
             const getRequest = URI + state;
             console.log(getRequest);
             if (getRequest != undefined && requestDone != true) {
                 axios
                     .get(getRequest)
-                    .then(res => setUserInfo(res.data))
-                    .catch(erreur => {
+                    .then((res) => setUserInfo(res.data))
+                    .catch((erreur) => {
                         console.warn(erreur);
                     });
 

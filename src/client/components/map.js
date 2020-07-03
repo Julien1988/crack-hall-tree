@@ -27,15 +27,15 @@ const App = () => {
 
     useEffect(() => {
         axios
-            .get("http://localhost/trees/alltrees")
-            .then(res => setAllTrees(res.data))
-            .catch(erreur => {
+            .get("https://crack-hall-trees.herokuapp.com/trees/alltrees")
+            .then((res) => setAllTrees(res.data))
+            .catch((erreur) => {
                 console.warn(erreur);
             });
     }, []);
     //console.log(allTrees);
-    const geolocCircle = getCenter => {
-        allTrees.forEach(element => {
+    const geolocCircle = (getCenter) => {
+        allTrees.forEach((element) => {
             const center = {lat: getCenter[0], lon: getCenter[1]};
             const radius = 500;
 
@@ -58,7 +58,7 @@ const App = () => {
         });
     };
 
-    const handleClick = e => {
+    const handleClick = (e) => {
         clickData = [e.latlng.lat, e.latlng.lng];
         setCenterGeoloc(clickData);
 
@@ -83,7 +83,7 @@ const App = () => {
 
                 <Circle center={centerGeoloc} radius={radiusGeoloc} />
 
-                {myGetArray.map(item => (
+                {myGetArray.map((item) => (
                     <React.Fragment key={item._id}>
                         <Marker position={[item.geoloc.lat, item.geoloc.lon]}>
                             <Popup>

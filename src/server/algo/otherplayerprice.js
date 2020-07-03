@@ -68,7 +68,7 @@ async function otherPlayerPrice(treeInfo, playerInfo) {
 
 module.exports = otherPlayerPrice;
 
-// http://localhost/trees/buyotherplayertree/5ece7015b467be4c63b04e4a/99
+// https://crack-hall-trees.herokuapp.com/trees/buyotherplayertree/5ece7015b467be4c63b04e4a/99
 
 // Si l'arbre appartient à un autre joueur, le prix est calculé avec la formule suivante: [valeur de l'arbre ciblé] + ([valeur de tous les arbres du joueur ciblé dans un rayon de 100 m] × ([nombre d'arbres dans un rayon de 100 m] / [ quantité d'arbre du joueur ciblé dans un rayon de 100m])) + [valeur de tous les autres arbres du joueur dans un rayon de 100m] - [valeur de tout votre arbre dans un rayon de 100m].
 

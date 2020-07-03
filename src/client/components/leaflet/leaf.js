@@ -58,7 +58,7 @@ const LeafMyMap = () => {
     useEffect(() => {
         setPlayerId(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
         axios
-            .get("http://localhost/trees/alltrees")
+            .get("https://crack-hall-trees.herokuapp.com/trees/alltrees")
             .then((res) => setAllTrees(res.data))
             .catch((erreur) => {
                 console.warn(erreur); // c'est la ligne 71
@@ -74,13 +74,13 @@ const LeafMyMap = () => {
         // vérifie si l'arbre est achetable et dispo
         if (element.free === true) {
             element.butonInfo = "Buy Me !";
-            element.buyButton = `http://localhost/trees/buyafreetree`;
+            element.buyButton = `https://crack-hall-trees.herokuapp.com/trees/buyafreetree`;
             element.butonStatus = false;
             myGetArray.push(element);
             // vérifie si l'abre est achetable et appartient à un joueur qui ne l'a pas encore lock
         } else if (element.free === false && element.locked === false) {
             element.butonInfo = "Acheter l'arbre d'un autre joueur";
-            element.buyButton = `http://localhost/trees/buyotherplayertree`;
+            element.buyButton = `https://crack-hall-trees.herokuapp.com/trees/buyotherplayertree`;
             element.butonStatus = false;
             myGetArray.push(element);
 

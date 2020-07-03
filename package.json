@@ -11,8 +11,7 @@
     "work:server": "npx babel src/server -s --watch --verbose --out-dir bin/server",
     "build:client": "npx webpack --progress --profile --colors",
     "work:client": "npx webpack --env=dev --progress",
-    "build": "npm run build:server && npm run build:client",
-    "start": "npm run build:server && npm run build:client"
+    "build": "npm run build:server && npm run build:client"
   },
   "lint-staged": {
     "*.js": [
@@ -93,5 +92,10 @@
     "reactjs-popup": "^1.5.0",
     "rootpath": "^0.1.2",
     "serialize-javascript": "^4.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged"
+    }
   }
 }

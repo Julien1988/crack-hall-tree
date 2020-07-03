@@ -22,7 +22,10 @@ const Login = () => {
         },
     });
     axios
-        .post("http://localhost/users/authenticate", formik.values)
+        .post(
+            "https://crack-hall-trees.herokuapp.com/users/authenticate",
+            formik.values,
+        )
         .then((res) => {
             localStorage.setItem("tokenUserId", JSON.stringify(res.data.id));
             console.warn(res.data.id);
