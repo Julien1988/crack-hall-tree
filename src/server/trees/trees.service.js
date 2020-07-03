@@ -153,8 +153,11 @@ async function lockFreeTree(req, res) {
 // Permet d'acheter un abre libre
 async function buyAFreeTree(req, res) {
     try {
-        const treeId = req.params.gettreeid;
-        const playerId = req.params.playerid;
+        console.log("buyAfreeTree");
+        console.log(req.body);
+
+        const treeId = req.body[1];
+        const playerId = req.body[0];
         const findTree = await Trees.find({_id: treeId});
         const treeLeave = await findTree[0].leave;
 

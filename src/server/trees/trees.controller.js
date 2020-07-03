@@ -23,9 +23,13 @@ router.get(
 );
 
 // Permet d'acheter un abre libre -- :treeid => id de l'abre ciblé :playerid => id du joueur connecté
-router.get("/buyafreetree/:treeid/:playerid", treeService.buyAFreeTree);
+router.post("/buyafreetree", treeService.buyAFreeTree);
 
 // Permet de lock un abre en sa possession -- :playerid => id du joueur connecté , :treeid => id de l'abre ciblé
 router.get("/locktree/:playerid/:treeid", treeService.lockFreeTree);
+
+function testfunction(req, res, next) {
+    console.log(req.body);
+}
 
 module.exports = router;

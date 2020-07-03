@@ -35,7 +35,6 @@ L.Icon.Default.mergeOptions({
 const position = [50.65156, 5.5806785];
 let myGetArray = [];
 const myGetArrayColor = [];
-let clickData;
 
 const myColourRed = "#d81205";
 const myColourYellow = "#f1ca08";
@@ -74,16 +73,29 @@ const icon = Leaflet.divIcon({
     popupAnchor: [0, -36],
     html: `<span style="${markerHtmlStyles}" />`,
 });
-
+// UserForTest
 const LeafMyMap = () => {
-    const handelbuyTree = (args) => {
-        console.log(args);
+    const handelbuyTree = (hrefLink, playerId, treeId) => {
+        console.log("achat d'un arbre");
+        //console.log(hrefLink, playerId, treeId);
+        const postParams = [playerId, treeId];
+        axios
+            .post("http://localhost/trees/buyafreetree", postParams)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.log(error.repsonse.data.message);
+            });
     };
 
     // Stoque l'ensemble des arbres
     const [allTrees, setAllTrees] = useState([]);
+    const [playerId, setPlayerId] = useState();
+    const myGetArray = [];
 
     useEffect(() => {
+        setPlayerId(localStorage.getItem("tokenUserId").replace(/\"/g, ""));
         axios
             .get("http://localhost/trees/alltrees")
             .then((res) => setAllTrees(res.data))
@@ -92,47 +104,32 @@ const LeafMyMap = () => {
             });
     }, []);
 
-    const geolocCircle = (getCenter) => {
-        allTrees.forEach((element) => {
-            const center = {lat: getCenter[0], lon: getCenter[1]};
-            const radius = 500;
+    allTrees.forEach((element) => {
+        if (element.comment == null) {
+            element.comment = "Pas de commentaire";
+            myGetArray.push(element);
+        }
 
-            const testCircleTree = insideCircle(
-                {lat: element.geoloc.lat, lon: element.geoloc.lon},
-                center,
-                radius,
-            );
+        // vérifie si l'arbre est achetable et dispo
+        if (element.free === true) {
+            element.free = "Buy Me !";
+            element.buyButton = `http://localhost/trees/buyafreetree/`;
+            myGetArray.push(element);
+            // vérifie si l'abre est achetable et appartient à un joueur qui ne l'a pas encore lock
+        } else if (element.free === false && element.locked === false) {
+            element.free = "Tu vas devoir payer plus cher";
+            element.buyButton = "href-buy-cher";
+            myGetArray.push(element);
 
-            if (testCircleTree === true) {
-                // modifie la valeur de la variable si pas de commentaire enregistré sur l'abre
-                if (element.comment == null) {
-                    element.comment = "Pas de commentaire";
-                    myGetArray.push(element);
-                }
+            // Vérifie si l'abre n'est plus achetable car a été lock par un joueur
+        } else if (element.free === false && element.locked === true) {
+            element.free = "Tu ne peux pas acheter cet arbre";
+            element.buyButton = "Non non non";
+            myGetArray.push(element);
+        }
+    });
 
-                // vérifie si l'arbre est achetable et dispo
-                if (element.free === true) {
-                    element.free = "Buy Me !";
-                    element.buyButton = "href-buy";
-                    // vérifie si l'abre est achetable et appartient à un joueur qui ne l'a pas encore lock
-                } else if (element.free === false && element.locked === false) {
-                    element.free = "Tu vas devoir payer plus cher";
-                    element.buyButton = "href-buy-cher";
-
-                    // Vérifie si l'abre n'est plus achetable car a été lock par un joueur
-                } else if (element.free === false && element.locked === true) {
-                    element.free = "Tu ne peux pas acheter cet arbre";
-                    element.buyButton = "Non non non";
-
-                    // valeur de callback
-                } else {
-                    myGetArray.push(element);
-                }
-            }
-        });
-    };
-
-    console.log(allTrees);
+    // console.log(allTrees);
 
     return (
         <Map className={"leaflet-container"} center={position} zoom={13}>
@@ -145,7 +142,7 @@ const LeafMyMap = () => {
                 }
             />
             <MarkerClusterGroup>
-                {allTrees.map((item) => (
+                {myGetArray.map((item) => (
                     <React.Fragment key={item._id}>
                         <Marker
                             icon={icon}
@@ -204,7 +201,11 @@ const LeafMyMap = () => {
                                             label={"Close"}
                                             // {() => this.handleClick(id)}
                                             onClick={() =>
-                                                handelbuyTree(item.buyButton)
+                                                handelbuyTree(
+                                                    item.buyButton,
+                                                    playerId,
+                                                    item.id,
+                                                )
                                             }>
                                             {"Buy Me !"}
                                         </button>
