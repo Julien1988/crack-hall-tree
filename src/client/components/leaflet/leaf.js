@@ -112,19 +112,22 @@ const LeafMyMap = () => {
 
         // vérifie si l'arbre est achetable et dispo
         if (element.free === true) {
-            element.free = "Buy Me !";
+            element.butonInfo = "Buy Me !";
             element.buyButton = `http://localhost/trees/buyafreetree`;
+            element.butonStatus = false;
             myGetArray.push(element);
             // vérifie si l'abre est achetable et appartient à un joueur qui ne l'a pas encore lock
         } else if (element.free === false && element.locked === false) {
-            element.free = "Tu vas devoir payer plus cher";
+            element.butonInfo = "Acheter l'arbre d'un autre joueur";
             element.buyButton = `http://localhost/trees/buyotherplayertree`;
+            element.butonStatus = false;
             myGetArray.push(element);
 
             // Vérifie si l'abre n'est plus achetable car a été lock par un joueur
         } else if (element.free === false && element.locked === true) {
-            element.free = "Tu ne peux pas acheter cet arbre";
+            element.butonInfo = "Arbre verouillé";
             element.buyButton = "Non non non";
+            element.butonStatus = true;
             myGetArray.push(element);
         }
     });
@@ -195,6 +198,7 @@ const LeafMyMap = () => {
                                     </section>
                                     <footer className={"modal-card-foot"}>
                                         <button
+                                            disabled={item.butonStatus}
                                             className={
                                                 "button is-success is-small is-pulled-right"
                                             }
@@ -207,7 +211,7 @@ const LeafMyMap = () => {
                                                     item.id,
                                                 )
                                             }>
-                                            {"Buy Me !"}
+                                            {item.butonInfo}
                                         </button>
                                     </footer>
                                 </div>
