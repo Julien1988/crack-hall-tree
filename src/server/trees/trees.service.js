@@ -56,8 +56,12 @@ async function newPlayerTreesGenerator(req, res) {
 // Permet d'acheetr un abre non lock appartenant à un autre joueur
 async function buyOtherPlayerTree(req, res) {
     try {
-        const playerId = req.params.playerid;
-        const treeId = req.params.treeid;
+        console.log("buyOtherPlayerTree");
+        console.log(req.body);
+
+        const treeId = req.body[1];
+        const playerId = req.body[0];
+
         const treeInfo = await Trees.findById(treeId);
         const playerInfo = await User.findById(playerId);
         // console.log(treeInfo);
@@ -113,8 +117,12 @@ async function buyOtherPlayerTree(req, res) {
 // Fonction pour lock un arbre
 async function lockFreeTree(req, res) {
     try {
-        const playerId = req.params.playerid;
-        const treeId = req.params.treeid;
+        console.log("lock tree");
+        console.log(req.body);
+
+        const treeId = req.body[1];
+        const playerId = req.body[0];
+
         const playerInfo = await User.find({_id: playerId});
         const treeInfo = await Trees.find({_id: treeId});
 

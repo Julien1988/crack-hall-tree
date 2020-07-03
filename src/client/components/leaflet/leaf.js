@@ -80,7 +80,7 @@ const LeafMyMap = () => {
         //console.log(hrefLink, playerId, treeId);
         const postParams = [playerId, treeId];
         axios
-            .post("http://localhost/trees/buyafreetree", postParams)
+            .post(hrefLink, postParams)
             .then((res) => {
                 console.log(res.data);
             })
@@ -113,12 +113,12 @@ const LeafMyMap = () => {
         // vérifie si l'arbre est achetable et dispo
         if (element.free === true) {
             element.free = "Buy Me !";
-            element.buyButton = `http://localhost/trees/buyafreetree/`;
+            element.buyButton = `http://localhost/trees/buyafreetree`;
             myGetArray.push(element);
             // vérifie si l'abre est achetable et appartient à un joueur qui ne l'a pas encore lock
         } else if (element.free === false && element.locked === false) {
             element.free = "Tu vas devoir payer plus cher";
-            element.buyButton = "href-buy-cher";
+            element.buyButton = `http://localhost/trees/buyotherplayertree`;
             myGetArray.push(element);
 
             // Vérifie si l'abre n'est plus achetable car a été lock par un joueur
